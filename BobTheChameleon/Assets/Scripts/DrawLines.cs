@@ -7,16 +7,19 @@ public class DrawLines : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    private GameObject newLineGenerator;
+    //Booleans
     private bool drawn;
+    private bool attached;
+
+    private GameObject newLineGenerator;
     private LineRenderer lineRenderer;
     private BoxCollider lineCollider;
 
     private Vector3 startPoint;
     private Vector3 endPoint;
 
-
-    private int layerMask = ~(1 << 8);
+    //Take 1, shift it of 8 places to the left, reverse the values of the bits.
+    private int playerLayerMask = ~(1 << 8);
 
 
     private void SpawnLineGenerator()
@@ -50,7 +53,7 @@ public class DrawLines : MonoBehaviour
 
     private bool CheckRaycast()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), Vector2.Distance(startPoint, endPoint), layerMask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), Vector2.Distance(startPoint, endPoint), playerLayerMask);
         Debug.DrawRay(startPoint, (endPoint - startPoint).normalized, Color.red, 5);
         Debug.DrawLine(startPoint, endPoint, Color.green, 5);
 
@@ -63,33 +66,51 @@ public class DrawLines : MonoBehaviour
             }
 
             endPoint = hits[0].transform.position;
+            if(hits[0].collider.tag == "Anchor")
+                Attach();
             return true;
         }
         return false;
     }
 
+    private void Attach()
+    {
+        attached = true;        
+    }
 
-    #region EventManager
+    private void Detach()
+    {
+        attached = false;
+    }
+
+
     private void OnEnable()
     {
-        EventManager.StartListening("TongueOut", TongueOut);
         drawn = false;
+        attached = false;
+        EventManager.StartListening("TongueOut", TongueOut);
     }
+
+    #region EventManager
 
     private void TongueOut()
     {
-        EventManager.StartListening("TongueIn", TongueIn);
+        
         EventManager.StopListening("TongueOut", TongueOut);
         SetStartPosition();
         SetEndPosition();
         if(CheckRaycast())
+        {
             SpawnLineGenerator();
+            EventManager.StartListening("TongueIn", TongueIn);
+        }
         else
         {
             SpawnLineGenerator();
-            Invoke("TongueIn", 0.25f);
+            Invoke("TongueIn", 0.1f);
 
         }
+
 
     }
     private void TongueIn()
@@ -98,6 +119,9 @@ public class DrawLines : MonoBehaviour
         EventManager.StopListening("TongueIn", TongueIn);
         Destroy(newLineGenerator);
         drawn = false;
+
+        if(attached)
+            Detach();
     }
 
     private void OnDisable()

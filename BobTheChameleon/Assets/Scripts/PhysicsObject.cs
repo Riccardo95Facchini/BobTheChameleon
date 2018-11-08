@@ -48,6 +48,7 @@ public class PhysicsObject : MonoBehaviour
 
     void FixedUpdate()
     {
+
         velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
         velocity.x = targetVelocity.x;
 
@@ -68,8 +69,8 @@ public class PhysicsObject : MonoBehaviour
 
         //Calculate vertical movement
         move = Vector2.up * deltaPosition.y;
-
         Movement(move, true);
+
     }
 
     /* Movement function, it separates the x and y axis components
