@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
 
     public static GameManager instance { get; private set; }
@@ -20,12 +19,13 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-	void Update () {
+    void Update()
+    {
 
         if(Input.GetKeyDown(KeyCode.Mouse0))
-            EventManager.TriggerEvent("TongueOut");
+            EventManager.TriggerEvent(Names.Events.TongueOut.ToString());
 
         if(Input.GetKeyUp(KeyCode.Mouse0))
-            EventManager.TriggerEvent("TongueIn");
+            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
     }
 }

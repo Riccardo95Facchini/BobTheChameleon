@@ -13,14 +13,34 @@ public class DrawLines : MonoBehaviour
 
     private GameObject newLineGenerator;
     private LineRenderer lineRenderer;
-    private BoxCollider lineCollider;
+    private DistanceJoint2D tongueJoint;
 
     private Vector3 startPoint;
     private Vector3 endPoint;
 
     //Take 1, shift it of 8 places to the left, reverse the values of the bits.
-    private int playerLayerMask = ~(1 << 8);
+    private int ignoreLayerMask = ~(1 << 8);
 
+    private void FixedUpdate()
+    {
+        if(drawn)
+        {
+            SetStartPosition();
+            lineRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 0f));
+
+            if(attached)
+            {
+                
+                //Debug.Log("\n"+ startPoint.ToString() +" "+ tongueJoint.anchor.ToString());
+                //Debug.Log(Vector2.Distance(startPoint, endPoint).ToString());
+            }
+        }
+    }
+
+    private void Awake()
+    {
+        tongueJoint = player.GetComponent<DistanceJoint2D>();
+    }
 
     private void SpawnLineGenerator()
     {
@@ -31,16 +51,6 @@ public class DrawLines : MonoBehaviour
         lineRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 0f));
         lineRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 0f));
     }
-
-    private void Update()
-    {
-        if(drawn)
-        {
-            SetStartPosition();
-            lineRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 0f));
-        }
-    }
-
     private void SetStartPosition()
     {
         startPoint = player.transform.position;
@@ -53,21 +63,29 @@ public class DrawLines : MonoBehaviour
 
     private bool CheckRaycast()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), Vector2.Distance(startPoint, endPoint), playerLayerMask);
-        Debug.DrawRay(startPoint, (endPoint - startPoint).normalized, Color.red, 5);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), Vector2.Distance(startPoint, endPoint), ignoreLayerMask);
+        //Debug.DrawRay(startPoint, (endPoint - startPoint).normalized, Color.red, 5);
         Debug.DrawLine(startPoint, endPoint, Color.green, 5);
 
-        Debug.Log(hits.Length);
+        //Debug.Log(hits.Length);
         if(hits.Length > 0)
         {
-            for(int i = 0; i < hits.Length; i++)
+            //for(int i = 0; i < hits.Length; i++)
+            //{
+            //    Debug.Log(hits[i].collider.gameObject.name);
+            //}
+
+            if(hits[0].collider.tag == Names.Layers.Anchor.ToString())
             {
-                Debug.Log(hits[i].collider.gameObject.name);
+                endPoint = hits[0].transform.position;
+                Attach();
+            }
+            else
+            {
+                // Instead of connecting to the center it snaps to the collision point.
+                endPoint = hits[0].point;
             }
 
-            endPoint = hits[0].transform.position;
-            if(hits[0].collider.tag == "Anchor")
-                Attach();
             return true;
         }
         return false;
@@ -75,58 +93,56 @@ public class DrawLines : MonoBehaviour
 
     private void Attach()
     {
-        attached = true;        
+        attached = true;
+        tongueJoint.connectedAnchor = endPoint;
+        tongueJoint.enabled = true;
     }
 
     private void Detach()
     {
         attached = false;
+        tongueJoint.enabled = false;
     }
 
-
+    #region EventManager
     private void OnEnable()
     {
         drawn = false;
         attached = false;
-        EventManager.StartListening("TongueOut", TongueOut);
+        EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
     }
-
-    #region EventManager
 
     private void TongueOut()
     {
-        
-        EventManager.StopListening("TongueOut", TongueOut);
+        EventManager.StopListening(Names.Events.TongueOut.ToString(), TongueOut);
         SetStartPosition();
         SetEndPosition();
         if(CheckRaycast())
         {
             SpawnLineGenerator();
-            EventManager.StartListening("TongueIn", TongueIn);
+            EventManager.StartListening(Names.Events.TongueIn.ToString(), TongueIn);
         }
         else
         {
             SpawnLineGenerator();
-            Invoke("TongueIn", 0.1f);
-
+            Invoke(Names.Events.TongueIn.ToString(), 0.1f);
         }
-
 
     }
     private void TongueIn()
     {
-        EventManager.StartListening("TongueOut", TongueOut);
-        EventManager.StopListening("TongueIn", TongueIn);
-        Destroy(newLineGenerator);
-        drawn = false;
-
         if(attached)
             Detach();
+
+        EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
+        EventManager.StopListening(Names.Events.TongueIn.ToString(), TongueIn);
+        Destroy(newLineGenerator);
+        drawn = false;
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening("TongueOut", TongueOut);
+        EventManager.StopListening(Names.Events.TongueOut.ToString(), TongueOut);
         drawn = false;
     }
     #endregion
