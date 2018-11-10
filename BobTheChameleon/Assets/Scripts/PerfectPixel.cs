@@ -27,6 +27,7 @@ namespace Complete
         // Use this for initialization
         void Start()
         {
+            referenceOrthographicSize = Screen.currentResolution.height;
             UpdateOrthoSize();
         }
 
