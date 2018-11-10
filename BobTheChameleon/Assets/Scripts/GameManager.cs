@@ -2,8 +2,6 @@
 
 public class GameManager : MonoBehaviour
 {
-
-
     public static GameManager instance { get; private set; }
 
     private void Awake()
@@ -21,7 +19,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-
         if(Input.GetKeyDown(KeyCode.Mouse0))
             EventManager.TriggerEvent(Names.Events.TongueOut.ToString());
 
