@@ -10,8 +10,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private const float maxTongueLength = 5f;                             // Minimum tongue length
     [SerializeField] private const float minTongueLength = 0.25f;                             // A position marking where to check for ceilings
-    //[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
-    //[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
+    [SerializeField] private GameObject mouth;
 
     const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -41,21 +40,24 @@ public class CharacterController2D : MonoBehaviour
                 m_Grounded = true;
         }
 
-        if(!m_Grounded)
+        if(tongueJoint.enabled)
         {
-            tongueJoint.anchor = Vector2.zero;
+            tongueJoint.anchor = mouth.transform.localPosition;
         }
     }
 
 
-    public void Move(float horizontal, float vertical, bool jump)
+    public void Move(float horizontal, bool jump)
     {
         //only control the player if grounded or airControl is turned on
         if(m_Grounded || m_AirControl)
         {
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
-            targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
+            if(tongueJoint.enabled)
+                targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
+            else
+                targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
 
             // And then smoothing it out and applying it to the character
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
@@ -83,15 +85,17 @@ public class CharacterController2D : MonoBehaviour
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 0.5f));
             }
             else
+            {
                 // Add a vertical force to the player.
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+            }
 
             m_Grounded = false;
         }
     }
 
 
-    private void Flip()
+    public void Flip()
     {
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;

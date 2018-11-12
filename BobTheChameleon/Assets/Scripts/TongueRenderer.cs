@@ -3,30 +3,61 @@
 public class TongueRenderer : MonoBehaviour
 {
     [SerializeField]
-    private GameObject lineGeneratorPrefab;
+    private LineRenderer tongueRenderer;
+    [SerializeField]
+    private LayerMask tongueLayerMask;
+    [SerializeField]
+    private const float climbSpeed = 3f;
+    [SerializeField]
+    private PlayerMovement playerMovement;
+    [SerializeField]
+    private DistanceJoint2D tongueJoint;
+    [SerializeField] private GameObject mouth;
 
     //Booleans
     private bool drawn;
-    private bool attached;
-
-    private GameObject newLineGenerator;
-    private LineRenderer lineRenderer;
-    private DistanceJoint2D tongueJoint;
+    private bool tongueAttached;
 
     private Vector3 startPoint;
     private Vector3 endPoint;
+    private bool distanceSet;
 
     private CharacterController2D controller;
 
-    //Take 1, shift it of 8 places to the left, reverse the values of the bits.
-    private int ignoreLayerMask = ~(1 << 8);
+    public const float tongueMaxDistance = 10f;
+    public const float tongueMinDistance = 0.5f;
 
     private void FixedUpdate()
     {
         if(drawn)
         {
             SetStartPosition();
-            lineRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 0f));
+            tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
+
+            if(!tongueAttached)
+            {
+                playerMovement.isSwinging = false;
+            }
+            else
+            {
+                playerMovement.isSwinging = true;
+            }
+            HandleTongueLength();
+        }
+    }
+
+    /// <summary>
+    /// Retracts or extends the 'tongue'
+    /// </summary>
+    private void HandleTongueLength()
+    {
+        if(Input.GetAxis("Vertical") > 0f && tongueAttached && tongueJoint.distance > tongueMinDistance)
+        {
+            tongueJoint.distance -= Time.deltaTime * climbSpeed;
+        }
+        else if(Input.GetAxis("Vertical") < 0f && tongueAttached && tongueJoint.distance < tongueMaxDistance)
+        {
+            tongueJoint.distance += Time.deltaTime * climbSpeed;
         }
     }
 
@@ -35,9 +66,7 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        tongueJoint = GetComponent<DistanceJoint2D>();
-        newLineGenerator = Instantiate(lineGeneratorPrefab);
-        lineRenderer = newLineGenerator.GetComponent<LineRenderer>();
+        tongueJoint.enabled = false;
         controller = GetComponent<CharacterController2D>();
     }
 
@@ -47,8 +76,8 @@ public class TongueRenderer : MonoBehaviour
     private void DrawTongue()
     {
         drawn = true;
-        lineRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 0f));
-        lineRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 0f));
+        tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
+        tongueRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 1f));
     }
 
     /// <summary>
@@ -56,11 +85,7 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void SetStartPosition()
     {
-        startPoint = this.transform.position;
-        if(controller.getFacingRight())
-            startPoint = new Vector3(startPoint.x + 0.45f, startPoint.y + 0.4f, 0f);
-        else
-            startPoint = new Vector3(startPoint.x - 0.45f, startPoint.y + 0.4f, 0f);
+        startPoint = mouth.transform.position;
     }
 
     /// <summary>
@@ -82,7 +107,7 @@ public class TongueRenderer : MonoBehaviour
     /// </returns>
     private bool CheckRaycast()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), Vector2.Distance(startPoint, endPoint), ignoreLayerMask);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), tongueMaxDistance, tongueLayerMask);
         Debug.DrawLine(startPoint, endPoint, Color.green, 5);
 
         if(hits.Length > 0)
@@ -91,15 +116,17 @@ public class TongueRenderer : MonoBehaviour
             {
                 endPoint = hits[0].transform.position;
                 Attach();
+                return true;
             }
             else
             {
                 // Instead of connecting to the center it snaps to the collision point.
                 endPoint = hits[0].point;
             }
-
-            return true;
         }
+        else
+            endPoint = startPoint + ((endPoint - startPoint).normalized * tongueMaxDistance);
+
         return false;
     }
 
@@ -108,8 +135,10 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void Attach()
     {
-        attached = true;
+        tongueAttached = true;
+        tongueJoint.anchor = startPoint;
         tongueJoint.connectedAnchor = endPoint;
+        tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
         tongueJoint.enabled = true;
     }
 
@@ -118,7 +147,7 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void Detach()
     {
-        attached = false;
+        tongueAttached = false;
         tongueJoint.enabled = false;
     }
 
@@ -143,7 +172,7 @@ public class TongueRenderer : MonoBehaviour
     private void OnEnable()
     {
         drawn = false;
-        attached = false;
+        tongueAttached = false;
         EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
     }
 
@@ -151,29 +180,32 @@ public class TongueRenderer : MonoBehaviour
     {
         SetStartPosition();
         SetEndPosition();
-        if(CorrectSide())
+        EventManager.StopListening(Names.Events.TongueOut.ToString(), TongueOut);
+
+        if(!CorrectSide())
         {
-            EventManager.StopListening(Names.Events.TongueOut.ToString(), TongueOut);
-            if(CheckRaycast())
-            {
-                DrawTongue();
-                EventManager.StartListening(Names.Events.TongueIn.ToString(), TongueIn);
-            }
-            else
-            {
-                DrawTongue();
-                Invoke(Names.Events.TongueIn.ToString(), 0.1f);
-            }
+            controller.Flip();
+        }
+
+        if(CheckRaycast())
+        {
+            DrawTongue();
+            EventManager.StartListening(Names.Events.TongueIn.ToString(), TongueIn);
+        }
+        else
+        {
+            DrawTongue();
+            Invoke(Names.Events.TongueIn.ToString(), 0.1f);
         }
     }
     private void TongueIn()
     {
-        if(attached)
+        if(tongueAttached)
             Detach();
 
         EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
         EventManager.StopListening(Names.Events.TongueIn.ToString(), TongueIn);
-        lineRenderer.SetPosition(1, new Vector3(startPoint.x, startPoint.y, 0f));
+        tongueRenderer.SetPosition(1, new Vector3(startPoint.x, startPoint.y, 1f));
         drawn = false;
     }
 
