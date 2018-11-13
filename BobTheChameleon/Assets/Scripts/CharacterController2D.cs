@@ -22,7 +22,6 @@ public class CharacterController2D : MonoBehaviour
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 velocity = Vector3.zero;
     private bool doubleJumped;
-    private bool jumped;
 
 
     private void Awake()
@@ -43,7 +42,6 @@ public class CharacterController2D : MonoBehaviour
             if(colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                jumped = false;
                 doubleJumped = false;
             }
         }
@@ -90,20 +88,17 @@ public class CharacterController2D : MonoBehaviour
     /// </summary>
     private void CheckAndJump()
     {
-
         if(tongueJoint.enabled)
             EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
 
         if(m_Grounded)
         {
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
-            jumped = true;
         }
         else if(!doubleJumped)
         {
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 0.5f));
             doubleJumped = true;
-
         }
 
         m_Grounded = false;

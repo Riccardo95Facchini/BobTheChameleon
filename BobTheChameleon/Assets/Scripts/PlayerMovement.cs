@@ -7,43 +7,34 @@ public class PlayerMovement : MonoBehaviour
 
 
     public float runSpeed = 40f;
-    private float climbSpeed =20f;//climbSpeed=0.5*runSpeed;
+    private float climbSpeed = 20f;//climbSpeed=0.5*runSpeed;
 
     float horizontalMove = 0f;
     float verticalMove = 0f;
     bool jump = false;
 
     public bool isSwinging;
-    public bool isOnLadder;
+    public bool isOnLadder = false;
 
     // Update is called once per frame
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        if (isOnLadder)
+        if(isOnLadder)
         {
             verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                jump = true;
-            }
-
         }
 
-        if (isSwinging)
+
+        if(Input.GetButtonDown("Jump"))
         {
-
-            if (Input.GetButtonDown("Jump"))
-            {
-                jump = true;
-            }
-            else if (Input.GetButtonDown("Sprint"))
-                runSpeed *= 1.5f;
-            else if (Input.GetButtonUp("Sprint"))
-                runSpeed /= 1.5f;
+            jump = true;
         }
+        else if(Input.GetButtonDown("Sprint"))
+            runSpeed *= 1.5f;
+        else if(Input.GetButtonUp("Sprint"))
+            runSpeed /= 1.5f;
     }
 
     void FixedUpdate()
@@ -52,10 +43,11 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
         jump = false;
 
-            //Move our character when climbing
-            if (isOnLadder) {
-                controller.Move(verticalMove * Time.fixedDeltaTime,jump);
-                jump = false;
-            }
+        //Move our character when climbing
+        if(isOnLadder)
+        {
+            controller.Move(verticalMove * Time.fixedDeltaTime, jump);
+            jump = false;
+        }
     }
 }
