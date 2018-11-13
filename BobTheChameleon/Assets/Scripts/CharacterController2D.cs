@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] private float m_JumpForce = 700f;                          // Amount of force added when the player jumps.
+    [SerializeField] private const float m_JumpForce = 700f;                          // Amount of force added when the player jumps.
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
@@ -12,7 +12,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private const float maxTongueLength = 5f;                             // Minimum tongue length
     [SerializeField] private const float minTongueLength = 0.25f;                             // A position marking where to check for ceilings
-    [SerializeField] private GameObject mouth;
+    [SerializeField] private readonly GameObject mouth;
 
     const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
@@ -40,9 +40,11 @@ public class CharacterController2D : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
         for(int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].gameObject != gameObject)
+            if(colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
+                jumped = false;
+                doubleJumped = false;
             }
         }
     }
@@ -50,7 +52,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void Move(float horizontal, bool jump)
     {
-       
+
 
         //only control the player if grounded or airControl is turned on
         if(m_Grounded || m_AirControl)
@@ -79,41 +81,32 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
+        if(jump)
+            CheckAndJump();
+    }
 
-        // If the player should jump...
-        if((tongueJoint.enabled || m_Grounded || !doubleJumped) && jump)
+    /// <summary>
+    /// Checks if the character can jump and executes the movement.
+    /// </summary>
+    private void CheckAndJump()
+    {
+
+        if(tongueJoint.enabled)
+            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+
+        if(m_Grounded)
         {
-
-           
-
-            if (jumped && !doubleJumped)
-            {
-                EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
-                doubleJumped = true;
-
-        
-
-            }
-
-            // Disconnects if swinging, uses half jumpForce
-            else if (!m_Grounded)
-            {
-                EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 7f));
-
-            }
-
-            else 
-            {
-                // Add a vertical force to the player.
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-                jumped = true;
-               
-            }
-            m_Grounded = false;
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
+            jumped = true;
+        }
+        else if(!doubleJumped)
+        {
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 0.5f));
+            doubleJumped = true;
 
         }
+
+        m_Grounded = false;
     }
 
 
