@@ -12,7 +12,8 @@ public class TongueRenderer : MonoBehaviour
     private PlayerMovement playerMovement;
     [SerializeField]
     private DistanceJoint2D tongueJoint;
-    [SerializeField] private GameObject mouth;
+    [SerializeField]
+    private GameObject mouth;
 
     //Booleans
     private bool drawn;
@@ -20,7 +21,6 @@ public class TongueRenderer : MonoBehaviour
 
     private Vector3 startPoint;
     private Vector3 endPoint;
-    private bool distanceSet;
 
     private CharacterController2D controller;
 
@@ -41,8 +41,14 @@ public class TongueRenderer : MonoBehaviour
             else
             {
                 playerMovement.isSwinging = true;
+                tongueJoint.anchor = mouth.transform.localPosition;
+                tongueJoint.enabled = !controller.getGrounded();
+
+                if(tongueJoint.enabled)
+                    tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
+
+                HandleTongueLength();
             }
-            HandleTongueLength();
         }
     }
 
@@ -139,7 +145,7 @@ public class TongueRenderer : MonoBehaviour
         tongueJoint.anchor = startPoint;
         tongueJoint.connectedAnchor = endPoint;
         tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
-        tongueJoint.enabled = true;
+        //tongueJoint.enabled = true;
     }
 
     /// <summary>
@@ -205,7 +211,7 @@ public class TongueRenderer : MonoBehaviour
 
         EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
         EventManager.StopListening(Names.Events.TongueIn.ToString(), TongueIn);
-        tongueRenderer.SetPosition(1, new Vector3(startPoint.x, startPoint.y, 1f));
+        tongueRenderer.SetPosition(1, tongueRenderer.GetPosition(0));
         drawn = false;
     }
 

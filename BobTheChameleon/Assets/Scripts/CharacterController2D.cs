@@ -12,9 +12,9 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private const float minTongueLength = 0.25f;                             // A position marking where to check for ceilings
     [SerializeField] private GameObject mouth;
 
-    const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded.
-    const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+    const float k_CeilingRadius = .1f; // Radius of the overlap circle to determine if the player can stand up
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
@@ -38,11 +38,6 @@ public class CharacterController2D : MonoBehaviour
         {
             if(colliders[i].gameObject != gameObject)
                 m_Grounded = true;
-        }
-
-        if(tongueJoint.enabled)
-        {
-            tongueJoint.anchor = mouth.transform.localPosition;
         }
     }
 
@@ -100,7 +95,7 @@ public class CharacterController2D : MonoBehaviour
         // Switch the way the player is labelled as facing.
         m_FacingRight = !m_FacingRight;
 
-        if(tongueJoint.enabled && m_Grounded)
+        if(m_Grounded)
             EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
 
         // Multiply the player's x local scale by -1.
@@ -112,5 +107,10 @@ public class CharacterController2D : MonoBehaviour
     public bool getFacingRight()
     {
         return m_FacingRight;
+    }
+
+    public bool getGrounded()
+    {
+        return m_Grounded;
     }
 }
