@@ -97,7 +97,12 @@ public class CharacterController2D : MonoBehaviour
         }
         else if(!doubleJumped)
         {
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 0.5f));
+
+
+            m_Rigidbody2D.velocity = Vector3.zero;
+            m_Rigidbody2D.angularVelocity = 0;
+
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1));
             doubleJumped = true;
         }
 
