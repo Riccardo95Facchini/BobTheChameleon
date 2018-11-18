@@ -48,12 +48,12 @@ public class CharacterController2D : MonoBehaviour
     }
 
 
-    public void Move(float horizontal, bool jump)
+    public void Move(float horizontal,bool jump, bool onLadder)
     {
 
 
         //only control the player if grounded or airControl is turned on
-        if(m_Grounded || m_AirControl)
+        if((m_Grounded || m_AirControl)&&!onLadder)
         {
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
@@ -78,6 +78,28 @@ public class CharacterController2D : MonoBehaviour
                 Flip();
             }
         }
+
+        if (onLadder) {//
+
+            float speed = 5;
+
+            Vector2 direction = new Vector2(0,0);
+            float yMovement = Input.GetAxis("Vertical");
+            float xMovement = Input.GetAxis("Horizontal");
+
+
+            if (yMovement != 0) { direction.y = yMovement; }
+            if (xMovement != 0) { direction.x = xMovement; }
+
+            
+
+            transform.Translate(direction*(speed*Time.deltaTime));//
+
+            
+
+            
+
+        }//
 
         if(jump)
             CheckAndJump();

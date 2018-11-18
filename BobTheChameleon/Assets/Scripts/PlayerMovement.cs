@@ -14,17 +14,19 @@ public class PlayerMovement : MonoBehaviour
     bool jump = false;
 
     public bool isSwinging;
-    public bool isOnLadder = false;
+    [SerializeField]public bool isOnLadder;         //
+
+
+    public void SetIsOnLadder(bool v) {             //
+        isOnLadder = v;                             //
+    }                                               //
 
     // Update is called once per frame
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        if(isOnLadder)
-        {
-            verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
-        }
+        
 
 
         if(Input.GetButtonDown("Jump"))
@@ -40,14 +42,9 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
+        controller.Move(horizontalMove * Time.fixedDeltaTime, jump,isOnLadder);
         jump = false;
 
-        //Move our character when climbing
-        if(isOnLadder)
-        {
-            controller.Move(verticalMove * Time.fixedDeltaTime, jump);
-            jump = false;
-        }
+      
     }
 }
