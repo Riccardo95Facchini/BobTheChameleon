@@ -45,11 +45,11 @@ public class LadderTriggerer : MonoBehaviour {
     }
 
 
-     void OnTriggerStay2D(Collider2D collision)
+     void OnTriggerStay2D(Collider2D collision )
     {
         Debug.Log("in this moment bob can start climbing ");
 
-        if (Input.GetKeyDown(KeyCode.W)) {
+        if (Input.GetKeyDown(KeyCode.W) && collision.tag=="Player") {
 
             collision.GetComponent<PlayerMovement>().SetIsOnLadder(true);
 

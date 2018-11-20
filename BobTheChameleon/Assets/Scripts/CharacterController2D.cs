@@ -83,21 +83,37 @@ public class CharacterController2D : MonoBehaviour
 
             float speed = 5;
 
-            Vector2 direction = new Vector2(0,0);
-            float yMovement = Input.GetAxis("Vertical");
-            float xMovement = Input.GetAxis("Horizontal");
+             Vector2 direction = new Vector2(0,0);
+             float yMovement = Input.GetAxis("Vertical");
+             float xMovement = Input.GetAxis("Horizontal");
 
 
-            if (yMovement != 0) { direction.y = yMovement; }
-            if (xMovement != 0) { direction.x = xMovement; }
+             if (yMovement != 0) { direction.y = yMovement; }
+             if (xMovement != 0) { direction.x = xMovement; }
 
-            
 
-            transform.Translate(direction*(speed*Time.deltaTime));//
 
-            
+             transform.Translate(direction*(speed*Time.deltaTime));
 
-            
+            if ( Input.GetKey(KeyCode.W))
+            {
+
+                m_Rigidbody2D.velocity = new Vector2(0, speed);
+            }
+            else if ( Input.GetKey(KeyCode.S))
+            {
+
+                m_Rigidbody2D.velocity = new Vector2(0, -speed);
+            }
+
+            else
+            {
+                m_Rigidbody2D.velocity = new Vector2(0,3/4);
+            }
+
+
+
+
 
         }//
 
