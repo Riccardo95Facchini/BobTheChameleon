@@ -11,7 +11,7 @@ public class LadderTriggerer : MonoBehaviour {
      {
          if (other.gameObject.tag=="Player")Debug.Log("ingoing collision with :  " + other.gameObject.name);
 
-         //other.GetComponent<PlayerMovement>().SetIsOnLadder(true);
+         //other.GetComponent<PlayerMovement>().SetIsOnLadder(true) ;
      }
 
 
