@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class FallingSpikes : MonoBehaviour {
+public class FallingSpikes : MonoBehaviour
+{
 
     Rigidbody2D spikes;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         spikes = GetComponent<Rigidbody2D>();
-	}
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("Player"))
+        if(collision.gameObject.name.Equals("Player"))
             Invoke("MakeDynamic", 0f);
     }
 
@@ -22,7 +22,8 @@ public class FallingSpikes : MonoBehaviour {
         Debug.Log("u ded");
     }
 
-    void MakeDynamic () {
+    void MakeDynamic()
+    {
         spikes.isKinematic = false;
     }
 }

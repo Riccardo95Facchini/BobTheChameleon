@@ -7,30 +7,25 @@ public class PlayerMovement : MonoBehaviour
 
 
     public float runSpeed = 40f;
-    private float climbSpeed = 20f;//climbSpeed=0.5*runSpeed;
+    //private float climbSpeed = 20f;//climbSpeed=0.5*runSpeed;
 
     float horizontalMove = 0f;
-    float verticalMove = 0f;
+    //float verticalMove = 0f;
     bool jump = false;
 
     public bool isSwinging;
-    [SerializeField]public bool isOnLadder;         //
+    [SerializeField] public bool isOnLadder;
 
 
-    public void SetIsOnLadder(bool v) {             //
-        isOnLadder = v;                             //
-    }                                               //
+    public void SetIsOnLadder(bool v)
+    {
+        isOnLadder = v;
+    }
 
     // Update is called once per frame
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
-        if(isOnLadder)
-        {
-            verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
-        }
-
 
         if(Input.GetButtonDown("Jump"))
         {
@@ -45,38 +40,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
+        controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
         jump = false;
-
-        //Move our character when climbing
-        if(isOnLadder)
-        {
-            controller.Move(verticalMove * Time.fixedDeltaTime, jump);
-            jump = false;
-        }
     }
 }
-
-        if(isOnLadder)
-        {
-            verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
-        }
-
-
-        if(Input.GetButtonDown("Jump"))
-        {
-            jump = true;
-        }
-        else if(Input.GetButtonDown("Sprint"))
-            runSpeed *= 1.5f;
-        else if(Input.GetButtonUp("Sprint"))
-            runSpeed /= 1.5f;
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
-        jump = false;
-
-        //Move our character when climbing
-        if(isOnLadder)
-        {
-            controller.Move(verticalMove * Time.fixedDeltaTime, jump);
-            jump = false;
-        }
