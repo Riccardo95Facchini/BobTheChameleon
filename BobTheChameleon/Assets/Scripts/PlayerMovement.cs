@@ -26,7 +26,10 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        
+        if(isOnLadder)
+        {
+            verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
+        }
 
 
         if(Input.GetButtonDown("Jump"))
@@ -42,9 +45,38 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump,isOnLadder);
+        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
         jump = false;
 
-      
+        //Move our character when climbing
+        if(isOnLadder)
+        {
+            controller.Move(verticalMove * Time.fixedDeltaTime, jump);
+            jump = false;
+        }
     }
 }
+
+        if(isOnLadder)
+        {
+            verticalMove = Input.GetAxisRaw("Vertical") * climbSpeed;
+        }
+
+
+        if(Input.GetButtonDown("Jump"))
+        {
+            jump = true;
+        }
+        else if(Input.GetButtonDown("Sprint"))
+            runSpeed *= 1.5f;
+        else if(Input.GetButtonUp("Sprint"))
+            runSpeed /= 1.5f;
+        controller.Move(horizontalMove * Time.fixedDeltaTime, jump);
+        jump = false;
+
+        //Move our character when climbing
+        if(isOnLadder)
+        {
+            controller.Move(verticalMove * Time.fixedDeltaTime, jump);
+            jump = false;
+        }
