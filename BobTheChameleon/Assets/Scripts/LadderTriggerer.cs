@@ -1,61 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LadderTriggerer : MonoBehaviour {
+public class LadderTriggerer : MonoBehaviour
+{
 
+    private PlayerMovement player = null;
 
-  
-
-     /*void OnTriggerEnter(Collider other)   
-     {
-         if (other.gameObject.tag=="Player")Debug.Log("ingoing collision with :  " + other.gameObject.name);
-
-         //other.GetComponent<PlayerMovement>().SetIsOnLadder(true) ;
-     }
-
-
-     void OnTriggerExit(Collider other)
-     {
-         Debug.Log("outgoing collision with: " + other.gameObject.name);
-     }*/
-
-
-
-
-
-     void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("ingoing collision with: " + collision.gameObject.name);// funziona quando bob interseca la scala la collisione viene rilevata
+        //Chaching
+        if(player == null && collision.tag == Names.Tags.Player.ToString())
+            player = collision.GetComponent<PlayerMovement>();
+    }
 
-        if (Input.GetKeyDown(KeyCode.W))
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == Names.Tags.Player.ToString())
         {
-
-            collision.GetComponent<PlayerMovement>().SetIsOnLadder(true);
-
+            player.SetIsOnLadder(false);
         }
     }
 
-
-     void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("outgoing collision with"+collision.gameObject.name);
-
-        collision.GetComponent<PlayerMovement>().SetIsOnLadder(false);
+        if(Input.GetKey(KeyCode.W) && collision.tag == Names.Tags.Player.ToString())
+            player.SetIsOnLadder(true);
     }
-
-
-     void OnTriggerStay2D(Collider2D collision )
-    {
-        Debug.Log("in this moment bob can start climbing ");
-
-        if (Input.GetKeyDown(KeyCode.W) && collision.tag=="Player") {
-
-            collision.GetComponent<PlayerMovement>().SetIsOnLadder(true);
-
-
-
-        }
-    }
-
 }

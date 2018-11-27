@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     bool jump = false;
 
     public bool isSwinging;
-    [SerializeField] public bool isOnLadder;
+    private bool isOnLadder;
 
 
     public void SetIsOnLadder(bool v)

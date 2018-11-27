@@ -65,51 +65,43 @@ public class CharacterController2D : MonoBehaviour
 
             // If the input is moving the player right and the player is facing left...
             if(horizontal > 0 && !m_FacingRight)
-            {
-                // ... flip the player.
                 Flip();
-            }
             // Otherwise if the input is moving the player left and the player is facing right...
             else if(horizontal < 0 && m_FacingRight)
-            {
-                // ... flip the player.
                 Flip();
-            }
         }
 
         if(onLadder)
-        {//
-
-            float speed = 5;
-
-            Vector2 direction = new Vector2(0, 0);
-            float yMovement = Input.GetAxis("Vertical");
-            float xMovement = Input.GetAxis("Horizontal");
-
-            if(yMovement != 0) { direction.y = yMovement; }
-            if(xMovement != 0) { direction.x = xMovement; }
-
-            transform.Translate(direction * (speed * Time.deltaTime));
-
-            if(Input.GetKey(KeyCode.W))
-            {
-
-                m_Rigidbody2D.velocity = new Vector2(0, speed);
-            }
-            else if(Input.GetKey(KeyCode.S))
-            {
-
-                m_Rigidbody2D.velocity = new Vector2(0, -speed);
-            }
-
-            else
-            {
-                m_Rigidbody2D.velocity = new Vector2(0, 3 / 4);
-            }
-        }
+            handleLadder();
+        else
+            m_Rigidbody2D.gravityScale = 3;
 
         if(jump)
             CheckAndJump();
+    }
+
+    private void handleLadder()
+    {
+        float speed = 10;
+        m_Rigidbody2D.gravityScale = 0;
+        m_Rigidbody2D.velocity = Vector2.zero;
+
+        Vector2 direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
+        transform.Translate(direction * (speed * Time.deltaTime));
+
+        //if(Input.GetKey(KeyCode.W))
+        //{
+        //    m_Rigidbody2D.velocity = new Vector2(0, speed * Time.deltaTime);
+        //}
+        //else if(Input.GetKey(KeyCode.S))
+        //{
+        //    m_Rigidbody2D.velocity = new Vector2(0, -speed * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    m_Rigidbody2D.velocity = Vector2.zero;
+        //}
     }
 
     /// <summary>
@@ -126,8 +118,6 @@ public class CharacterController2D : MonoBehaviour
         }
         else if(!doubleJumped)
         {
-
-
             m_Rigidbody2D.velocity = Vector3.zero;
             m_Rigidbody2D.angularVelocity = 0;
 

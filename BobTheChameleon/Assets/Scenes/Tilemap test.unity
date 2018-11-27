@@ -466,7 +466,6 @@ MonoBehaviour:
   controller: {fileID: 339744718}
   runSpeed: 40
   isSwinging: 0
-  isOnLadder: 0
 --- !u!114 &339744717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5156,6 +5155,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1299870577718374, guid: 194ac784a5cbef6419a6fd400f4571c5, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 50070138312242828, guid: 194ac784a5cbef6419a6fd400f4571c5,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194ac784a5cbef6419a6fd400f4571c5, type: 2}
   m_IsPrefabAsset: 0
@@ -5285,7 +5293,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.109375
+  orthographic size: 6.59375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5326,7 +5334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   referenceOrthographicSize: 1080
-  referencePixelsPerUnit: 32
+  referencePixelsPerUnit: 48
   overrides: []
 --- !u!1001 &1430701076
 Prefab:
@@ -5707,6 +5715,16 @@ Prefab:
     - target: {fileID: 4156311035964864, guid: 697bc5c04b3c544669f1e51d5b17bd4c, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 61999673916560152, guid: 697bc5c04b3c544669f1e51d5b17bd4c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61089229998997106, guid: 697bc5c04b3c544669f1e51d5b17bd4c,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 697bc5c04b3c544669f1e51d5b17bd4c, type: 2}
