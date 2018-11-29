@@ -24,6 +24,13 @@ public class CharacterController2D : MonoBehaviour
     private bool doubleJumped;
 
 
+    [SerializeField] private bool dead;//
+
+    public void SetDead(bool value) {//
+        dead = value;//
+    }//
+
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -50,66 +57,69 @@ public class CharacterController2D : MonoBehaviour
 
     public void Move(float horizontal, bool jump, bool onLadder)
     {
-        //only control the player if grounded or airControl is turned on
-        if((m_Grounded || m_AirControl) && !onLadder)
-        {
-            // Move the character by finding the target velocity
-            Vector3 targetVelocity = Vector3.zero;
-            if(tongueJoint.enabled)
-                targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
-            else
-                targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
-
-            // And then smoothing it out and applying it to the character
-            m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
-
-            // If the input is moving the player right and the player is facing left...
-            if(horizontal > 0 && !m_FacingRight)
+        if(!dead){
+            
+            //only control the player if grounded or airControl is turned on
+            if ((m_Grounded || m_AirControl) && !onLadder)
             {
-                // ... flip the player.
-                Flip();
+                // Move the character by finding the target velocity
+                Vector3 targetVelocity = Vector3.zero;
+                if (tongueJoint.enabled)
+                    targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
+                else
+                    targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
+
+                // And then smoothing it out and applying it to the character
+                m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+
+                // If the input is moving the player right and the player is facing left...
+                if (horizontal > 0 && !m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
+                // Otherwise if the input is moving the player left and the player is facing right...
+                else if (horizontal < 0 && m_FacingRight)
+                {
+                    // ... flip the player.
+                    Flip();
+                }
             }
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if(horizontal < 0 && m_FacingRight)
-            {
-                // ... flip the player.
-                Flip();
+
+            if (onLadder)
+            {//
+
+                float speed = 5;
+
+                Vector2 direction = new Vector2(0, 0);
+                float yMovement = Input.GetAxis("Vertical");
+                float xMovement = Input.GetAxis("Horizontal");
+
+                if (yMovement != 0) { direction.y = yMovement; }
+                if (xMovement != 0) { direction.x = xMovement; }
+
+                transform.Translate(direction * (speed * Time.deltaTime));
+
+                if (Input.GetKey(KeyCode.W))
+                {
+
+                    m_Rigidbody2D.velocity = new Vector2(0, speed);
+                }
+                else if (Input.GetKey(KeyCode.S))
+                {
+
+                    m_Rigidbody2D.velocity = new Vector2(0, -speed);
+                }
+
+                else
+                {
+                    m_Rigidbody2D.velocity = new Vector2(0, 3 / 4);
+                }
             }
+
+            if (jump)
+                CheckAndJump();
         }
-
-        if(onLadder)
-        {//
-
-            float speed = 5;
-
-            Vector2 direction = new Vector2(0, 0);
-            float yMovement = Input.GetAxis("Vertical");
-            float xMovement = Input.GetAxis("Horizontal");
-
-            if(yMovement != 0) { direction.y = yMovement; }
-            if(xMovement != 0) { direction.x = xMovement; }
-
-            transform.Translate(direction * (speed * Time.deltaTime));
-
-            if(Input.GetKey(KeyCode.W))
-            {
-
-                m_Rigidbody2D.velocity = new Vector2(0, speed);
-            }
-            else if(Input.GetKey(KeyCode.S))
-            {
-
-                m_Rigidbody2D.velocity = new Vector2(0, -speed);
-            }
-
-            else
-            {
-                m_Rigidbody2D.velocity = new Vector2(0, 3 / 4);
-            }
-        }
-
-        if(jump)
-            CheckAndJump();
     }
 
     /// <summary>
