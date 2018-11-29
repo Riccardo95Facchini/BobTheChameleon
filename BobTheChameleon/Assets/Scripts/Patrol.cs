@@ -14,15 +14,22 @@ public class Patrol : MonoBehaviour
 
     private bool movingLeft = true;
     private bool charging;
+    public Animator animator;
 
     void Update()
     {
         float speed;
 
-        if(!charging)
+        if (!charging)
+        {
             speed = walkSpeed;
+            animator.SetBool("Attacking", false);
+        }
         else
+        {
             speed = chargeSpeed;
+            animator.SetBool("Attacking", true);
+        }
 
         transform.Translate(Vector2.left * speed * Time.deltaTime);
 
@@ -49,6 +56,7 @@ public class Patrol : MonoBehaviour
         {
             if(horizontalCheck.collider.tag == Names.Tags.Player.ToString())
                 charging = true;
+
         }
 
         if(verticalCheck.collider == false)
