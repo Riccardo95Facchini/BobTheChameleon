@@ -69,5 +69,5 @@ public class Patrol : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);
             movingLeft = true;
         }
-    }
+    }    
 }

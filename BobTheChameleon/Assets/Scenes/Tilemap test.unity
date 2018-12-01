@@ -672,6 +672,7 @@ MonoBehaviour:
   playerMovement: {fileID: 339744716}
   tongueJoint: {fileID: 339744714}
   mouth: {fileID: 1117079142}
+  off: 0
 --- !u!114 &339744718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +746,8 @@ MonoBehaviour:
   maxHealth: 1
   DeathPanel: {fileID: 693592513}
   characterControllerObject: {fileID: 339744712}
+  tongueRendererObject: {fileID: 339744712}
+  player: {fileID: 339744712}
 --- !u!114 &339744722
 MonoBehaviour:
   m_ObjectHideFlags: 0

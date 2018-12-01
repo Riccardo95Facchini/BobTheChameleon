@@ -127,25 +127,27 @@ public class CharacterController2D : MonoBehaviour
     /// </summary>
     private void CheckAndJump()
     {
-        if(tongueJoint.enabled)
-            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+        if(!dead){
+            if (tongueJoint.enabled)
+                EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
 
-        if(m_Grounded)
-        {
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
+            if (m_Grounded)
+            {
+                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
+            }
+            else if (!doubleJumped)
+            {
+
+
+                m_Rigidbody2D.velocity = Vector3.zero;
+                m_Rigidbody2D.angularVelocity = 0;
+
+                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1));
+                doubleJumped = true;
+            }
+
+            m_Grounded = false;
         }
-        else if(!doubleJumped)
-        {
-
-
-            m_Rigidbody2D.velocity = Vector3.zero;
-            m_Rigidbody2D.angularVelocity = 0;
-
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1));
-            doubleJumped = true;
-        }
-
-        m_Grounded = false;
     }
 
 

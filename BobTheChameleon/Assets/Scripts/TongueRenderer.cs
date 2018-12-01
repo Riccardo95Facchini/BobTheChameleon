@@ -19,6 +19,8 @@ public class TongueRenderer : MonoBehaviour
     private bool drawn;
     private bool tongueAttached;
 
+    [SerializeField] public bool off;
+
     private Vector3 startPoint;
     private Vector3 endPoint;
 
@@ -26,6 +28,10 @@ public class TongueRenderer : MonoBehaviour
 
     public const float tongueMaxDistance = 10f;
     public const float tongueMinDistance = 0.5f;
+
+    public void SetOff(bool v) {
+        off = v;
+    }
 
     private void FixedUpdate()
     {
@@ -81,9 +87,11 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void DrawTongue()
     {
-        drawn = true;
-        tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
-        tongueRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 1f));
+        if(!off){
+            drawn = true;
+            tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
+            tongueRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 1f));
+        }
     }
 
     /// <summary>

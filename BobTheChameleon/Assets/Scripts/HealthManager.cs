@@ -8,6 +8,11 @@ public class HealthManager : MonoBehaviour {
     public int maxHealth;
     public GameObject DeathPanel;
     public GameObject characterControllerObject;
+    public GameObject tongueRendererObject;
+    public GameObject player;
+   
+
+    
     
     
 
@@ -33,7 +38,7 @@ public class HealthManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
+        checkFall();
     }
 
 
@@ -41,20 +46,37 @@ public class HealthManager : MonoBehaviour {
 
         Debug.Log("you're dead");
 
-
+        
         characterControllerObject.GetComponent<CharacterController2D>().SetDead(true);
-
+        tongueRendererObject.GetComponent<TongueRenderer>().SetOff(true);
+        
+        
+        
         DeathPanel.SetActive(true);
         Cursor.visible = true;
     }
 
     public void Respawn() {
 
+        
         Cursor.visible = false;
 
         DeathPanel.SetActive(false);
+
+
+        tongueRendererObject.GetComponent<TongueRenderer>().SetOff(false);
         characterControllerObject.GetComponent<CharacterController2D>().SetDead(false);
         health = maxHealth;
 
     }
+
+
+    private void checkFall() {
+
+        if (player.GetComponent<Transform>().position.y<-6) {
+            Die();
+        }
+
+    }
+    
 }
