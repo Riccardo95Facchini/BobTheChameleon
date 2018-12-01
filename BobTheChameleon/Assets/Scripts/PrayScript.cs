@@ -6,7 +6,7 @@ public class PrayScript : MonoBehaviour {
 
     bool goUp;
     public float speed = 1;
-    public int gain = 10;
+    public int gain = 10;       //it is the bonus which is given to bob if ests the pray
 
     // Use this for initialization
     void Start()

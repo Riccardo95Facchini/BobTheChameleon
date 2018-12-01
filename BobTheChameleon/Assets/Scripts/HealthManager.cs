@@ -63,7 +63,7 @@ public class HealthManager : MonoBehaviour {
 
         DeathPanel.SetActive(false);
 
-
+        player.GetComponent<Transform>().position = new Vector2(1,3);//in order to translate bob at the beginning of the level or at last checkpoint 
         tongueRendererObject.GetComponent<TongueRenderer>().SetOff(false);
         characterControllerObject.GetComponent<CharacterController2D>().SetDead(false);
         health = maxHealth;

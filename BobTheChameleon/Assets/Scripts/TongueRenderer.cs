@@ -174,12 +174,16 @@ public class TongueRenderer : MonoBehaviour
     /// </returns>
     private bool CorrectSide()
     {
-        if(endPoint.x >= startPoint.x && controller.getFacingRight())
-            return true;
-        else if(endPoint.x <= startPoint.x && !controller.getFacingRight())
-            return true;
+        if (!off)
+        {
+            if (endPoint.x >= startPoint.x && controller.getFacingRight())
+                return true;
+            else if (endPoint.x <= startPoint.x && !controller.getFacingRight())
+                return true;
 
-        return false;
+            return false;
+        }
+        else return true;
     }
 
     #region EventManager

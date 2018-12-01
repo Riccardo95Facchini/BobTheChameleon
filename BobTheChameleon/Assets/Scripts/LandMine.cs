@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeKillBob : MonoBehaviour {
+public class LandMine : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +16,7 @@ public class SpikeKillBob : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.GetComponent<HealthManager>().Die();
+        if (collision.gameObject.name.Equals("Player"))
+        { collision.GetComponent<HealthManager>().Die(); }
     }
 }
