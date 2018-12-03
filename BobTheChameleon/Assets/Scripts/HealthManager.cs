@@ -59,7 +59,7 @@ public class HealthManager : MonoBehaviour {
     public void Respawn() {
 
         
-        Cursor.visible = false;
+        //Cursor.visible = false;
 
         DeathPanel.SetActive(false);
 

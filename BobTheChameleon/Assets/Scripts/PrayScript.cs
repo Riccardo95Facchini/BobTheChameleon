@@ -49,7 +49,7 @@ public class PrayScript : MonoBehaviour {
 
 
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)  //in this way bob can eat bugs also colliding with them
     {
         if (collision.CompareTag("Player"))
         {

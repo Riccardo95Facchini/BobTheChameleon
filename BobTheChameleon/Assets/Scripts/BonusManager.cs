@@ -5,7 +5,7 @@ using UnityEngine;
 public class BonusManager : MonoBehaviour {
 
     public int bonus;
-    public int minBonus;
+    public int minBonus=0;
     
 
 
@@ -14,9 +14,12 @@ public class BonusManager : MonoBehaviour {
 
     public void Gain(int takenGain)
     {
-        
 
-        if (bonus < minBonus) { bonus= minBonus; }
+
+        if (bonus < minBonus) { bonus = minBonus; }
+        bonus = bonus + takenGain;
+
+        Debug.Log("bonus: " + bonus);
 
     }
 
