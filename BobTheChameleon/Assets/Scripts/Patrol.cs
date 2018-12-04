@@ -11,6 +11,7 @@ public class Patrol : MonoBehaviour
     private Enemy enemyData;
 
     public LayerMask whatIsPlayer;
+    public Animator animator;
 
     private float walkSpeed;
     private float chargeSpeed;
@@ -57,11 +58,13 @@ public class Patrol : MonoBehaviour
         if(!charging)
         {
             charging = IsPlayerInSight();
+            animator.SetBool("Attacking", false);
             return walkSpeed;
         }
         else
         {
             FollowPlayer();
+            animator.SetBool("Attacking", true);
             return chargeSpeed;
         }
     }
