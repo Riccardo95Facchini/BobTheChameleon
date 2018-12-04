@@ -2,27 +2,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public CharacterController2D controller;
-
-
-    public float runSpeed = 40f;
-    //private float climbSpeed = 20f;//climbSpeed=0.5*runSpeed;
+    [SerializeField]
+    private CharacterController2D controller;
+    [SerializeField]
+    private float runSpeed = 40f;
+    [SerializeField]
+    private float sprintModifier = 1.5f;
 
     float horizontalMove = 0f;
-    //float verticalMove = 0f;
     bool jump = false;
 
-    public bool isSwinging;
     private bool isOnLadder;
 
+    /* Not actually used at the moment
+    private bool isSwinging;
+
+    public bool IsSwinging
+    {
+        get { return isSwinging; }
+        set { isSwinging = value; }
+    }
+    */
 
     public void SetIsOnLadder(bool v)
     {
         isOnLadder = v;
     }
 
-    // Update is called once per frame
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -32,9 +38,9 @@ public class PlayerMovement : MonoBehaviour
             jump = true;
         }
         else if(Input.GetButtonDown("Sprint"))
-            runSpeed *= 1.5f;
+            runSpeed *= sprintModifier;
         else if(Input.GetButtonUp("Sprint"))
-            runSpeed /= 1.5f;
+            runSpeed /= sprintModifier;
     }
 
     void FixedUpdate()

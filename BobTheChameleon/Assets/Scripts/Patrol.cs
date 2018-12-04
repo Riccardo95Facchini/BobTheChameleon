@@ -1,18 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Patrol : MonoBehaviour
 {
-
-    [SerializeField]
-    private float walkSpeed;
-    [SerializeField]
-    private float chargeSpeed;
-    [SerializeField]
-    private float lineOfSight;
     [SerializeField]
     private Transform groundDetection;
+    [SerializeField]
+    private Transform playerDetection;
+    [SerializeField]
+    private Enemy enemyData;
 
     public LayerMask whatIsPlayer;
+
+    private float walkSpeed;
+    private float chargeSpeed;
+    private float lineOfSight;
 
     private bool movingLeft = true;
     private bool charging;
@@ -20,25 +22,48 @@ public class Patrol : MonoBehaviour
     private Vector2 rayDirection;
     private Transform player = null;
 
-    void Update()
+    //Caching values from the ScriptableObject
+    private void Awake()
     {
-        float speed;
+        walkSpeed = enemyData.walkSpeed;
+        chargeSpeed = enemyData.chargeSpeed;
+        lineOfSight = enemyData.lineOfSight;
+    }
 
-        HorizontalCheck();
-        VerticalCheck();
+    private void OnEnable()
+    {
+        StartCoroutine(StartPatrol());
+    }
 
+    private IEnumerator StartPatrol()
+    {
+        while(true)
+        {
+            HorizontalObstacleCheck();
+            VerticalGroundCheck();
+
+            //Movement using transform and speed taken from method
+            transform.Translate(Vector2.left * SpeedSet() * Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// If not charging checks if next frame it should, otherwise checks if player is behind
+    /// </summary>
+    /// <returns>walkSpeed when not charging, chargeSpeed when charging</returns>
+    private float SpeedSet()
+    {
         if(!charging)
         {
-            speed = walkSpeed;
-            charging = PlayerInSight();
+            charging = IsPlayerInSight();
+            return walkSpeed;
         }
         else
         {
-            speed = chargeSpeed;
             FollowPlayer();
+            return chargeSpeed;
         }
-
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
     }
 
     /// <summary>
@@ -46,7 +71,7 @@ public class Patrol : MonoBehaviour
     /// </summary>
     private void FollowPlayer()
     {
-        RaycastHit2D playerBehind = Physics2D.Raycast(transform.localPosition, -rayDirection, Mathf.Infinity, whatIsPlayer);
+        RaycastHit2D playerBehind = Physics2D.Raycast(playerDetection.position, -rayDirection, Mathf.Infinity, whatIsPlayer);
 
         if(playerBehind.collider != false)
             FlipSprite();
@@ -55,9 +80,9 @@ public class Patrol : MonoBehaviour
     /// <summary>
     /// Checks if the player is in line of sight, if so start charging
     /// </summary>
-    private bool PlayerInSight()
+    private bool IsPlayerInSight()
     {
-        RaycastHit2D playerInSight = Physics2D.Raycast(transform.localPosition, rayDirection, lineOfSight, whatIsPlayer);
+        RaycastHit2D playerInSight = Physics2D.Raycast(playerDetection.position, rayDirection, lineOfSight, whatIsPlayer);
 
         if(playerInSight.collider != false)
         {
@@ -71,7 +96,7 @@ public class Patrol : MonoBehaviour
     /// <summary>
     /// Checks if the enemy is about to fall from a platform and flips it if so
     /// </summary>
-    private void VerticalCheck()
+    private void VerticalGroundCheck()
     {
         RaycastHit2D verticalCheck = Physics2D.Raycast(groundDetection.position, Vector2.down, 0.5f);
 
@@ -85,12 +110,9 @@ public class Patrol : MonoBehaviour
     /// <summary>
     /// Checks if the enemy is about to bump into an obstacle and flips it if so
     /// </summary>
-    private void HorizontalCheck()
+    private void HorizontalObstacleCheck()
     {
-        if(movingLeft)
-            rayDirection = Vector2.left;
-        else
-            rayDirection = Vector2.right;
+        rayDirection = movingLeft ? Vector2.left : Vector2.right;
 
         RaycastHit2D horizontalCheck = Physics2D.Raycast(groundDetection.position, rayDirection, 0.2f);
 
@@ -104,19 +126,16 @@ public class Patrol : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Turns the sprite 180 degrees on itself and changes the movingLeft boolean
+    /// </summary>
     private void FlipSprite()
     {
-        //charging = PlayerInSight();
-
         if(movingLeft)
-        {
             transform.eulerAngles = new Vector3(0, -180, 0);
-            movingLeft = false;
-        }
         else
-        {
             transform.eulerAngles = new Vector3(0, 0, 0);
-            movingLeft = true;
-        }
+
+        movingLeft = !movingLeft;
     }
 }
