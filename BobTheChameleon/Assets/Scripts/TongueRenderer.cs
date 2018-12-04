@@ -9,8 +9,6 @@ public class TongueRenderer : MonoBehaviour
     [SerializeField]
     private const float climbSpeed = 3f;
     [SerializeField]
-    private PlayerMovement playerMovement;
-    [SerializeField]
     private DistanceJoint2D tongueJoint;
     [SerializeField]
     private GameObject mouth;
@@ -34,13 +32,8 @@ public class TongueRenderer : MonoBehaviour
             SetStartPosition();
             tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
 
-            if(!tongueAttached)
+            if(tongueAttached)
             {
-                playerMovement.isSwinging = false;
-            }
-            else
-            {
-                playerMovement.isSwinging = true;
                 tongueJoint.anchor = mouth.transform.localPosition;
                 tongueJoint.enabled = !controller.getGrounded();
 
