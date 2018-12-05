@@ -1,7 +1,7 @@
 ﻿public static class Names
 {
 
-    public enum Layers { Player, Anchor };
-    public enum Tags { Player, Anchor };
-    public enum Events { TongueOut, TongueIn, PlayerHit };
+    public enum Layers { Player, Anchor, Default, Enemy };
+    public enum Tags { Player, Anchor, Ground, Enemy };
+    public enum Events { TongueOut, TongueIn, PlayerHit, PlayerDead, Respawn };
 }

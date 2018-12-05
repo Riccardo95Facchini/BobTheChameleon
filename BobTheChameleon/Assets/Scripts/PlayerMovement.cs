@@ -2,20 +2,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public CharacterController2D controller;
-
 
     public float runSpeed = 40f;
     //private float climbSpeed = 20f;//climbSpeed=0.5*runSpeed;
 
-    float horizontalMove = 0f;
-    //float verticalMove = 0f;
-    bool jump = false;
+    private bool jump;
+    private bool isPlayerDead;
 
+    [SerializeField]
+    public bool isOnLadder;
     public bool isSwinging;
-    [SerializeField] public bool isOnLadder;
 
+    private void Awake()
+    {
+        jump = false;
+        isPlayerDead = false;
+        isOnLadder = false;
+        isSwinging = false;
+        EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
+    }
 
     public void SetIsOnLadder(bool v)
     {
@@ -25,8 +31,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
         if(Input.GetButtonDown("Jump"))
         {
             jump = true;
@@ -39,8 +43,26 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
-        jump = false;
+        if(!isPlayerDead)
+        {
+            var horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+
+            // Move our character
+            controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
+            jump = false;
+        }
     }
+
+    #region EventManager
+    private void PlayerDead()
+    {
+        isPlayerDead = true;
+        EventManager.StartListening(Names.Events.Respawn, Respawn);
+    }
+    private void Respawn()
+    {
+        isPlayerDead = false;
+        EventManager.StopListening(Names.Events.Respawn, Respawn);
+    }
+    #endregion
 }

@@ -19,8 +19,6 @@ public class TongueRenderer : MonoBehaviour
     private bool drawn;
     private bool tongueAttached;
 
-    [SerializeField] public bool off;
-
     private Vector3 startPoint;
     private Vector3 endPoint;
 
@@ -28,10 +26,6 @@ public class TongueRenderer : MonoBehaviour
 
     public const float tongueMaxDistance = 10f;
     public const float tongueMinDistance = 0.5f;
-
-    public void SetOff(bool v) {
-        off = v;
-    }
 
     private void FixedUpdate()
     {
@@ -87,11 +81,9 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void DrawTongue()
     {
-        if(!off){
-            drawn = true;
-            tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
-            tongueRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 1f));
-        }
+        drawn = true;
+        tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
+        tongueRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 1f));
     }
 
     /// <summary>
@@ -174,16 +166,12 @@ public class TongueRenderer : MonoBehaviour
     /// </returns>
     private bool CorrectSide()
     {
-        if (!off)
-        {
-            if (endPoint.x >= startPoint.x && controller.getFacingRight())
-                return true;
-            else if (endPoint.x <= startPoint.x && !controller.getFacingRight())
-                return true;
+        if(endPoint.x >= startPoint.x && controller.getFacingRight())
+            return true;
+        else if(endPoint.x <= startPoint.x && !controller.getFacingRight())
+            return true;
 
-            return false;
-        }
-        else return true;
+        return false;
     }
 
     #region EventManager
@@ -191,14 +179,14 @@ public class TongueRenderer : MonoBehaviour
     {
         drawn = false;
         tongueAttached = false;
-        EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
+        EventManager.StartListening(Names.Events.TongueOut, TongueOut);
     }
 
     private void TongueOut()
     {
         SetStartPosition();
         SetEndPosition();
-        EventManager.StopListening(Names.Events.TongueOut.ToString(), TongueOut);
+        EventManager.StopListening(Names.Events.TongueOut, TongueOut);
 
         if(!CorrectSide())
         {
@@ -208,7 +196,7 @@ public class TongueRenderer : MonoBehaviour
         if(CheckRaycast())
         {
             DrawTongue();
-            EventManager.StartListening(Names.Events.TongueIn.ToString(), TongueIn);
+            EventManager.StartListening(Names.Events.TongueIn, TongueIn);
         }
         else
         {
@@ -221,15 +209,15 @@ public class TongueRenderer : MonoBehaviour
         if(tongueAttached)
             Detach();
 
-        EventManager.StartListening(Names.Events.TongueOut.ToString(), TongueOut);
-        EventManager.StopListening(Names.Events.TongueIn.ToString(), TongueIn);
+        EventManager.StartListening(Names.Events.TongueOut, TongueOut);
+        EventManager.StopListening(Names.Events.TongueIn, TongueIn);
         tongueRenderer.SetPosition(1, tongueRenderer.GetPosition(0));
         drawn = false;
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening(Names.Events.TongueOut.ToString(), TongueOut);
+        EventManager.StopListening(Names.Events.TongueOut, TongueOut);
         drawn = false;
     }
     #endregion

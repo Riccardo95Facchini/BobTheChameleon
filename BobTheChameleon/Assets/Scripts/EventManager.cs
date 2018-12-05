@@ -38,10 +38,10 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public static void StartListening(string eventName, UnityAction listener)
+    public static void StartListening(Names.Events eventName, UnityAction listener)
     {
         UnityEvent thisEvent = null;
-        if(instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        if(instance.eventDictionary.TryGetValue(eventName.ToString(), out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
@@ -49,24 +49,24 @@ public class EventManager : MonoBehaviour
         {
             thisEvent = new UnityEvent();
             thisEvent.AddListener(listener);
-            instance.eventDictionary.Add(eventName, thisEvent);
+            instance.eventDictionary.Add(eventName.ToString(), thisEvent);
         }
     }
 
-    public static void StopListening(string eventName, UnityAction listener)
+    public static void StopListening(Names.Events eventName, UnityAction listener)
     {
         if(eventManager == null) return;
         UnityEvent thisEvent = null;
-        if(instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        if(instance.eventDictionary.TryGetValue(eventName.ToString(), out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
     }
 
-    public static void TriggerEvent(string eventName)
+    public static void TriggerEvent(Names.Events eventName)
     {
         UnityEvent thisEvent = null;
-        if(instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        if(instance.eventDictionary.TryGetValue(eventName.ToString(), out thisEvent))
         {
             thisEvent.Invoke();
         }

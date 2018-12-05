@@ -542,8 +542,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 339744718}
   runSpeed: 40
-  isSwinging: 0
   isOnLadder: 0
+  isSwinging: 0
 --- !u!114 &339744717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -562,7 +562,6 @@ MonoBehaviour:
   playerMovement: {fileID: 339744716}
   tongueJoint: {fileID: 339744714}
   mouth: {fileID: 1117079142}
-  off: 0
 --- !u!114 &339744718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,10 +633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   maxHealth: 1
-  DeathPanel: {fileID: 693592513}
-  characterControllerObject: {fileID: 339744712}
-  tongueRendererObject: {fileID: 339744712}
-  player: {fileID: 339744712}
+  player: {fileID: 339744720}
 --- !u!114 &339744722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -650,7 +646,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonus: 0
-  minBonus: 0
 --- !u!1001 &342728851
 Prefab:
   m_ObjectHideFlags: 0
@@ -706,7 +701,7 @@ GameObject:
   - component: {fileID: 382409125}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4989,25 +4984,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &511695849 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1748535700815530, guid: 75916520d11aeee43b3e04d0edf907b7,
-    type: 2}
-  m_PrefabInternal: {fileID: 525181559}
---- !u!114 &511695855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 511695849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e379c85dbe7f924da617923d8a17a0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  escapeSpeed: 6
-  radius: 5
-  player: {fileID: 339744712}
 --- !u!1001 &517850898
 Prefab:
   m_ObjectHideFlags: 0
@@ -5057,48 +5033,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 715bb362e9af3db41a55962ac05c789b, type: 2}
-  m_IsPrefabAsset: 0
---- !u!1001 &525181559
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -3.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 2.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4106250593498824, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 75916520d11aeee43b3e04d0edf907b7, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1001 &547367134
 Prefab:
@@ -5326,7 +5260,7 @@ RectTransform:
   m_Children:
   - {fileID: 693592514}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5491,6 +5425,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 61970544645382554, guid: 194ac784a5cbef6419a6fd400f4571c5,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194ac784a5cbef6419a6fd400f4571c5, type: 2}
   m_IsPrefabAsset: 0
@@ -5620,7 +5559,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.65625
+  orthographic size: 7.09375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5660,7 +5599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899996961a9d09c41bef035d71663b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referenceOrthographicSize: 1824
+  referenceOrthographicSize: 1080
   referencePixelsPerUnit: 32
   overrides: []
 --- !u!1 &1313431930 stripped
@@ -5679,31 +5618,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceec92f6da16ea44dbe1ef914e43d084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &1313431937
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1313431930}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.25, y: 1.5}
-    newSize: {x: 0.3125, y: 0.375}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.25, y: 1.5}
-  m_EdgeRadius: 0
 --- !u!1001 &1410485148
 Prefab:
   m_ObjectHideFlags: 0
@@ -5815,6 +5729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b7f8f791132ad499ac81aa64db5b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeathPanel: {fileID: 693592513}
 --- !u!4 &1457691943
 Transform:
   m_ObjectHideFlags: 0
@@ -6163,7 +6078,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1996722853
 Prefab:

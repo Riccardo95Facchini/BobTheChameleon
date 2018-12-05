@@ -1,82 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class HealthManager : MonoBehaviour {
-
+public class HealthManager : MonoBehaviour
+{
     public int health;
     public int maxHealth;
-    public GameObject DeathPanel;
-    public GameObject characterControllerObject;
-    public GameObject tongueRendererObject;
-    public GameObject player;
-   
+    public Transform player;
 
-    
-    
-    
-
-
-    public void Damage(int damageTaken)
-    {
-        if (health < 1)
-        {
-            Die();
-        }
-
-        if (health > maxHealth) { health = maxHealth; }
-
-    }
-
-    // Use this for initialization
-    void Start()
+    void Awake()
     {
         health = maxHealth;
-        DeathPanel.SetActive(false);
+        EventManager.StartListening(Names.Events.PlayerHit, PlayerHit);
     }
 
-    // Update is called once per frame
-    void Update()
+    void FiexedUpdate()
     {
-        checkFall();
+        CheckFall();
     }
 
-
-    public void Die() {
-
-        Debug.Log("you're dead");
-
-        
-        characterControllerObject.GetComponent<CharacterController2D>().SetDead(true);
-        tongueRendererObject.GetComponent<TongueRenderer>().SetOff(true);
-        
-        
-        
-        DeathPanel.SetActive(true);
-        Cursor.visible = true;
-    }
-
-    public void Respawn() {
-
-        
-        //Cursor.visible = false;
-
-        DeathPanel.SetActive(false);
-
-        player.GetComponent<Transform>().position = new Vector2(1,3);//in order to translate bob at the beginning of the level or at last checkpoint 
-        tongueRendererObject.GetComponent<TongueRenderer>().SetOff(false);
-        characterControllerObject.GetComponent<CharacterController2D>().SetDead(false);
+    public void Respawn()
+    {
+        // TODO: checkpoint system? 
+        EventManager.TriggerEvent(Names.Events.Respawn);
         health = maxHealth;
-
     }
 
-
-    private void checkFall() {
-
-        if (player.GetComponent<Transform>().position.y<-6) {
-            Die();
-        }
-
+    private void CheckFall()
+    {
+        if(player.position.y < -6)
+            EventManager.TriggerEvent(Names.Events.PlayerDead);
     }
-    
+
+    #region EventManager
+    private void PlayerHit()
+    {
+        health--;
+
+        if(health < 1)
+            EventManager.TriggerEvent(Names.Events.PlayerDead);
+
+        if(health > maxHealth)
+            health = maxHealth;
+    }
+    #endregion
+
 }

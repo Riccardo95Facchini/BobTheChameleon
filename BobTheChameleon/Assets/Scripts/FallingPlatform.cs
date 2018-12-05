@@ -1,25 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class FallingPlatform : MonoBehaviour {
+public class FallingPlatform : MonoBehaviour
+{
 
-    Rigidbody2D collidedObject;
+    [SerializeField]
+    private readonly float fallDelay;
 
-	// Use this for initialization
-	void Start () {
+    private Rigidbody2D collidedObject;
+
+    void Awake()
+    {
         collidedObject = GetComponent<Rigidbody2D>();
-	}
+    }
+
+    private void Update()
+    {
+        if(transform.position.y < -6f)
+            gameObject.SetActive(false);
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name.Equals ("Player")) {
-            Invoke("MakeDynamic", 1f);
-            Destroy(gameObject, 4f);
-        }
+        if(collision.collider.tag == Names.Tags.Player.ToString())
+            Invoke("MakeDynamic", fallDelay);
     }
 
-    void MakeDynamic() {
+    void MakeDynamic()
+    {
         collidedObject.isKinematic = false;
     }
 }

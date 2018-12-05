@@ -4,11 +4,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
 
+    [SerializeField]
+    private GameObject DeathPanel;
+
+    private bool isPlayerDead;
+
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
+            isPlayerDead = false;
+            EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -19,10 +26,28 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-            EventManager.TriggerEvent(Names.Events.TongueOut.ToString());
+        if(!isPlayerDead)
+        {
+            if(Input.GetKeyDown(KeyCode.Mouse0))
+                EventManager.TriggerEvent(Names.Events.TongueOut);
 
-        if(Input.GetKeyUp(KeyCode.Mouse0))
-            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+            if(Input.GetKeyUp(KeyCode.Mouse0))
+                EventManager.TriggerEvent(Names.Events.TongueIn);
+        }
     }
+
+    #region EventManager
+    private void PlayerDead()
+    {
+        isPlayerDead = true;
+        DeathPanel.SetActive(true);
+        EventManager.StartListening(Names.Events.Respawn, Respawn);
+    }
+    private void Respawn()
+    {
+        isPlayerDead = false;
+        DeathPanel.SetActive(false);
+        EventManager.StopListening(Names.Events.Respawn, Respawn);
+    }
+    #endregion
 }

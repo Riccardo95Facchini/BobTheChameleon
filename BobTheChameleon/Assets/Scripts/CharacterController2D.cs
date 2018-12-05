@@ -129,7 +129,7 @@ public class CharacterController2D : MonoBehaviour
     {
         if(!dead){
             if (tongueJoint.enabled)
-                EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+                EventManager.TriggerEvent(Names.Events.TongueIn);
 
             if (m_Grounded)
             {
@@ -157,7 +157,7 @@ public class CharacterController2D : MonoBehaviour
         m_FacingRight = !m_FacingRight;
 
         if(m_Grounded)
-            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+            EventManager.TriggerEvent(Names.Events.TongueIn);
 
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;

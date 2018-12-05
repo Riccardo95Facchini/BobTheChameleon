@@ -3,24 +3,44 @@
 public class FallingSpikes : MonoBehaviour
 {
 
-    Rigidbody2D spikes;
+    [SerializeField]
+    private BoxCollider2D trigger;
+    [SerializeField]
+    private BoxCollider2D boxCollider;
+    [SerializeField]
+    private readonly float fallDelay;
 
-    // Use this for initialization
-    void Start()
+    private Rigidbody2D spikes;
+
+    void Awake()
     {
         spikes = GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Update()
     {
-        if(collision.gameObject.name.Equals("Player"))
-            Invoke("MakeDynamic", 0f);
+        if(transform.position.y < -6f)
+            gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("u ded");
-        
+        if(collision.collider.tag == Names.Tags.Player.ToString())
+        {
+            EventManager.TriggerEvent(Names.Events.PlayerHit);
+            boxCollider.enabled = false;
+        }
+        else if(collision.collider.tag == Names.Tags.Ground.ToString())
+            boxCollider.enabled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == Names.Tags.Player.ToString())
+        {
+            trigger.enabled = false;
+            Invoke("MakeDynamic", fallDelay);
+        }
     }
 
     void MakeDynamic()
