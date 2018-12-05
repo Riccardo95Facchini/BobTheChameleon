@@ -12,7 +12,7 @@ public class HealthManager : MonoBehaviour
         EventManager.StartListening(Names.Events.PlayerHit, PlayerHit);
     }
 
-    void FiexedUpdate()
+    void Update()
     {
         CheckFall();
     }

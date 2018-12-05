@@ -5729,6 +5729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b7f8f791132ad499ac81aa64db5b4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 339744712}
   DeathPanel: {fileID: 693592513}
 --- !u!4 &1457691943
 Transform:

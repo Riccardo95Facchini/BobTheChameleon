@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     [SerializeField]
+    private GameObject player;
+    [SerializeField]
     private GameObject DeathPanel;
 
     private bool isPlayerDead;
@@ -41,12 +43,14 @@ public class GameManager : MonoBehaviour
     {
         isPlayerDead = true;
         DeathPanel.SetActive(true);
+        player.SetActive(false);
         EventManager.StartListening(Names.Events.Respawn, Respawn);
     }
     private void Respawn()
     {
         isPlayerDead = false;
         DeathPanel.SetActive(false);
+        player.SetActive(true);
         EventManager.StopListening(Names.Events.Respawn, Respawn);
     }
     #endregion
