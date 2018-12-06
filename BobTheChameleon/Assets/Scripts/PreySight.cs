@@ -11,15 +11,19 @@ public class PreySight : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.tag == Names.Tags.Player.ToString())
+        if(preyPatrol.IsCaught())
+        {
+            gameObject.SetActive(false);
+        }
+        else if(collision.tag == Names.Tags.Player.ToString())
         {
             if(playerPosition == null)
                 playerPosition = collision.transform;
 
             if(IsPlayerInSight())
             {
-                preyPatrol.StartFlee();     //Calls method to start fleeing
-                gameObject.SetActive(false);//Disables trigger that serves no purpose now
+                preyPatrol.StartFlee(collision.transform);     //Calls method to start fleeing
+                gameObject.SetActive(false);                   //Disables trigger that serves no purpose now
             }
         }
     }
@@ -34,7 +38,7 @@ public class PreySight : MonoBehaviour
                     (playerPosition.position - transform.position).normalized,
                     Vector2.Distance(transform.position, playerPosition.position), WhatIsObstacleAndPlayer);
 
-        if(hit.collider.tag == Names.Tags.Player.ToString())
+        if(hit.collider != null && hit.collider.tag == Names.Tags.Player.ToString())
             return true;
         else
             return false;

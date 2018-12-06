@@ -130,9 +130,9 @@ GameObject:
   - component: {fileID: 106609767}
   - component: {fileID: 106609766}
   - component: {fileID: 106609764}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Prey
-  m_TagString: Untagged
+  m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,7 +212,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 106609762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 2, z: 0}
+  m_LocalPosition: {x: -3.94, y: 2, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 509168569}
@@ -659,7 +659,7 @@ MonoBehaviour:
   tongueRenderer: {fileID: 339744713}
   tongueLayerMask:
     serializedVersion: 2
-    m_Bits: 529
+    m_Bits: 1553
   playerMovement: {fileID: 339744716}
   tongueJoint: {fileID: 339744714}
   mouth: {fileID: 1117079142}
@@ -785,6 +785,10 @@ Prefab:
     - target: {fileID: 4805152593525018, guid: 4accde88163197e4a8997a071ba85d32, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1310434958390498, guid: 4accde88163197e4a8997a071ba85d32, type: 2}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4accde88163197e4a8997a071ba85d32, type: 2}
@@ -5144,7 +5148,7 @@ MonoBehaviour:
   preyPatrol: {fileID: 106609764}
   WhatIsObstacleAndPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 257
 --- !u!1001 &517850898
 Prefab:
   m_ObjectHideFlags: 0
@@ -5591,6 +5595,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1565719966792826, guid: 194ac784a5cbef6419a6fd400f4571c5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194ac784a5cbef6419a6fd400f4571c5, type: 2}
   m_IsPrefabAsset: 0
@@ -5664,7 +5672,7 @@ GameObject:
   - component: {fileID: 1299014067}
   - component: {fileID: 1299014071}
   - component: {fileID: 1299014068}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -5692,10 +5700,10 @@ MonoBehaviour:
   target: {fileID: 339744720}
   speed: 160
   cameraDepth: -10
-  minX: -19
+  minX: -15
   minY: -1
   maxX: 30
-  maxY: 100
+  maxY: 30
 --- !u!20 &1299014069
 Camera:
   m_ObjectHideFlags: 0
@@ -5720,7 +5728,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.59375
+  orthographic size: 7.09375
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

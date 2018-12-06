@@ -2,7 +2,7 @@
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance { get; private set; }
+    public static GameManager Instance { get; private set; }
 
     [SerializeField]
     private GameObject player;
@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
             isPlayerDead = false;
             EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
             DontDestroyOnLoad(gameObject);
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         isPlayerDead = true;
         DeathPanel.SetActive(true);
         player.SetActive(false);
+        EventManager.TriggerEvent(Names.Events.TongueIn);   //Useful if player dies while swinging
         EventManager.StartListening(Names.Events.Respawn, Respawn);
     }
     private void Respawn()

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class TongueRenderer : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class TongueRenderer : MonoBehaviour
     [SerializeField]
     private GameObject mouth;
 
-    //Booleans
     private bool drawn;
     private bool tongueAttached;
 
@@ -24,12 +24,18 @@ public class TongueRenderer : MonoBehaviour
 
     private CharacterController2D controller;
 
-    public const float tongueMaxDistance = 10f;
-    public const float tongueMinDistance = 0.5f;
+    private GameObject caughtPrey = null;
 
-    private void FixedUpdate()
+    public readonly float tongueMaxDistance = 10f;
+    public readonly float tongueMinDistance = 0.5f;
+
+    /// <summary>
+    /// Starts when the tongue is drawn and loops until it isn't anymore
+    /// </summary>
+    /// <returns>null</returns>
+    private IEnumerator Drawn()
     {
-        if(drawn)
+        while(drawn)
         {
             SetStartPosition();
             tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
@@ -40,16 +46,37 @@ public class TongueRenderer : MonoBehaviour
             }
             else
             {
-                playerMovement.isSwinging = true;
-                tongueJoint.anchor = mouth.transform.localPosition;
-                tongueJoint.enabled = !controller.getGrounded();
-
-                if(tongueJoint.enabled)
-                    tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
-
-                HandleTongueLength();
+                if(caughtPrey == null)
+                    HandleAnchor();
+                else
+                    HandlePrey();
             }
+            yield return null;
         }
+    }
+
+    private void HandlePrey()
+    {
+        if(caughtPrey.activeSelf)
+            tongueRenderer.SetPosition(1, caughtPrey.transform.position);
+        else
+        {
+            TongueIn();
+            caughtPrey = null;
+        }
+
+    }
+
+    private void HandleAnchor()
+    {
+        playerMovement.isSwinging = true;
+        tongueJoint.anchor = mouth.transform.localPosition;
+        tongueJoint.enabled = !controller.getGrounded();
+
+        if(!tongueJoint.enabled)
+            tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
+
+        HandleTongueLength();
     }
 
     /// <summary>
@@ -59,11 +86,11 @@ public class TongueRenderer : MonoBehaviour
     {
         if(Input.GetAxis("Vertical") > 0f && tongueAttached && tongueJoint.distance > tongueMinDistance)
         {
-            tongueJoint.distance -= Time.deltaTime * climbSpeed;
+            tongueJoint.distance -= Time.fixedDeltaTime * climbSpeed;
         }
         else if(Input.GetAxis("Vertical") < 0f && tongueAttached && tongueJoint.distance < tongueMaxDistance)
         {
-            tongueJoint.distance += Time.deltaTime * climbSpeed;
+            tongueJoint.distance += Time.fixedDeltaTime * climbSpeed;
         }
     }
 
@@ -84,6 +111,7 @@ public class TongueRenderer : MonoBehaviour
         drawn = true;
         tongueRenderer.SetPosition(0, new Vector3(startPoint.x, startPoint.y, 1f));
         tongueRenderer.SetPosition(1, new Vector3(endPoint.x, endPoint.y, 1f));
+        StartCoroutine(Drawn());
     }
 
     /// <summary>
@@ -113,25 +141,33 @@ public class TongueRenderer : MonoBehaviour
     /// </returns>
     private bool CheckRaycast()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(startPoint, (endPoint - startPoint), tongueMaxDistance, tongueLayerMask);
-        Debug.DrawLine(startPoint, endPoint, Color.green, 5);
+        RaycastHit2D hit = Physics2D.Raycast(startPoint, (endPoint - startPoint), tongueMaxDistance, tongueLayerMask);
 
-        if(hits.Length > 0)
+        if(hit.collider != null)
         {
-            if(hits[0].collider.tag == Names.Layers.Anchor.ToString())
+            if(hit.collider.tag == Names.Tags.Anchor.ToString())
             {
-                endPoint = hits[0].transform.position;
+                endPoint = hit.transform.position;
                 Attach();
+                return true;
+            }
+            else if(hit.collider.tag == Names.Tags.Prey.ToString())
+            {
+                caughtPrey = hit.collider.gameObject;
+                hit.collider.GetComponent<PreyPatrol>().Caught(mouth.transform);
+                tongueAttached = true;
                 return true;
             }
             else
             {
                 // Instead of connecting to the center it snaps to the collision point.
-                endPoint = hits[0].point;
+                endPoint = hit.point;
             }
         }
         else
+        {
             endPoint = startPoint + ((endPoint - startPoint).normalized * tongueMaxDistance);
+        }
 
         return false;
     }
@@ -145,7 +181,6 @@ public class TongueRenderer : MonoBehaviour
         tongueJoint.anchor = startPoint;
         tongueJoint.connectedAnchor = endPoint;
         tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
-        //tongueJoint.enabled = true;
     }
 
     /// <summary>
