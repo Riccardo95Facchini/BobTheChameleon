@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 50770978934764696}
   - component: {fileID: 61115360735846604}
   - component: {fileID: 114930823256428794}
+  - component: {fileID: 114060714370586742}
   - component: {fileID: 95155032779687864}
   m_Layer: 10
   m_Name: Snake
@@ -81,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1469652020367606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.69, y: -4.6, z: 0}
+  m_LocalPosition: {x: -1.73, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4567271130147752}
@@ -165,6 +166,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114060714370586742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1469652020367606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceec92f6da16ea44dbe1ef914e43d084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114930823256428794
 MonoBehaviour:
   m_ObjectHideFlags: 1

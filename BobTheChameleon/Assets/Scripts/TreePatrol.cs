@@ -111,12 +111,21 @@ public class TreePatrol : MonoBehaviour
         }
         else
         {
-            Transform startPosition = isLookingLeft ? leftPosition.transform : rightPosition.transform;
-            StopCoroutine(currentCoroutine);
-            currentCoroutine = GoBackToTree(startPosition);
-            StartCoroutine(currentCoroutine);
+            SetBackToTree();
             return false;
         }
+    }
+
+    /// <summary>
+    /// Sets the values for going back to the tree
+    /// </summary>
+    private void SetBackToTree()
+    {
+        playerPosition = null;
+        Transform startPosition = isLookingLeft ? leftPosition.transform : rightPosition.transform;
+        StopCoroutine(currentCoroutine);
+        currentCoroutine = GoBackToTree(startPosition);
+        StartCoroutine(currentCoroutine);
     }
 
     //Trigger for the collision when following
@@ -127,6 +136,7 @@ public class TreePatrol : MonoBehaviour
             if(collision.tag == Names.Tags.Player.ToString())
             {
                 EventManager.TriggerEvent(Names.Events.PlayerHit);
+                SetBackToTree();
             }
         }
     }

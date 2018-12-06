@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
         if(Instance == null)
         {
             Instance = this;
             isPlayerDead = false;
-            EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
         isPlayerDead = true;
         DeathPanel.SetActive(true);
         player.SetActive(false);
-        EventManager.TriggerEvent(Names.Events.TongueIn);   //Useful if player dies while swinging
         EventManager.StartListening(Names.Events.Respawn, Respawn);
+        EventManager.TriggerEvent(Names.Events.TongueIn);   //Useful if player dies while swinging
     }
     private void Respawn()
     {
