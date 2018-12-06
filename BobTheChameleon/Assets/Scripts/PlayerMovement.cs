@@ -33,20 +33,29 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        if(Input.GetButtonDown("Jump"))
+
+        if (Input.GetButtonDown("Jump"))
         {
             jump = true;
         }
-        else if(Input.GetButtonDown("Sprint"))
+        else if (Input.GetButtonDown("Sprint"))
+        {
             runSpeed *= sprintModifier;
-        else if(Input.GetButtonUp("Sprint"))
+            
+            
+        }
+        else if (Input.GetButtonUp("Sprint"))
             runSpeed /= sprintModifier;
     }
 
     void FixedUpdate()
     {
+
+        
         // Move our character
         controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
+        
+       
         jump = false;
     }
 }

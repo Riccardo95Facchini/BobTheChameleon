@@ -22,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 velocity = Vector3.zero;
     private bool doubleJumped;
+    public AudioManager audioManager;
 
 
     private void Awake()
@@ -53,6 +54,18 @@ public class CharacterController2D : MonoBehaviour
         //only control the player if grounded or airControl is turned on
         if((m_Grounded || m_AirControl) && !onLadder)
         {
+            // Play stepping sound if the playing is walking on the floor
+
+            if (horizontal != 0f && (m_Grounded))
+            {
+                if (!audioManager.IsPlaying("walk"))
+                audioManager.Play("walk");
+
+            }
+            if (horizontal == 0 || !m_Grounded) audioManager.Stop("walk");
+
+
+
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
             if(tongueJoint.enabled)
