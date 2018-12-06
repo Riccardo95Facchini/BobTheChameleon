@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Anchor
+  - Ground
+  - Prey
   - Enemy
   layers:
   - Default
@@ -19,6 +21,9 @@ TagManager:
   - Anchor
   - Enemy
   - Background
+  - Prey
+  - 
+  - 
   - 
   - 
   - 

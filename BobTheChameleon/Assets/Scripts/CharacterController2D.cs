@@ -48,7 +48,6 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-
     public void Move(float horizontal, bool jump, bool onLadder)
     {
         //only control the player if grounded or airControl is turned on
@@ -56,15 +55,13 @@ public class CharacterController2D : MonoBehaviour
         {
             // Play stepping sound if the playing is walking on the floor
 
-            if (horizontal != 0f && (m_Grounded))
+            if(horizontal != 0f && (m_Grounded))
             {
-                if (!audioManager.IsPlaying("walk"))
-                audioManager.Play("walk");
-
+                if(!audioManager.IsPlaying("walk"))
+                    audioManager.Play("walk");
             }
-            if (horizontal == 0 || !m_Grounded) audioManager.Stop("walk");
-
-
+            if(horizontal == 0 || !m_Grounded)
+                audioManager.Stop("walk");
 
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
@@ -123,7 +120,7 @@ public class CharacterController2D : MonoBehaviour
     private void CheckAndJump()
     {
         if(tongueJoint.enabled)
-            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+            EventManager.TriggerEvent(Names.Events.TongueIn);
 
         if(m_Grounded)
         {
@@ -137,7 +134,6 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1));
             doubleJumped = true;
         }
-
         m_Grounded = false;
     }
 
@@ -148,7 +144,7 @@ public class CharacterController2D : MonoBehaviour
         m_FacingRight = !m_FacingRight;
 
         if(m_Grounded)
-            EventManager.TriggerEvent(Names.Events.TongueIn.ToString());
+            EventManager.TriggerEvent(Names.Events.TongueIn);
 
         // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;

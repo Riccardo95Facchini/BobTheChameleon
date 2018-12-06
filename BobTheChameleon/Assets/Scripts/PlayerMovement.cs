@@ -9,20 +9,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float sprintModifier = 1.5f;
 
-    float horizontalMove = 0f;
     bool jump = false;
+    private bool isPlayerDead;
 
     private bool isOnLadder;
 
-    /* Not actually used at the moment
-    private bool isSwinging;
-
-    public bool IsSwinging
+    private void Awake()
     {
-        get { return isSwinging; }
-        set { isSwinging = value; }
+        jump = false;
+        isPlayerDead = false;
+        isOnLadder = false;
+        EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
     }
-    */
 
     public void SetIsOnLadder(bool v)
     {
@@ -31,18 +29,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-
-
-        if (Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump"))
         {
             jump = true;
         }
         else if (Input.GetButtonDown("Sprint"))
         {
             runSpeed *= sprintModifier;
-            
-            
         }
         else if (Input.GetButtonUp("Sprint"))
             runSpeed /= sprintModifier;
@@ -50,12 +43,26 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!isPlayerDead)
+        {
+            var horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        
-        // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
-        
-       
-        jump = false;
+            // Move our character
+            controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
+            jump = false;
+        }
     }
+
+    #region EventManager
+    private void PlayerDead()
+    {
+        isPlayerDead = true;
+        EventManager.StartListening(Names.Events.Respawn, Respawn);
+    }
+    private void Respawn()
+    {
+        isPlayerDead = false;
+        EventManager.StopListening(Names.Events.Respawn, Respawn);
+    }
+    #endregion
 }

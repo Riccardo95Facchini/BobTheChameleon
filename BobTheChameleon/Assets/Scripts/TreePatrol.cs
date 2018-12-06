@@ -126,7 +126,7 @@ public class TreePatrol : MonoBehaviour
         {
             if(collision.tag == Names.Tags.Player.ToString())
             {
-                EventManager.TriggerEvent(Names.Events.PlayerHit.ToString());
+                EventManager.TriggerEvent(Names.Events.PlayerHit);
             }
         }
     }
