@@ -112,9 +112,9 @@ public class PreyPatrol : MonoBehaviour
     /// If caught and collides with the player, it's eaten
     /// </summary>
     /// <param name="collision">What collided with the prey</param>
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.collider.tag == Names.Tags.Player.ToString())
+        if(collision.tag == Names.Tags.Player.ToString())
             isEaten = isCaught;
     }
 

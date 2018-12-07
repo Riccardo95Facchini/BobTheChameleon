@@ -3,18 +3,13 @@ using UnityEngine;
 
 public class TreePatrol : MonoBehaviour
 {
-    [SerializeField]
-    private Transform leftPosition;
-    [SerializeField]
-    private Transform rightPosition;
-    [SerializeField]
-    private Enemy enemyData;
-    [SerializeField]
-    private LayerMask WhatIsObstacleAndPlayer;
-    [SerializeField]
-    private CircleCollider2D sightTrigger;
-    [SerializeField]
-    private CircleCollider2D hitTrigger;
+    [SerializeField] private Transform leftPosition;
+    [SerializeField] private Transform rightPosition;
+    [SerializeField] private Enemy enemyData;
+    [SerializeField] private LayerMask WhatIsObstacleAndPlayer;
+    [SerializeField] private CircleCollider2D sightTrigger;
+    [SerializeField] private CircleCollider2D hitTrigger;
+    [SerializeField] private PlayerInLineOfSight sightCheck;
 
     private float flipInterval;
     private float chargeSpeed;
@@ -60,9 +55,7 @@ public class TreePatrol : MonoBehaviour
     /// <returns>null</returns>
     private IEnumerator FollowPlayer()
     {
-        sightTrigger.enabled = false;
-        hitTrigger.enabled = true;
-        while(PlayerInSight())
+        while(AttackCheck())
         {
             transform.position = Vector2.MoveTowards(transform.position, playerPosition.position, chargeSpeed * Time.deltaTime);
             yield return null;
@@ -81,24 +74,21 @@ public class TreePatrol : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.position, chargeSpeed * Time.deltaTime);
             yield return null;
         }
+        isOnTree = true;
         sightTrigger.enabled = true;
         hitTrigger.enabled = false;
-        isOnTree = true;
         currentCoroutine = ChangeSide();
         StartCoroutine(currentCoroutine);
         yield return null;
     }
 
     /// <summary>
-    /// If player in the collision, checks if is in sight and start coroutine to follow, otherwise go back to the tree.
+    /// Checks if the player is in sight and if needed moves from the tree to follow
     /// </summary>
-    private bool PlayerInSight()
+    /// <returns>True if in sight, false otherwise</returns>
+    private bool AttackCheck()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,
-                    (playerPosition.position - transform.position).normalized,
-                    Vector2.Distance(transform.position, playerPosition.position), WhatIsObstacleAndPlayer);
-
-        if(hit.collider.tag == Names.Tags.Player.ToString())
+        if(sightCheck.IsPlayerInSight(playerPosition.position, Vector2.Distance(transform.position, playerPosition.position)))
         {
             if(isOnTree)
             {
@@ -111,7 +101,8 @@ public class TreePatrol : MonoBehaviour
         }
         else
         {
-            SetBackToTree();
+            if(!isOnTree)
+                SetBackToTree();
             return false;
         }
     }
@@ -151,7 +142,10 @@ public class TreePatrol : MonoBehaviour
                 if(!playerPosition)
                     playerPosition = collision.transform;
 
-                PlayerInSight();
+                sightTrigger.enabled = false;
+                hitTrigger.enabled = true;
+
+                AttackCheck();
             }
         }
     }

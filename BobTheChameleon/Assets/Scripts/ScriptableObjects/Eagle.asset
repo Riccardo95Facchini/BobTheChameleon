@@ -14,5 +14,4 @@ MonoBehaviour:
   walkSpeed: 0
   chargeSpeed: 2
   lineOfSight: 0
-  flipInterval: 1.5
-  maxDistance: 0
+  flipInterval: 3

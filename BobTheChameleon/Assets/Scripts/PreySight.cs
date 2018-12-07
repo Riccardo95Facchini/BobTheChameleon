@@ -5,7 +5,7 @@ public class PreySight : MonoBehaviour
     [SerializeField]
     private PreyPatrol preyPatrol;
     [SerializeField]
-    private LayerMask WhatIsObstacleAndPlayer;
+    private PlayerInLineOfSight sightCheck;
 
     private Transform playerPosition = null;
 
@@ -20,27 +20,11 @@ public class PreySight : MonoBehaviour
             if(playerPosition == null)
                 playerPosition = collision.transform;
 
-            if(IsPlayerInSight())
+            if(sightCheck.IsPlayerInSight(playerPosition.position, Vector2.Distance(transform.position, playerPosition.position)))
             {
                 preyPatrol.StartFlee(collision.transform);     //Calls method to start fleeing
                 gameObject.SetActive(false);                   //Disables trigger that serves no purpose now
             }
         }
-    }
-
-    /// <summary>
-    /// If player in the collision, checks if it's in sight
-    /// </summary>
-    /// <returns>ture if player is in sight, false otherwise</returns>
-    private bool IsPlayerInSight()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,
-                    (playerPosition.position - transform.position).normalized,
-                    Vector2.Distance(transform.position, playerPosition.position), WhatIsObstacleAndPlayer);
-
-        if(hit.collider != null && hit.collider.tag == Names.Tags.Player.ToString())
-            return true;
-        else
-            return false;
     }
 }

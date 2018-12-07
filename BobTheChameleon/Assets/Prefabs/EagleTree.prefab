@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 4964452399846452}
   - component: {fileID: 212425571075858958}
   - component: {fileID: 114404083052324804}
+  - component: {fileID: 114460111800471020}
   - component: {fileID: 58767077883806870}
   - component: {fileID: 58920523559666256}
   m_Layer: 10
@@ -153,7 +154,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1391640936211850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.27, y: 1.8791567, z: 0}
+  m_LocalPosition: {x: 8.6, y: 1.93, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 4964452399846452}
@@ -259,6 +260,21 @@ MonoBehaviour:
     m_Bits: 769
   sightTrigger: {fileID: 58767077883806870}
   hitTrigger: {fileID: 58920523559666256}
+  sightCheck: {fileID: 114460111800471020}
+--- !u!114 &114460111800471020
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1944844328419252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206e3db275a0af34fbbcb5004f32441c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WhatIsObstacleAndPlayer:
+    serializedVersion: 2
+    m_Bits: 257
 --- !u!212 &212277574737828294
 SpriteRenderer:
   m_ObjectHideFlags: 1
