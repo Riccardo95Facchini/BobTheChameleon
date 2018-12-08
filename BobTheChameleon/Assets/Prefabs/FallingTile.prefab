@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50933945131013446}
   - component: {fileID: 114546235926079068}
   m_Layer: 0
-  m_Name: FallingPlatform
+  m_Name: FallingTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
