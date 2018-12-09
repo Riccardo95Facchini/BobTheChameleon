@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float sprintModifier = 1.5f;
 
+    public Animator animator;
+
     bool jump = false;
     private bool isPlayerDead;
 
@@ -49,6 +51,10 @@ public class PlayerMovement : MonoBehaviour
 
             // Move our character
             controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
+            if (horizontalMove != 0)
+                animator.SetBool("Moving", true);
+            else
+                animator.SetBool("Moving", false);
             jump = false;
         }
     }
