@@ -6,9 +6,6 @@ public class TreePatrol : MonoBehaviour
     [SerializeField] private Transform leftPosition;
     [SerializeField] private Transform rightPosition;
     [SerializeField] private Enemy enemyData;
-    [SerializeField] private LayerMask WhatIsObstacleAndPlayer;
-    [SerializeField] private CircleCollider2D sightTrigger;
-    [SerializeField] private CircleCollider2D hitTrigger;
     [SerializeField] private PlayerInLineOfSight sightCheck;
 
     private float flipInterval;
@@ -18,16 +15,13 @@ public class TreePatrol : MonoBehaviour
     private IEnumerator currentCoroutine;
 
     private bool isLookingLeft;
-    private bool isOnTree;
 
     void Awake()
     {
         flipInterval = enemyData.flipInterval;
         chargeSpeed = enemyData.chargeSpeed;
-
         playerPosition = null;
         isLookingLeft = true;
-        isOnTree = true;
     }
 
     private void OnEnable()
@@ -50,12 +44,12 @@ public class TreePatrol : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts following the player as long as it's in sight
+    /// Starts following the player, it can be stopped only by the sight script calling the stop
     /// </summary>
     /// <returns>null</returns>
     private IEnumerator FollowPlayer()
     {
-        while(AttackCheck())
+        while(true)
         {
             transform.position = Vector2.MoveTowards(transform.position, playerPosition.position, chargeSpeed * Time.deltaTime);
             yield return null;
@@ -67,44 +61,40 @@ public class TreePatrol : MonoBehaviour
     /// </summary>
     /// <param name="target">Position to reach</param>
     /// <returns>null</returns>
-    private IEnumerator GoBackToTree(Transform target)
+    private IEnumerator GoBackToTree(Vector3 target)
     {
-        while(transform.position != target.position)
+        if(isLookingLeft && transform.position.x < target.x)
+            FlipSprite();
+        else if(!isLookingLeft && transform.position.x > target.x)
+            FlipSprite();
+
+        while(transform.position != target)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.position, chargeSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, target, chargeSpeed * Time.deltaTime);
             yield return null;
         }
-        isOnTree = true;
-        sightTrigger.enabled = true;
-        hitTrigger.enabled = false;
         currentCoroutine = ChangeSide();
         StartCoroutine(currentCoroutine);
         yield return null;
     }
 
     /// <summary>
-    /// Checks if the player is in sight and if needed moves from the tree to follow
+    /// Called when the player is in sight
     /// </summary>
-    /// <returns>True if in sight, false otherwise</returns>
-    private bool AttackCheck()
+    public void StartAttack(Transform playerPosition)
     {
-        if(sightCheck.IsPlayerInSight(playerPosition.position, Vector2.Distance(transform.position, playerPosition.position)))
-        {
-            if(isOnTree)
-            {
-                StopCoroutine(currentCoroutine);
-                isOnTree = false;
-                currentCoroutine = FollowPlayer();
-                StartCoroutine(currentCoroutine);
-            }
-            return true;
-        }
-        else
-        {
-            if(!isOnTree)
-                SetBackToTree();
-            return false;
-        }
+        this.playerPosition = playerPosition;
+        StopCoroutine(currentCoroutine);
+        currentCoroutine = FollowPlayer();
+        StartCoroutine(currentCoroutine);
+    }
+
+    /// <summary>
+    /// Used to call SetBackToTree without exposing it
+    /// </summary>
+    public void StopAttack()
+    {
+        SetBackToTree();
     }
 
     /// <summary>
@@ -113,40 +103,19 @@ public class TreePatrol : MonoBehaviour
     private void SetBackToTree()
     {
         playerPosition = null;
-        Transform startPosition = isLookingLeft ? leftPosition.transform : rightPosition.transform;
+        Vector3 startPosition = isLookingLeft ? leftPosition.transform.position : rightPosition.transform.position;
         StopCoroutine(currentCoroutine);
         currentCoroutine = GoBackToTree(startPosition);
         StartCoroutine(currentCoroutine);
     }
 
-    //Trigger for the collision when following
-    private void OnTriggerEnter2D(Collider2D collision)
+    //On collision with the player, call PlayerHit and go back to the tree
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(!isOnTree)
+        if(collision.transform.tag == Names.Tags.Player.ToString())
         {
-            if(collision.tag == Names.Tags.Player.ToString())
-            {
-                EventManager.TriggerEvent(Names.Events.PlayerHit);
-                SetBackToTree();
-            }
-        }
-    }
-
-    //Trigger for the line of sight
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(isOnTree)
-        {
-            if(collision.tag == Names.Tags.Player.ToString())
-            {
-                if(!playerPosition)
-                    playerPosition = collision.transform;
-
-                sightTrigger.enabled = false;
-                hitTrigger.enabled = true;
-
-                AttackCheck();
-            }
+            EventManager.TriggerEvent(Names.Events.PlayerHit);
+            SetBackToTree();
         }
     }
 

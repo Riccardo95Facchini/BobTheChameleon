@@ -11,22 +11,6 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1391640936211850}
   m_IsPrefabAsset: 1
---- !u!1 &1164556581538470
-GameObject:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4188199877500222}
-  - component: {fileID: 50044570405102776}
-  m_Layer: 0
-  m_Name: JointAnchor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1391640936211850
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,16 +57,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1754053195859890
+--- !u!1 &1833444697551328
 GameObject:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4295872221358604}
-  m_Layer: 0
-  m_Name: LookingPosition
+  - component: {fileID: 4210590916841504}
+  - component: {fileID: 58509985680861654}
+  - component: {fileID: 114162738161598324}
+  - component: {fileID: 114497215480417224}
+  m_Layer: 10
+  m_Name: EagleSight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +86,6 @@ GameObject:
   - component: {fileID: 212425571075858958}
   - component: {fileID: 114404083052324804}
   - component: {fileID: 114460111800471020}
-  - component: {fileID: 58767077883806870}
   - component: {fileID: 58920523559666256}
   m_Layer: 10
   m_Name: Eagle
@@ -108,18 +94,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4188199877500222
+--- !u!4 &4210590916841504
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1164556581538470}
+  m_GameObject: {fileID: 1833444697551328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4964452399846452}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4220776183382552
 Transform:
@@ -133,19 +119,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4564743827353150}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4295872221358604
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1754053195859890}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: -3.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4964452399846452}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4564743827353150
 Transform:
@@ -186,37 +159,16 @@ Transform:
   m_LocalPosition: {x: -1.55, y: 0.26, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
-  - {fileID: 4295872221358604}
-  - {fileID: 4188199877500222}
+  - {fileID: 4210590916841504}
   m_Father: {fileID: 4564743827353150}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50044570405102776
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1164556581538470}
-  m_BodyType: 2
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &58767077883806870
+--- !u!58 &58509985680861654
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1944844328419252}
+  m_GameObject: {fileID: 1833444697551328}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -232,15 +184,28 @@ CircleCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944844328419252}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &114162738161598324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1833444697551328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5d87a09bbf92f4a80e2f6b268b9a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  birdPatrol: {fileID: 114404083052324804}
+  sightCheck: {fileID: 114497215480417224}
 --- !u!114 &114404083052324804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,11 +220,6 @@ MonoBehaviour:
   leftPosition: {fileID: 4220776183382552}
   rightPosition: {fileID: 4885776084162032}
   enemyData: {fileID: 11400000, guid: 4bb4a9606718be74db212b4e26eb4b29, type: 2}
-  WhatIsObstacleAndPlayer:
-    serializedVersion: 2
-    m_Bits: 769
-  sightTrigger: {fileID: 58767077883806870}
-  hitTrigger: {fileID: 58920523559666256}
   sightCheck: {fileID: 114460111800471020}
 --- !u!114 &114460111800471020
 MonoBehaviour:
@@ -267,6 +227,20 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944844328419252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206e3db275a0af34fbbcb5004f32441c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WhatIsObstacleAndPlayer:
+    serializedVersion: 2
+    m_Bits: 257
+--- !u!114 &114497215480417224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1833444697551328}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 206e3db275a0af34fbbcb5004f32441c, type: 3}

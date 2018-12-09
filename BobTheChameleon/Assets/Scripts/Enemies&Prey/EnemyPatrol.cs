@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Patrol : MonoBehaviour
+public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField]
     private Transform groundDetection;
@@ -9,6 +9,8 @@ public class Patrol : MonoBehaviour
     private Transform playerDetection;
     [SerializeField]
     private Enemy enemyData;
+    [SerializeField]
+    private PlayerInLineOfSight sightCheck;
 
     public LayerMask whatIsPlayer;
     public Animator animator;
@@ -77,7 +79,10 @@ public class Patrol : MonoBehaviour
         RaycastHit2D playerBehind = Physics2D.Raycast(playerDetection.position, -rayDirection, Mathf.Infinity, whatIsPlayer);
 
         if(playerBehind.collider != false)
+        {
             FlipSprite();
+            charging = IsPlayerInSight();
+        }
     }
 
     /// <summary>
@@ -85,12 +90,12 @@ public class Patrol : MonoBehaviour
     /// </summary>
     private bool IsPlayerInSight()
     {
-        RaycastHit2D playerInSight = Physics2D.Raycast(playerDetection.position, rayDirection, lineOfSight, whatIsPlayer);
+        RaycastHit2D hit = Physics2D.Raycast(playerDetection.position, rayDirection, lineOfSight, whatIsPlayer);
 
-        if(playerInSight.collider != false)
+        if(hit.collider != null && sightCheck.SpottedCheck(hit.collider))
         {
             if(player == null)
-                player = playerInSight.collider.transform;
+                player = hit.collider.transform;
             return true;
         }
         return false;
