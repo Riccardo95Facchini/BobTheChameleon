@@ -12,10 +12,12 @@ public class Patrol : MonoBehaviour
 
     public LayerMask whatIsPlayer;
     public Animator animator;
+    public AudioManager audioManager;
 
     private float walkSpeed;
     private float chargeSpeed;
     private float lineOfSight;
+    private string soundName;
 
     private bool movingLeft = true;
     private bool charging;
@@ -29,6 +31,7 @@ public class Patrol : MonoBehaviour
         walkSpeed = enemyData.walkSpeed;
         chargeSpeed = enemyData.chargeSpeed;
         lineOfSight = enemyData.lineOfSight;
+        soundName = enemyData.sound;
     }
 
     private void OnEnable()
@@ -65,6 +68,9 @@ public class Patrol : MonoBehaviour
         {
             FollowPlayer();
             animator.SetBool("Attacking", true);
+            if (!audioManager.IsPlaying(soundName))
+                audioManager.Play(soundName);
+
             return chargeSpeed;
         }
     }

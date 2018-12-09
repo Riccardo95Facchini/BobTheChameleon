@@ -15,7 +15,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private readonly GameObject mouth;
 
     const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
-    private bool m_Grounded;            // Whether or not the player is grounded.
+    private bool m_Grounded;            // Whether or not the player is grounded
     const float k_CeilingRadius = .1f; // Radius of the overlap circle to determine if the player can stand up
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
@@ -38,9 +38,9 @@ public class CharacterController2D : MonoBehaviour
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-        for(int i = 0; i < colliders.Length; i++)
+        for (int i = 0; i < colliders.Length; i++)
         {
-            if(colliders[i].gameObject != gameObject)
+            if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
                 doubleJumped = false;
@@ -55,13 +55,15 @@ public class CharacterController2D : MonoBehaviour
         {
             // Play stepping sound if the playing is walking on the floor
 
-            if(horizontal != 0f && (m_Grounded))
+
+            if (horizontal != 0f && (m_Grounded))
             {
-                if(!audioManager.IsPlaying("walk"))
+                if (!audioManager.IsPlaying("walk"))
                     audioManager.Play("walk");
             }
-            if(horizontal == 0 || !m_Grounded)
+            if (horizontal == 0 || !m_Grounded)
                 audioManager.Stop("walk");
+
 
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
@@ -125,6 +127,7 @@ public class CharacterController2D : MonoBehaviour
         if(m_Grounded)
         {
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
+            audioManager.Play("jump1");
         }
         else if(!doubleJumped)
         {
@@ -132,9 +135,11 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.angularVelocity = 0;
 
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1));
+            audioManager.Play("jump2");
             doubleJumped = true;
         }
         m_Grounded = false;
+        
     }
 
 

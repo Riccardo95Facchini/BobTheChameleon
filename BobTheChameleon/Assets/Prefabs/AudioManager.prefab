@@ -9,17 +9,17 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1150929608401428}
+  m_RootGameObject: {fileID: 1865730463630994}
   m_IsPrefabAsset: 1
---- !u!1 &1150929608401428
+--- !u!1 &1865730463630994
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4841439927693314}
-  - component: {fileID: 114882138081699538}
+  - component: {fileID: 4788896067017240}
+  - component: {fileID: 114884296346227200}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -27,12 +27,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4841439927693314
+--- !u!4 &4788896067017240
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1150929608401428}
+  m_GameObject: {fileID: 1865730463630994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,12 +40,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114882138081699538
+--- !u!114 &114884296346227200
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1150929608401428}
+  m_GameObject: {fileID: 1865730463630994}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4910de64faa554d41ae97b78c277b51e, type: 3}
@@ -53,27 +53,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: walk
-    clip: {fileID: 8300000, guid: 86c4f2c54df9a6048834cac6759846a9, type: 3}
+    clip: {fileID: 8300000, guid: f74eef7e41ff9264dba5f318e638bc30, type: 3}
     volume: 1
-    pitch: 1.04
+    pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Player jump
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: jump1
+    clip: {fileID: 8300000, guid: 81d4c1e473a686e4d8e316d715e19ea9, type: 3}
+    volume: 0.161
+    pitch: 0.54
     loop: 0
     source: {fileID: 0}
-  - name: Player death
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: jump2
+    clip: {fileID: 8300000, guid: 81d4c1e473a686e4d8e316d715e19ea9, type: 3}
+    volume: 0.153
+    pitch: 1.08
     loop: 0
     source: {fileID: 0}
-  - name: Snake moving
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
+  - name: snake
+    clip: {fileID: 8300000, guid: 8e994c594a87506448bfa6508b3a7726, type: 3}
+    volume: 1
+    pitch: 1.11
     loop: 0
     source: {fileID: 0}
   - name: Snake attacking
@@ -82,7 +82,7 @@ MonoBehaviour:
     pitch: 0
     loop: 0
     source: {fileID: 0}
-  - name: Bee
+  - name: wasp
     clip: {fileID: 0}
     volume: 0
     pitch: 0

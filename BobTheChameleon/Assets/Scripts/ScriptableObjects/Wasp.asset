@@ -14,3 +14,5 @@ MonoBehaviour:
   walkSpeed: 7
   chargeSpeed: 12
   lineOfSight: 4
+  flipInterval: 0
+  sound: wasp

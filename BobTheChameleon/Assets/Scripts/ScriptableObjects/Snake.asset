@@ -14,3 +14,5 @@ MonoBehaviour:
   walkSpeed: 5
   chargeSpeed: 10
   lineOfSight: 6
+  flipInterval: 0
+  sound: snake

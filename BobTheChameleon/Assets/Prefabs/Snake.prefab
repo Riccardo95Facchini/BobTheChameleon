@@ -195,6 +195,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   animator: {fileID: 95155032779687864}
+  audioManager: {fileID: 114729125207916832, guid: 9c3f7c538e8b3ef449d7e0d7392171a6,
+    type: 2}
 --- !u!212 &212888660466849070
 SpriteRenderer:
   m_ObjectHideFlags: 1
