@@ -15,7 +15,7 @@ public class FallingPlatform : MonoBehaviour
 
     private void Update()
     {
-        if(transform.position.y < -6f)
+        if(transform.position.y < -20f)
             gameObject.SetActive(false);
     }
 
