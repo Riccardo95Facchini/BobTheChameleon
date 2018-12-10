@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4554874836825594}
   - component: {fileID: 114163038816705204}
+  - component: {fileID: 114598329338527448}
   - component: {fileID: 58257592324725900}
   m_Layer: 2
   m_Name: PreySight
@@ -130,7 +131,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 9.12
 --- !u!70 &70500500784839958
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -140,7 +141,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -158,9 +159,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preyPatrol: {fileID: 114777531372693710}
+  sightCheck: {fileID: 114598329338527448}
+--- !u!114 &114598329338527448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1021148573563684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206e3db275a0af34fbbcb5004f32441c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   WhatIsObstacleAndPlayer:
     serializedVersion: 2
-    m_Bits: 273
+    m_Bits: 257
 --- !u!114 &114777531372693710
 MonoBehaviour:
   m_ObjectHideFlags: 1

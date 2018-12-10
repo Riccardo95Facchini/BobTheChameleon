@@ -20,29 +20,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4020181000550002}
   - component: {fileID: 212989473940322380}
-  - component: {fileID: 50684386733148112}
   - component: {fileID: 61640887185067246}
   - component: {fileID: 114191379905857974}
+  - component: {fileID: 114560302665265012}
   - component: {fileID: 114181279361488144}
   - component: {fileID: 95020723518387764}
   m_Layer: 10
   m_Name: Snake
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1369790676117448
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4844494946252768}
-  m_Layer: 0
-  m_Name: PlayerDetection
-  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,11 +54,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1077362912882172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.44, y: -8.92, z: 0}
+  m_LocalPosition: {x: 2.75, y: -0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4106414831995852}
-  - {fileID: 4844494946252768}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,45 +68,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1421486214128030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.671, y: -0.75, z: 0}
+  m_LocalPosition: {x: -0.671, y: -0.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4020181000550002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4844494946252768
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1369790676117448}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.631, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4020181000550002}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50684386733148112
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1077362912882172}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!61 &61640887185067246
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -132,7 +83,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -189,13 +140,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundDetection: {fileID: 4106414831995852}
-  playerDetection: {fileID: 4844494946252768}
   enemyData: {fileID: 11400000, guid: 7400e0c11db69184caf9d9cc948eac3d, type: 2}
+  sightCheck: {fileID: 114560302665265012}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1
   animator: {fileID: 95020723518387764}
-  audioManager: {fileID: 0}
+--- !u!114 &114560302665265012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1077362912882172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 206e3db275a0af34fbbcb5004f32441c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WhatIsObstacleAndPlayer:
+    serializedVersion: 2
+    m_Bits: 257
 --- !u!212 &212989473940322380
 SpriteRenderer:
   m_ObjectHideFlags: 1

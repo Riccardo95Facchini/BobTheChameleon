@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Prey
   - Enemy
+  - Environment
   layers:
   - Default
   - TransparentFX
@@ -41,10 +42,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3848528609
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

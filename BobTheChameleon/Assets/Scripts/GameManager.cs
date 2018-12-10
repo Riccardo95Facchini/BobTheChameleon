@@ -4,10 +4,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField]
-    private GameObject player;
-    [SerializeField]
-    private GameObject DeathPanel;
+    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject DeathPanel;
+    [SerializeField] private float slowMotionValue;
+
+    [SerializeField, Header("Note: Will be affeted by slowMotionValue"), Tooltip("If slowMotionValue = 0.5f, the effect duration will be double")]
+    private float slowMotionDuration;
 
     private bool isPlayerDead;
 
@@ -32,10 +34,26 @@ public class GameManager : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Mouse0))
                 EventManager.TriggerEvent(Names.Events.TongueOut);
-
-            if(Input.GetKeyUp(KeyCode.Mouse0))
+            else if(Input.GetKeyUp(KeyCode.Mouse0))
                 EventManager.TriggerEvent(Names.Events.TongueIn);
+
+            if(Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                Time.timeScale = slowMotionValue;
+                Invoke("CancelSlowMotion", slowMotionDuration);
+            }
+            else if(Input.GetKeyUp(KeyCode.Mouse1))
+            {
+                CancelInvoke();
+                Time.timeScale = 1f;
+            }
+
         }
+    }
+
+    private void CancelSlowMotion()
+    {
+        Time.timeScale = 1f;
     }
 
     #region EventManager
