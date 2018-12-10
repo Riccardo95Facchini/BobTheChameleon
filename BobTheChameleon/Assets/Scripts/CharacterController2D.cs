@@ -23,6 +23,7 @@ public class CharacterController2D : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private bool doubleJumped;
     public AudioManager audioManager;
+    public Animator animator;
 
 
     private void Awake()
@@ -63,6 +64,22 @@ public class CharacterController2D : MonoBehaviour
             }
             if (horizontal == 0 || !m_Grounded)
                 audioManager.Stop("walk");
+
+            if (!m_Grounded)
+            {
+                animator.SetBool("Jumping", true);
+            }
+            if (horizontal != 0 && m_Grounded)
+            {
+                animator.SetBool("Jumping", false);
+                animator.SetBool("Moving", true);
+            }
+
+            else if (m_Grounded)
+            {
+                animator.SetBool("Jumping", false);
+                animator.SetBool("Moving", false);
+            }
 
 
             // Move the character by finding the target velocity
