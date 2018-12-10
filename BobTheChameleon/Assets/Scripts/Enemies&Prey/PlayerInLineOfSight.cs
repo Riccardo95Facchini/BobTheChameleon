@@ -28,13 +28,10 @@ public class PlayerInLineOfSight : MonoBehaviour
                     distance, WhatIsObstacleAndPlayer);
 
         if(hit.collider != null && hit.collider.tag == Names.Tags.Player.ToString())
-        {
             SpottedCheck(hit.collider);
-        }
         else
-        {
             spottedBeforeCamouflage = false;
-        }
+
         return spottedBeforeCamouflage;
     }
 

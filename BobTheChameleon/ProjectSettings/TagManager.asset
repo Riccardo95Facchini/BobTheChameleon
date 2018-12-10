@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Prey
   - Enemy
+  - Environment
   layers:
   - Default
   - TransparentFX

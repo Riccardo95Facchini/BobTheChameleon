@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 114067126265989284}
   - component: {fileID: 114089539434949810}
   - component: {fileID: 114774262029961104}
+  - component: {fileID: 114120606303033170}
+  - component: {fileID: 114687852038203846}
   - component: {fileID: 70412079890072638}
   - component: {fileID: 232377035239648282}
   - component: {fileID: 212399114390164528}
@@ -86,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1001034318864632}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 3.19, z: 0}
+  m_LocalPosition: {x: -4.93, y: 4.06, z: 0}
   m_LocalScale: {x: 0.683, y: 1, z: 1}
   m_Children:
   - {fileID: 4488725513813532}
@@ -102,7 +104,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1522677007135776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.999, z: 0}
+  m_LocalPosition: {x: 0, y: -0.986, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4032623908578562}
@@ -151,7 +153,7 @@ Rigidbody2D:
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &70412079890072638
@@ -180,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a40e0000229c5439d81326fcd16537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 700
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
@@ -188,7 +189,7 @@ MonoBehaviour:
     m_Bits: 23
   m_GroundCheck: {fileID: 4446097606603912}
   m_CeilingCheck: {fileID: 4488725513813532}
-  mouth: {fileID: 1168666106581466}
+  audioManager: {fileID: 0}
 --- !u!114 &114089539434949810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,10 +204,38 @@ MonoBehaviour:
   tongueRenderer: {fileID: 120755266673303512}
   tongueLayerMask:
     serializedVersion: 2
-    m_Bits: 567
+    m_Bits: 4625
   playerMovement: {fileID: 114774262029961104}
-  tongueJoint: {fileID: 232377035239648282}
   mouth: {fileID: 1168666106581466}
+  climbSpeed: 3
+  tongueMaxDistance: 10
+  tongueMinDistance: 2
+--- !u!114 &114120606303033170
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1001034318864632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d177dee3158574fba8542ae10e76a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camouflageTime: 0
+--- !u!114 &114687852038203846
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1001034318864632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d31dc231055c1146ac89cf3cc2ba02b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  maxHealth: 1
+  player: {fileID: 4032623908578562}
 --- !u!114 &114774262029961104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,7 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 114067126265989284}
   runSpeed: 40
-  isSwinging: 0
+  sprintModifier: 1.5
 --- !u!120 &120755266673303512
 LineRenderer:
   m_ObjectHideFlags: 1

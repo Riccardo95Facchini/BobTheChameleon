@@ -10,11 +10,13 @@ public class Camouflage : MonoBehaviour
 
     private bool isCamouflaged;
     private bool startedCamouflage;
+    private bool canCamouflage;
 
     private void OnEnable()
     {
         isCamouflaged = false;
         startedCamouflage = false;
+        canCamouflage = false;
     }
 
     void FixedUpdate()
@@ -22,7 +24,7 @@ public class Camouflage : MonoBehaviour
         //If C is pressed and isn't camouflaged
         if(Input.GetKey(KeyCode.C))
         {
-            if(!startedCamouflage) //If the animation isn't already running
+            if(!startedCamouflage && canCamouflage) //If the animation isn't already running
             {
                 startedCamouflage = true;
                 Invoke("FinishCamouflage", camouflageTime);
@@ -43,6 +45,15 @@ public class Camouflage : MonoBehaviour
     private void FinishCamouflage()
     {
         isCamouflaged = true;
+    }
+
+    /// <summary>
+    /// Used to enable camouflage only where it's allowed or disable it
+    /// </summary>
+    /// <param name="value">True if player is in a place where it can camouflage</param>
+    public void SetCamouflageFlag(bool value)
+    {
+        canCamouflage = value;
     }
 
     public bool IsCamouflaged()

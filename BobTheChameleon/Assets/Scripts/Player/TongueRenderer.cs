@@ -1,20 +1,16 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class TongueRenderer : MonoBehaviour
 {
-    [SerializeField]
-    private LineRenderer tongueRenderer;
-    [SerializeField]
-    private LayerMask tongueLayerMask;
-    [SerializeField]
-    private const float climbSpeed = 3f;
-    [SerializeField]
-    private PlayerMovement playerMovement;
-    [SerializeField]
-    private DistanceJoint2D tongueJoint;
-    [SerializeField]
-    private GameObject mouth;
+    [SerializeField] private LineRenderer tongueRenderer;
+    [SerializeField] private LayerMask tongueLayerMask;
+    [SerializeField] private PlayerMovement playerMovement;
+
+    [SerializeField] private GameObject mouth;
+    [SerializeField] private float climbSpeed = 3f;
+    [SerializeField] private float tongueMaxDistance = 10f;
+    [SerializeField] private float tongueMinDistance;
 
     private bool drawn;
     private bool tongueAttached;
@@ -23,11 +19,20 @@ public class TongueRenderer : MonoBehaviour
     private Vector3 endPoint;
 
     private CharacterController2D controller;
-
+    private DistanceJoint2D tongueJoint;
     private GameObject caughtPrey = null;
 
-    public readonly float tongueMaxDistance = 10f;
-    public readonly float tongueMinDistance = 0.5f;
+    /// <summary>
+    /// When awake cache the needed components and initiate the renderer
+    /// </summary>
+    private void Awake()
+    {
+        drawn = false;
+        tongueAttached = false;
+        controller = GetComponent<CharacterController2D>();
+        tongueJoint = GetComponent<DistanceJoint2D>();
+        tongueJoint.enabled = false;
+    }
 
     /// <summary>
     /// Starts when the tongue is drawn and loops until it isn't anymore
@@ -87,15 +92,6 @@ public class TongueRenderer : MonoBehaviour
         {
             tongueJoint.distance += Time.fixedDeltaTime * climbSpeed;
         }
-    }
-
-    /// <summary>
-    /// When awake cache the needed components and initiate the renderer
-    /// </summary>
-    private void Awake()
-    {
-        tongueJoint.enabled = false;
-        controller = GetComponent<CharacterController2D>();
     }
 
     /// <summary>
@@ -207,8 +203,6 @@ public class TongueRenderer : MonoBehaviour
     #region EventManager
     private void OnEnable()
     {
-        drawn = false;
-        tongueAttached = false;
         EventManager.StartListening(Names.Events.TongueOut, TongueOut);
     }
 

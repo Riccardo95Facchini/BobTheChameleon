@@ -12,6 +12,8 @@ public class PredatorKillsBob : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.tag == Names.Tags.Player.ToString() && camouflageCheck.WasSpottedBeforeCamouflage())
+        {
             EventManager.TriggerEvent(Names.Events.PlayerHit);
+        }
     }
 }

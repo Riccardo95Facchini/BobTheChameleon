@@ -3,16 +3,12 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    [SerializeField]
-    private Transform groundDetection;
-    [SerializeField]
-    private Transform playerDetection;
-    [SerializeField]
-    private Enemy enemyData;
-    [SerializeField]
-    private PlayerInLineOfSight sightCheck;
+    [SerializeField] private Transform groundDetection;
+    [SerializeField] private Enemy enemyData;
+    [SerializeField] private PlayerInLineOfSight sightCheck;
 
     public LayerMask whatIsPlayer;
+    public LayerMask whatIsGround;
     public Animator animator;
 
     private float walkSpeed;
@@ -60,13 +56,11 @@ public class EnemyPatrol : MonoBehaviour
         if(!charging)
         {
             charging = IsPlayerInSight();
-            animator.SetBool("Attacking", false);
             return walkSpeed;
         }
         else
         {
             FollowPlayer();
-            animator.SetBool("Attacking", true);
             return chargeSpeed;
         }
     }
@@ -76,7 +70,7 @@ public class EnemyPatrol : MonoBehaviour
     /// </summary>
     private void FollowPlayer()
     {
-        RaycastHit2D playerBehind = Physics2D.Raycast(playerDetection.position, -rayDirection, Mathf.Infinity, whatIsPlayer);
+        RaycastHit2D playerBehind = Physics2D.Raycast(transform.position, -rayDirection, lineOfSight, whatIsPlayer);
 
         if(playerBehind.collider != false)
         {
@@ -90,12 +84,13 @@ public class EnemyPatrol : MonoBehaviour
     /// </summary>
     private bool IsPlayerInSight()
     {
-        RaycastHit2D hit = Physics2D.Raycast(playerDetection.position, rayDirection, lineOfSight, whatIsPlayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, lineOfSight, whatIsPlayer);
 
         if(hit.collider != null && sightCheck.SpottedCheck(hit.collider))
         {
             if(player == null)
                 player = hit.collider.transform;
+            animator.SetBool("Attacking", true);
             return true;
         }
         return false;
@@ -106,7 +101,7 @@ public class EnemyPatrol : MonoBehaviour
     /// </summary>
     private void VerticalGroundCheck()
     {
-        RaycastHit2D verticalCheck = Physics2D.Raycast(groundDetection.position, Vector2.down, 0.5f);
+        RaycastHit2D verticalCheck = Physics2D.Raycast(groundDetection.position, Vector2.down, 0.2f);
 
         if(verticalCheck.collider == false)
         {
@@ -122,7 +117,7 @@ public class EnemyPatrol : MonoBehaviour
     {
         rayDirection = movingLeft ? Vector2.left : Vector2.right;
 
-        RaycastHit2D horizontalCheck = Physics2D.Raycast(groundDetection.position, rayDirection, 0.2f);
+        RaycastHit2D horizontalCheck = Physics2D.Raycast(groundDetection.position, rayDirection, 0.2f, whatIsGround);
 
         if(horizontalCheck.collider != false)
         {
@@ -145,5 +140,7 @@ public class EnemyPatrol : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);
 
         movingLeft = !movingLeft;
+
+        animator.SetBool("Attacking", false);
     }
 }
