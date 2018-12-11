@@ -11,6 +11,7 @@ public class Camouflage : MonoBehaviour
     private bool isCamouflaged;
     private bool startedCamouflage;
     private bool canCamouflage;
+    public Animator animator;
 
     private void OnEnable()
     {
@@ -27,6 +28,7 @@ public class Camouflage : MonoBehaviour
             if(!startedCamouflage && canCamouflage) //If the animation isn't already running
             {
                 startedCamouflage = true;
+                animator.SetBool("Camo", true);
                 Invoke("FinishCamouflage", camouflageTime);
                 //animator.SetBool(Names.Animations.CamouflageOn.ToString(), true); //Animation starts immediately, boolean after the invoke
             }
@@ -34,6 +36,7 @@ public class Camouflage : MonoBehaviour
         else if(Input.anyKey)//Any other key breaks the camouflagement
         {
             isCamouflaged = false;
+            animator.SetBool("Camo", false);
             startedCamouflage = false;
             //animator.SetBool(Names.Animations.CamouflageOff.ToString(), false);
         }

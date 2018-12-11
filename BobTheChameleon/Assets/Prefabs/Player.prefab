@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camouflageTime: 0
+  animator: {fileID: 95080848357129244}
 --- !u!120 &120634025458630210
 LineRenderer:
   m_ObjectHideFlags: 1
