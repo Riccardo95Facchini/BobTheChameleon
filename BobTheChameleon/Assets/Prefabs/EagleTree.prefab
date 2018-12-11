@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 114404083052324804}
   - component: {fileID: 114460111800471020}
   - component: {fileID: 58920523559666256}
+  - component: {fileID: 95780122061242278}
   m_Layer: 10
   m_Name: Eagle
   m_TagString: Enemy
@@ -190,9 +191,27 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.20163846, y: -0.30245733}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.7199471
+--- !u!95 &95780122061242278
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1944844328419252}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1cb6216a278c1e4ea6876a8effd5295, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114162738161598324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -221,6 +240,7 @@ MonoBehaviour:
   rightPosition: {fileID: 4885776084162032}
   enemyData: {fileID: 11400000, guid: 4bb4a9606718be74db212b4e26eb4b29, type: 2}
   sightCheck: {fileID: 114460111800471020}
+  animator: {fileID: 95780122061242278}
 --- !u!114 &114460111800471020
 MonoBehaviour:
   m_ObjectHideFlags: 1

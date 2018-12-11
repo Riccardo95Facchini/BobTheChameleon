@@ -8,6 +8,8 @@ public class TreePatrol : MonoBehaviour
     [SerializeField] private Enemy enemyData;
     [SerializeField] private PlayerInLineOfSight sightCheck;
 
+    public Animator animator;
+    
     private float flipInterval;
     private float chargeSpeed;
 
@@ -75,6 +77,7 @@ public class TreePatrol : MonoBehaviour
         }
         currentCoroutine = ChangeSide();
         StartCoroutine(currentCoroutine);
+        animator.SetBool("IsAtTree", true);
         yield return null;
     }
 
@@ -87,6 +90,8 @@ public class TreePatrol : MonoBehaviour
         StopCoroutine(currentCoroutine);
         currentCoroutine = FollowPlayer();
         StartCoroutine(currentCoroutine);
+        animator.SetBool("Attacking", true);
+        animator.SetBool("IsAtTree", false);
     }
 
     /// <summary>
@@ -95,6 +100,7 @@ public class TreePatrol : MonoBehaviour
     public void StopAttack()
     {
         SetBackToTree();
+        animator.SetBool("Attacking", false);
     }
 
     /// <summary>
