@@ -4,6 +4,7 @@ public class HealthManager : MonoBehaviour
 {
     public int health;
     public int maxHealth;
+    public float minY;
     public Transform player;
 
     void Awake()
@@ -26,7 +27,7 @@ public class HealthManager : MonoBehaviour
 
     private void CheckFall()
     {
-        if(player.position.y < -6)
+        if(player.position.y < minY)
             EventManager.TriggerEvent(Names.Events.PlayerDead);
     }
 
