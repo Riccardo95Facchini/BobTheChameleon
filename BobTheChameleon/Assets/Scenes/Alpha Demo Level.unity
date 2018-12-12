@@ -2696,8 +2696,8 @@ GameObject:
   m_Component:
   - component: {fileID: 573249682}
   - component: {fileID: 573249685}
-  - component: {fileID: 573249684}
   - component: {fileID: 573249683}
+  - component: {fileID: 573249684}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Ground
@@ -2746,7 +2746,7 @@ TilemapRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 96cd214094dae86489656def2d8cb3f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -68868,21 +68868,6 @@ Prefab:
       propertyPath: audioManager
       value: 
       objectReference: {fileID: 1684689445}
-    - target: {fileID: 114252814478827326, guid: a14ced108e045d949a77aae4a7e632da,
-        type: 2}
-      propertyPath: minY
-      value: -27
-      objectReference: {fileID: 0}
-    - target: {fileID: 70359564390116350, guid: a14ced108e045d949a77aae4a7e632da,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: 0.06833649
-      objectReference: {fileID: 0}
-    - target: {fileID: 70359564390116350, guid: a14ced108e045d949a77aae4a7e632da,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.98934937
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a14ced108e045d949a77aae4a7e632da, type: 2}
   m_IsPrefabAsset: 0
@@ -74234,18 +74219,6 @@ Prefab:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1320348081}
-    - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1049427635106400, guid: f87e0a897c616134e9c3549965fbeb8c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f87e0a897c616134e9c3549965fbeb8c, type: 2}
   m_IsPrefabAsset: 0

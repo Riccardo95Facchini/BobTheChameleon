@@ -28,16 +28,16 @@ public class Camouflage : MonoBehaviour
             if(!startedCamouflage && canCamouflage) //If the animation isn't already running
             {
                 startedCamouflage = true;
-                animator.SetBool("Camo", true);
                 Invoke("FinishCamouflage", camouflageTime);
+                animator.SetBool("Camo", true);
                 //animator.SetBool(Names.Animations.CamouflageOn.ToString(), true); //Animation starts immediately, boolean after the invoke
             }
         }
         else if(Input.anyKey)//Any other key breaks the camouflagement
         {
             isCamouflaged = false;
-            animator.SetBool("Camo", false);
             startedCamouflage = false;
+            animator.SetBool("Camo", false);
             //animator.SetBool(Names.Animations.CamouflageOff.ToString(), false);
         }
     }
