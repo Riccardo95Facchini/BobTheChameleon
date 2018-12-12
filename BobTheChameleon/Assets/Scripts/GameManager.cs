@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     private bool isPlayerDead;
 
+    public Vector3 checkpoint;
+
     private void Awake()
     {
         EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
@@ -26,6 +28,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        checkpoint = player.transform.position;
     }
 
     void Update()
@@ -48,7 +51,10 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1f;
             }
 
+            if(Input.GetKeyDown(KeyCode.KeypadEnter))
+                Respawn(); // TODO: only for prototype
         }
+        
     }
 
     private void CancelSlowMotion()
@@ -67,6 +73,7 @@ public class GameManager : MonoBehaviour
     }
     private void Respawn()
     {
+        player.GetComponent<PlayerMovement>().SetRespawn(checkpoint);
         isPlayerDead = false;
         DeathPanel.SetActive(false);
         player.SetActive(true);

@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float sprintModifier = 1.5f;
 
-    
-
     bool jump = false;
     private bool isPlayerDead;
 
@@ -35,11 +33,11 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = true;
         }
-        else if (Input.GetButtonDown("Sprint"))
+        else if(Input.GetButtonDown("Sprint"))
         {
             runSpeed *= sprintModifier;
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if(Input.GetButtonUp("Sprint"))
             runSpeed /= sprintModifier;
     }
 
@@ -48,16 +46,17 @@ public class PlayerMovement : MonoBehaviour
         if(!isPlayerDead)
         {
             var horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-      
 
             // Move our character
             controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
 
-            
-                
             jump = false;
-            
         }
+    }
+
+    public void SetRespawn(Vector3 resp)
+    {
+        this.transform.position = resp; // TODO: only for prototype
     }
 
     #region EventManager
