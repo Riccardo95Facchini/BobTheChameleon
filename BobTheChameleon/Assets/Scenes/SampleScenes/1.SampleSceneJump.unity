@@ -6982,7 +6982,7 @@ GameObject:
   - component: {fileID: 2020282282}
   - component: {fileID: 2020282284}
   - component: {fileID: 2020282283}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BackgroundTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

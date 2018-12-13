@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 66678426}
   - component: {fileID: 66678428}
   - component: {fileID: 66678427}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BackgroundTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

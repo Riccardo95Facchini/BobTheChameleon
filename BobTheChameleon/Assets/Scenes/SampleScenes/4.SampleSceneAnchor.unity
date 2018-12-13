@@ -352,11 +352,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -35.289497
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -9.028999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114327977784717880, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 2}
@@ -6502,7 +6502,7 @@ GameObject:
   - component: {fileID: 2075815688}
   - component: {fileID: 2075815690}
   - component: {fileID: 2075815689}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BackgroundTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

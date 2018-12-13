@@ -8412,7 +8412,7 @@ GameObject:
   - component: {fileID: 1181785187}
   - component: {fileID: 1181785189}
   - component: {fileID: 1181785188}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BackgroundTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

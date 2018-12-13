@@ -7688,7 +7688,7 @@ GameObject:
   - component: {fileID: 878518550}
   - component: {fileID: 878518552}
   - component: {fileID: 878518551}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BackgroundTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -61,16 +61,16 @@ public class GameManager : MonoBehaviour
     {
         if(!inMenu)
         {
-            if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                inMenu = true;
-                SceneManager.LoadScene("0.MainMenu");
-            }
-            if(Input.GetKeyDown(KeyCode.Return))
-                Load(currentLevel);
-
             if(!isPlayerDead)
             {
+                if(Input.GetKeyDown(KeyCode.Escape))
+                {
+                    inMenu = true;
+                    SceneManager.LoadScene("0.MainMenu");
+                }
+                if(Input.GetKeyDown(KeyCode.Return))
+                    Load(currentLevel);
+
                 if(Input.GetKeyDown(KeyCode.Mouse0))
                     EventManager.TriggerEvent(Names.Events.TongueOut);
                 else if(Input.GetKeyUp(KeyCode.Mouse0))
@@ -131,7 +131,12 @@ public class GameManager : MonoBehaviour
     }
     private void Respawn()
     {
-        player.GetComponent<PlayerMovement>().SetRespawn(checkpoint);
+        if(currentLevel != 10) //TODO: only prototype
+            Load(currentLevel);
+        else
+        {
+            player.GetComponent<PlayerMovement>().SetRespawn(checkpoint);
+        }
         isPlayerDead = false;
         DeathPanel.SetActive(false);
         player.SetActive(true);
