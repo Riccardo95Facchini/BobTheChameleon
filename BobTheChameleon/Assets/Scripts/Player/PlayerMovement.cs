@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool jump = false;
     private bool isPlayerDead;
-
+    private bool isSprinting;
     private bool isOnLadder;
 
     private void Awake()
@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
         jump = false;
         isPlayerDead = false;
         isOnLadder = false;
+        isSprinting = false;
         EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
     }
 
@@ -30,22 +31,18 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         if(Input.GetButtonDown("Jump"))
-        {
             jump = true;
-        }
         else if(Input.GetButtonDown("Sprint"))
-        {
-            runSpeed *= sprintModifier;
-        }
+            isSprinting = true;
         else if(Input.GetButtonUp("Sprint"))
-            runSpeed /= sprintModifier;
+            isSprinting = false;
     }
 
     void FixedUpdate()
     {
         if(!isPlayerDead)
         {
-            var horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+            var horizontalMove = isSprinting ? Input.GetAxisRaw("Horizontal") * runSpeed * sprintModifier : Input.GetAxisRaw("Horizontal") * runSpeed;
 
             // Move our character
             controller.Move(horizontalMove * Time.fixedDeltaTime, jump, isOnLadder);
