@@ -2,19 +2,27 @@
 
 public class PredatorKillsBob : MonoBehaviour
 {
-    private PlayerInLineOfSight camouflageCheck;
+    private PlayerInLineOfSight spottedCheck;
+    private Camouflage playerState;
 
     private void Awake()
     {
-        camouflageCheck = GetComponent<PlayerInLineOfSight>();
+        spottedCheck = GetComponent<PlayerInLineOfSight>();
+        playerState = null;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == Names.Tags.Player.ToString() && camouflageCheck.WasSpottedBeforeCamouflage())
+        if(collision.tag == Names.Tags.Player.ToString())
         {
-            EventManager.TriggerEvent(Names.Events.PlayerHit);
-            camouflageCheck.Reset();
+            if(playerState == null)
+                playerState = collision.GetComponent<Camouflage>();
+
+            if(spottedCheck.WasSpottedBeforeCamouflage() || !playerState.IsCamouflaged())
+            {
+                EventManager.TriggerEvent(Names.Events.PlayerHit);
+                spottedCheck.Reset();
+            }
         }
     }
 }

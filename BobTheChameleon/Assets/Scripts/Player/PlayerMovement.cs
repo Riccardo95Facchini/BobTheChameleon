@@ -23,9 +23,14 @@ public class PlayerMovement : MonoBehaviour
         EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
     }
 
+    private void OnEnable()
+    {
+        isOnLadder = false;
+    }
+
     public void SetIsOnLadder(bool v)
     {
-        isOnLadder = v;
+        isOnLadder = v;  //Avoids problem with respawn on checkpoint if dead on ladder
     }
 
     void Update()

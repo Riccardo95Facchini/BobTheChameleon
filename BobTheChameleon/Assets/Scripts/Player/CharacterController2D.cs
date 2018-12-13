@@ -25,6 +25,7 @@ public class CharacterController2D : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
+        
     }
 
     private void FixedUpdate()
@@ -99,8 +100,8 @@ public class CharacterController2D : MonoBehaviour
             handleLadder();
         else
         {
-            m_Rigidbody2D.gravityScale = 3;
-            if(jump)
+            m_Rigidbody2D.gravityScale = 3; //TODO: usa a variable to store the original value
+            if(jump) //Can jump only if not on a ladder
                 CheckAndJump();
         }
 
