@@ -59,8 +59,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(inMenu);
-
         if(!inMenu)
         {
             if(Input.GetKeyDown(KeyCode.Escape))

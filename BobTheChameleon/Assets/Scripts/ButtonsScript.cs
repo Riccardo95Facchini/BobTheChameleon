@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Controls : MonoBehaviour {
+public class ButtonsScript: MonoBehaviour {
 
     [SerializeField] GameObject image;
 
@@ -14,6 +14,11 @@ public class Controls : MonoBehaviour {
     public void ClickBack()
     {
         image.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
 }

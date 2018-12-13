@@ -1,14 +1,15 @@
-﻿using UnityEditor.Audio;
-using System;
+﻿using System;
 using UnityEngine;
 
-public class AudioManager : MonoBehaviour {
+public class AudioManager : MonoBehaviour
+{
 
     public Sound[] sounds;
 
-	// Use this for initialization
-	void Awake () {
-		foreach (Sound s in sounds)
+    // Use this for initialization
+    void Awake()
+    {
+        foreach(Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
@@ -17,27 +18,27 @@ public class AudioManager : MonoBehaviour {
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
         }
-	}
+    }
 
     // Update is called once per frame
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        
-        if (s == null)
+
+        if(s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found");
             return;
         }
 
-  
+
         s.source.Play();
     }
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
-        if (s == null)
+        if(s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found");
             return;
@@ -48,7 +49,7 @@ public class AudioManager : MonoBehaviour {
 
     public bool IsPlaying(string name)
     {
-   
+
         return Array.Find(sounds, sound => sound.name == name).source.isPlaying;
 
     }
@@ -57,7 +58,7 @@ public class AudioManager : MonoBehaviour {
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
 
-        if (s == null)
+        if(s == null)
         {
             Debug.LogWarning("Sound: " + name + " not found");
             return;
