@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
     private float slowMotionDuration;
 
     private bool isPlayerDead;
+    private static bool inMenu;
 
     public Vector3 checkpoint;
 
-    private static int currentLevel = 0;
+    private static int currentLevel;
 
     private static ArrayList levels = new ArrayList()
 {
@@ -42,6 +43,10 @@ public class GameManager : MonoBehaviour
             Instance = this;
             isPlayerDead = false;
             DontDestroyOnLoad(gameObject);
+
+            currentLevel = 0;
+            inMenu = true;
+            Load(currentLevel);
         }
         else
         {
@@ -54,33 +59,40 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-            SceneManager.LoadScene("0.MainMenu");
-        if(Input.GetKeyDown(KeyCode.Return))
-            Load(currentLevel);
+        Debug.Log(inMenu);
 
-        if(!isPlayerDead)
+        if(!inMenu)
         {
-            if(Input.GetKeyDown(KeyCode.Mouse0))
-                EventManager.TriggerEvent(Names.Events.TongueOut);
-            else if(Input.GetKeyUp(KeyCode.Mouse0))
-                EventManager.TriggerEvent(Names.Events.TongueIn);
-
-            if(Input.GetKeyDown(KeyCode.Mouse1))
+            if(Input.GetKeyDown(KeyCode.Escape))
             {
-                Time.timeScale = slowMotionValue;
-                Invoke("CancelSlowMotion", slowMotionDuration);
+                inMenu = true;
+                SceneManager.LoadScene("0.MainMenu");
             }
-            else if(Input.GetKeyUp(KeyCode.Mouse1))
-            {
-                CancelInvoke();
-                Time.timeScale = 1f;
-            }
+            if(Input.GetKeyDown(KeyCode.Return))
+                Load(currentLevel);
 
-            if(Input.GetKeyDown(KeyCode.KeypadEnter))
-                Respawn(); // TODO: only for prototype
+            if(!isPlayerDead)
+            {
+                if(Input.GetKeyDown(KeyCode.Mouse0))
+                    EventManager.TriggerEvent(Names.Events.TongueOut);
+                else if(Input.GetKeyUp(KeyCode.Mouse0))
+                    EventManager.TriggerEvent(Names.Events.TongueIn);
+
+                if(Input.GetKeyDown(KeyCode.Mouse1))
+                {
+                    Time.timeScale = slowMotionValue;
+                    Invoke("CancelSlowMotion", slowMotionDuration);
+                }
+                else if(Input.GetKeyUp(KeyCode.Mouse1))
+                {
+                    CancelInvoke();
+                    Time.timeScale = 1f;
+                }
+
+                if(Input.GetKeyDown(KeyCode.KeypadEnter))
+                    Respawn(); // TODO: only for prototype
+            }
         }
-
     }
 
     private void CancelSlowMotion()
@@ -94,6 +106,9 @@ public class GameManager : MonoBehaviour
     /// <param name="sceneId">Id of the level</param>
     public void Load(int sceneId)
     {
+        if(sceneId != 0)
+            inMenu = false;
+
         currentLevel = sceneId;
         SceneManager.LoadScene(levels[sceneId].ToString());
     }
