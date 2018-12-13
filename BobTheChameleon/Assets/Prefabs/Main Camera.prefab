@@ -45,7 +45,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1503262508796898
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -80,7 +80,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4575241903513230
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1503262508796898}
@@ -182,7 +182,7 @@ AudioListener:
   m_Enabled: 1
 --- !u!114 &114010599445388488
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1503262508796898}
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &114011499162277252
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1503262508796898}
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 4485770090094986, guid: a14ced108e045d949a77aae4a7e632da, type: 2}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 6

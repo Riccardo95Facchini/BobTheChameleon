@@ -55,3 +55,4 @@ MonoBehaviour:
   DeathPanel: {fileID: 0}
   slowMotionValue: 0.5
   slowMotionDuration: 0.75
+  checkpoint: {x: 0, y: 0, z: 0}
