@@ -46,7 +46,7 @@ public class TreePatrol : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts following the player, it can be stopped only by the sight script calling the stop
+    /// Starts following the player, it can be stopped only by the BirdSight script calling the stop
     /// </summary>
     /// <returns>null</returns>
     private IEnumerator FollowPlayer()
@@ -78,6 +78,7 @@ public class TreePatrol : MonoBehaviour
         currentCoroutine = ChangeSide();
         StartCoroutine(currentCoroutine);
         animator.SetBool("IsAtTree", true);
+        animator.SetBool("Attacking", false);
         yield return null;
     }
 
@@ -86,8 +87,8 @@ public class TreePatrol : MonoBehaviour
     /// </summary>
     public void StartAttack(Transform playerPosition)
     {
-        this.playerPosition = playerPosition;
         StopCoroutine(currentCoroutine);
+        this.playerPosition = playerPosition;
         currentCoroutine = FollowPlayer();
         StartCoroutine(currentCoroutine);
         animator.SetBool("Attacking", true);

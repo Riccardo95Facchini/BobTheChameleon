@@ -14,6 +14,7 @@ public class PredatorKillsBob : MonoBehaviour
         if(collision.tag == Names.Tags.Player.ToString() && camouflageCheck.WasSpottedBeforeCamouflage())
         {
             EventManager.TriggerEvent(Names.Events.PlayerHit);
+            camouflageCheck.Reset();
         }
     }
 }

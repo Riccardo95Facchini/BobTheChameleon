@@ -36,7 +36,7 @@ public class PlayerInLineOfSight : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks if the player was spotted before the camouflaging ends
+    /// Checks if the player was spotted before camouflaging
     /// </summary>
     /// <param name="hit">Result of the raycast</param>
     /// <returns>true if spotted, false otherwise</returns>
@@ -44,11 +44,10 @@ public class PlayerInLineOfSight : MonoBehaviour
     {
         if(playerState == null)
             playerState = hit.GetComponent<Camouflage>();
-
-        if(!playerState.IsCamouflaged())
-            spottedBeforeCamouflage = true;
         else
-            spottedBeforeCamouflage = false;
+            return spottedBeforeCamouflage;
+
+        spottedBeforeCamouflage = !playerState.IsCamouflaged();
 
         return spottedBeforeCamouflage;
     }
@@ -56,5 +55,11 @@ public class PlayerInLineOfSight : MonoBehaviour
     public bool WasSpottedBeforeCamouflage()
     {
         return spottedBeforeCamouflage;
+    }
+
+    public void Reset()
+    {
+        playerState = null;
+        spottedBeforeCamouflage = false;
     }
 }
