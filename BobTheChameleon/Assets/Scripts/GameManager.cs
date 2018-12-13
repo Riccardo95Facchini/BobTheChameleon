@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +17,23 @@ public class GameManager : MonoBehaviour
 
     public Vector3 checkpoint;
 
+    private static int currentLevel = 0;
+
+    private static ArrayList levels = new ArrayList()
+{
+    "0.MainMenu", "1.SampleSceneJump", "2.SampleSceneBush",
+        "3.SampleScenePrey", "4.SampleSceneAnchor", "5.SampleSceneAcrobatics",
+        "6.SampleScenePlatforms", "7.SampleSceneSpikes", "8.SampleSceneSnake",
+        "9.SampleSceneEagle", "Alpha Demo Level"
+};
+
+    private void OnLevelWasLoaded(int level)
+    {
+        player = GameObject.FindWithTag(Names.Tags.Player.ToString());
+        if(player != null)
+            checkpoint = player.transform.position;
+    }
+
     private void Awake()
     {
         EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
@@ -28,11 +47,18 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        checkpoint = player.transform.position;
+        player = GameObject.FindWithTag(Names.Tags.Player.ToString());
+        if(player != null)
+            checkpoint = player.transform.position;
     }
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+            SceneManager.LoadScene("0.MainMenu");
+        if(Input.GetKeyDown(KeyCode.Return))
+            Load(currentLevel);
+
         if(!isPlayerDead)
         {
             if(Input.GetKeyDown(KeyCode.Mouse0))
@@ -54,12 +80,32 @@ public class GameManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.KeypadEnter))
                 Respawn(); // TODO: only for prototype
         }
-        
+
     }
 
     private void CancelSlowMotion()
     {
         Time.timeScale = 1f;
+    }
+
+    /// <summary>
+    /// Load a specific level in the Arraylist levels
+    /// </summary>
+    /// <param name="sceneId">Id of the level</param>
+    public void Load(int sceneId)
+    {
+        currentLevel = sceneId;
+        SceneManager.LoadScene(levels[sceneId].ToString());
+    }
+
+    /// <summary>
+    /// Loads the next level in the ArrayList
+    /// </summary>
+    public void LoadNext()
+    {
+        currentLevel++;
+        Debug.Log(currentLevel);
+        SceneManager.LoadScene(levels[currentLevel].ToString());
     }
 
     #region EventManager
