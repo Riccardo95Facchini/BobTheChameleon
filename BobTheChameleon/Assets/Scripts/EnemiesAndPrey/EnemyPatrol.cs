@@ -55,7 +55,7 @@ public class EnemyPatrol : MonoBehaviour
     {
         if(!charging)
         {
-            charging = IsPlayerInSight();
+            charging = IsPlayerInSightSimple();
             return walkSpeed;
         }
         else
@@ -75,14 +75,14 @@ public class EnemyPatrol : MonoBehaviour
         if(playerBehind.collider != false)
         {
             FlipSprite();
-            charging = IsPlayerInSight();
+            charging = IsPlayerInSightSimple();
         }
     }
 
     /// <summary>
     /// Checks if the player is in line of sight, if so start charging
     /// </summary>
-    private bool IsPlayerInSight()
+    private bool IsPlayerInSightSimple()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, lineOfSight, whatIsPlayer);
 
@@ -93,6 +93,7 @@ public class EnemyPatrol : MonoBehaviour
             animator.SetBool("Attacking", true);
             return true;
         }
+        sightCheck.Reset();
         return false;
     }
 

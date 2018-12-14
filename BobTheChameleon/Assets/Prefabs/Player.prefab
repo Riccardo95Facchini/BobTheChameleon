@@ -11,21 +11,6 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1110115698857284}
   m_IsPrefabAsset: 1
---- !u!1 &1013822787218014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4023645398072504}
-  m_Layer: 8
-  m_Name: CeilingCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1110115698857284
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,19 +67,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4023645398072504
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1013822787218014}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.257, y: 0.908, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4485770090094986}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4446007625140384
 Transform:
   m_ObjectHideFlags: 1
@@ -106,7 +78,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4485770090094986}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4485770090094986
 Transform:
@@ -115,10 +87,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1110115698857284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.07, y: -3.6, z: 0}
+  m_LocalPosition: {x: -40.309498, y: -4.849, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4023645398072504}
   - {fileID: 4945107553363234}
   - {fileID: 4446007625140384}
   m_Father: {fileID: 0}
@@ -131,11 +102,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1768526208953890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.188, y: -0.986, z: 0}
+  m_LocalPosition: {x: -0.002, y: -0.615, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4485770090094986}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50531010647946316
 Rigidbody2D:
@@ -169,8 +140,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.014892817, y: -0.008243322}
-  m_Size: {x: 1.0214152, y: 1.987267}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.83172226, y: 1.987267}
   m_Direction: 0
 --- !u!95 &95080848357129244
 Animator:
@@ -203,6 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1
   maxHealth: 1
+  minY: -27
   player: {fileID: 4485770090094986}
 --- !u!114 &114490097068375462
 MonoBehaviour:
@@ -249,13 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a40e0000229c5439d81326fcd16537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_JumpForce: 700
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 17
   m_GroundCheck: {fileID: 4945107553363234}
-  m_CeilingCheck: {fileID: 4023645398072504}
   audioManager: {fileID: 0}
   animator: {fileID: 95080848357129244}
 --- !u!114 &114924774786233468

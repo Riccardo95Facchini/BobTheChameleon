@@ -17,12 +17,11 @@ public class FallingSpikes : MonoBehaviour
         spikes = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void OnBecameInvisible()
     {
-        if(transform.position.y < -6f)
+        if(!spikes.isKinematic)
             gameObject.SetActive(false);
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag == Names.Tags.Player.ToString())

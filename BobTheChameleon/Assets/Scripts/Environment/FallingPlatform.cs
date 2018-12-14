@@ -13,16 +13,16 @@ public class FallingPlatform : MonoBehaviour
         collidedObject = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
-    {
-        if(transform.position.y < -6f)
-            gameObject.SetActive(false);
-    }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag == Names.Tags.Player.ToString())
             Invoke("MakeDynamic", fallDelay);
+    }
+
+    private void OnBecameInvisible()
+    {
+        if(!collidedObject.isKinematic)
+            gameObject.SetActive(false);
     }
 
     void MakeDynamic()

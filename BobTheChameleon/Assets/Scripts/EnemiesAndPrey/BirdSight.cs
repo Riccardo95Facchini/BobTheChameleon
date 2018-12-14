@@ -8,15 +8,15 @@ public class BirdSight : MonoBehaviour
     private TreePatrol birdPatrol;
     [SerializeField]
     private PlayerInLineOfSight sightCheck;
+    [SerializeField]
+    private LayerMask WhatIsObstacleAndPlayer;
 
     private Transform playerPosition = null;
     private bool isAiming;
-    private bool isAttacking;
 
     private void Awake()
     {
         isAiming = false;
-        isAttacking = false;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -29,9 +29,15 @@ public class BirdSight : MonoBehaviour
             if(!isAiming)
             {
                 isAiming = true;
+                sightCheck.Reset();
                 StartCoroutine(Aim());
             }
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        sightCheck.Reset();
     }
 
     /// <summary>
@@ -40,14 +46,24 @@ public class BirdSight : MonoBehaviour
     /// <returns></returns>
     private IEnumerator Aim()
     {
+        if(sightCheck.IsPlayerInSight(playerPosition.position, Vector2.Distance(transform.position, playerPosition.position)))
+        {
+            birdPatrol.StartAttack(playerPosition);
+        }
+        else
+        {
+            isAiming = false;
+            StopAllCoroutines();
+        }
+
+        RaycastHit2D hit;  // TODO: fix this botching you did for the prototype
+
         while(true)
         {
-            if(sightCheck.IsPlayerInSight(playerPosition.position, Vector2.Distance(transform.position, playerPosition.position)))
-            {
-                birdPatrol.StartAttack(playerPosition);
-                isAttacking = true;
-            }
-            else if(isAttacking)
+            hit = Physics2D.Raycast(transform.position,
+                    (playerPosition.position - transform.position).normalized,
+                    Vector2.Distance(playerPosition.position, transform.position), WhatIsObstacleAndPlayer);
+            if(hit.collider != null && hit.collider.tag != Names.Tags.Player.ToString())
             {
                 birdPatrol.StopAttack();
                 isAiming = false;

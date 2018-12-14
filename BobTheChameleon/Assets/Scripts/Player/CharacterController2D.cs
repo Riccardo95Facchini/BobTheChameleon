@@ -2,21 +2,16 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] private const float m_JumpForce = 700f;                          // Amount of force added when the player jumps.
+    [SerializeField] private float m_JumpForce = 700f;                          // Amount of force added when the player jumps.
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
 
-
-    [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
-    [SerializeField] private const float maxTongueLength = 5f;                             // Minimum tongue length
-    [SerializeField] private const float minTongueLength = 0.25f;                             // A position marking where to check for ceilings
     [SerializeField] private readonly GameObject mouth;
 
-    const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .4f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded
-    const float k_CeilingRadius = .1f; // Radius of the overlap circle to determine if the player can stand up
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
@@ -30,6 +25,7 @@ public class CharacterController2D : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
+        
     }
 
     private void FixedUpdate()
@@ -39,9 +35,9 @@ public class CharacterController2D : MonoBehaviour
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-        for (int i = 0; i < colliders.Length; i++)
+        for(int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].gameObject != gameObject)
+            if(colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
                 doubleJumped = false;
@@ -57,25 +53,25 @@ public class CharacterController2D : MonoBehaviour
             // Play stepping sound if the playing is walking on the floor
 
 
-            if (horizontal != 0f && (m_Grounded))
+            if(horizontal != 0f && (m_Grounded))
             {
-                if (!audioManager.IsPlaying("walk"))
+                if(!audioManager.IsPlaying("walk"))
                     audioManager.Play("walk");
             }
-            if (horizontal == 0 || !m_Grounded)
+            if(horizontal == 0 || !m_Grounded)
                 audioManager.Stop("walk");
 
-            if (!m_Grounded)
+            if(!m_Grounded)
             {
                 animator.SetBool("Jumping", true);
             }
-            if (horizontal != 0 && m_Grounded)
+            if(horizontal != 0 && m_Grounded)
             {
                 animator.SetBool("Jumping", false);
                 animator.SetBool("Moving", true);
             }
 
-            else if (m_Grounded)
+            else if(m_Grounded)
             {
                 animator.SetBool("Jumping", false);
                 animator.SetBool("Moving", false);
@@ -103,10 +99,12 @@ public class CharacterController2D : MonoBehaviour
         if(onLadder)
             handleLadder();
         else
-            m_Rigidbody2D.gravityScale = 3;
+        {
+            m_Rigidbody2D.gravityScale = 3; //TODO: usa a variable to store the original value
+            if(jump) //Can jump only if not on a ladder
+                CheckAndJump();
+        }
 
-        if(jump)
-            CheckAndJump();
     }
 
     private void handleLadder()
@@ -156,7 +154,7 @@ public class CharacterController2D : MonoBehaviour
             doubleJumped = true;
         }
         m_Grounded = false;
-        
+
     }
 
 

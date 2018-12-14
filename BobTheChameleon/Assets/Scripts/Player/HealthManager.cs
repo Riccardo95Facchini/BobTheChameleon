@@ -34,10 +34,10 @@ public class HealthManager : MonoBehaviour
     #region EventManager
     private void PlayerHit()
     {
-        health--;
+        //health--;
 
-        if(health < 1)
-            EventManager.TriggerEvent(Names.Events.PlayerDead);
+        //if(health < 1)
+        EventManager.TriggerEvent(Names.Events.PlayerDead);
 
         if(health > maxHealth)
             health = maxHealth;

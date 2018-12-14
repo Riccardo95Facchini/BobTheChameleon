@@ -10,9 +10,12 @@ public class PreyPatrol : MonoBehaviour
     private Vector2 startingPosition;
     private Vector2 nextPosition;
 
+    private SpriteRenderer spriteRenderer;
+
     private bool isEscaped;
     private bool isCaught;
     private bool isEaten;
+    private bool isLookingRight;
 
     /// <summary>
     /// Chaching and coroutine starting
@@ -22,7 +25,9 @@ public class PreyPatrol : MonoBehaviour
         isEscaped = false;
         isCaught = false;
         isEaten = false;
+        isLookingRight = true;
         startingPosition = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine(RandomMovement());
         StartCoroutine(NewPosition());
     }
@@ -51,7 +56,28 @@ public class PreyPatrol : MonoBehaviour
             nextPosition = new Vector2(
                 startingPosition.x + Random.Range(-movementRange, movementRange),
                 startingPosition.y + Random.Range(-movementRange, movementRange));
+
+            CheckFlip(nextPosition.x);
+
             yield return new WaitForSeconds(newPositionInterval);
+        }
+    }
+
+    /// <summary>
+    /// Flips the sprite if the fly goes the other way
+    /// </summary>
+    /// <param name="nextX">Value on the X of the next position</param>
+    private void CheckFlip(float nextX)
+    {
+        if(nextX < transform.position.x && isLookingRight)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            isLookingRight = false;
+        }
+        else if(nextX > transform.position.x && !isLookingRight)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            isLookingRight = true;
         }
     }
 

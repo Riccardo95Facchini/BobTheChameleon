@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Camouflage : MonoBehaviour
 {
@@ -18,28 +19,40 @@ public class Camouflage : MonoBehaviour
         isCamouflaged = false;
         startedCamouflage = false;
         canCamouflage = false;
+        StartCoroutine(WaitForCamouflage());
     }
 
-    void FixedUpdate()
+    private IEnumerator WaitForCamouflage()
     {
-        //If C is pressed and isn't camouflaged
-        if(Input.GetKey(KeyCode.C))
+        while(!startedCamouflage)
         {
-            if(!startedCamouflage && canCamouflage) //If the animation isn't already running
+            //If C is pressed and isn't camouflaged
+            if(Input.GetKey(KeyCode.C) && !startedCamouflage && canCamouflage)
             {
                 startedCamouflage = true;
-                animator.SetBool("Camo", true);
                 Invoke("FinishCamouflage", camouflageTime);
-                //animator.SetBool(Names.Animations.CamouflageOn.ToString(), true); //Animation starts immediately, boolean after the invoke
+                animator.SetBool("Camo", true);
             }
+            yield return null;
         }
-        else if(Input.anyKey)//Any other key breaks the camouflagement
+        StopAllCoroutines();
+        StartCoroutine(WaitForAnotherKey());
+    }
+
+    private IEnumerator WaitForAnotherKey()
+    {
+        while(startedCamouflage)
         {
-            isCamouflaged = false;
-            animator.SetBool("Camo", false);
-            startedCamouflage = false;
-            //animator.SetBool(Names.Animations.CamouflageOff.ToString(), false);
+            if(Input.anyKeyDown || !canCamouflage)//Any other key breaks the camouflagement
+            {
+                isCamouflaged = false;
+                startedCamouflage = false;
+                animator.SetBool("Camo", false);
+            }
+            yield return null;
         }
+        StopAllCoroutines();
+        StartCoroutine(WaitForCamouflage());
     }
 
     /// <summary>

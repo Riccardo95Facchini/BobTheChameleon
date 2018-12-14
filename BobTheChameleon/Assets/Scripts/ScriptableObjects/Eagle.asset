@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Eagle
   m_EditorClassIdentifier: 
   walkSpeed: 0
-  chargeSpeed: 2
+  chargeSpeed: 6
   lineOfSight: 0
-  flipInterval: 3
+  flipInterval: 2
+  sound: 
