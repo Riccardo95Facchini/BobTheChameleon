@@ -10,7 +10,7 @@ public class CharacterController2D : MonoBehaviour
 
     [SerializeField] private readonly GameObject mouth;
 
-    const float k_GroundedRadius = .1f; // Radius of the overlap circle to determine if grounded
+    const float k_GroundedRadius = .4f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;

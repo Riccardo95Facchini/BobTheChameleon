@@ -76,7 +76,10 @@ public class TongueRenderer : MonoBehaviour
         if(!tongueJoint.enabled)
             tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
 
-        HandleTongueLength();
+        if(tongueJoint.distance > tongueMaxDistance)
+            TongueIn();
+        else
+            HandleTongueLength();
     }
 
     /// <summary>

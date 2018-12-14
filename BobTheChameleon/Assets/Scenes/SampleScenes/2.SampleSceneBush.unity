@@ -4717,6 +4717,11 @@ Prefab:
       propertyPath: audioManager
       value: 
       objectReference: {fileID: 850708199}
+    - target: {fileID: 114924774786233468, guid: a14ced108e045d949a77aae4a7e632da,
+        type: 2}
+      propertyPath: camouflageTime
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a14ced108e045d949a77aae4a7e632da, type: 2}
   m_IsPrefabAsset: 0
