@@ -3,13 +3,13 @@ using UnityEngine;
 public class CharacterController2D : MonoBehaviour
 {
     [SerializeField] private float m_JumpForce = 700f;                          // Amount of force added when the player jumps.
-    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
+    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = 0.05f; // How much to smooth out the movement
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
     [SerializeField] private GameObject mouth;
 
-    private const float groundCheckRadius = .25f; // Radius of the overlap circle to determine if grounded
+    private const float groundCheckRadius = 0.27f; // Radius of the overlap circle to determine if grounded
     private float originalGravity;
 
     private bool m_Grounded;            // Whether or not the player is grounded
@@ -31,7 +31,7 @@ public class CharacterController2D : MonoBehaviour
         originalGravity = m_Rigidbody2D.gravityScale;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -39,16 +39,11 @@ public class CharacterController2D : MonoBehaviour
 
         if(colliders.Length == 0)
             m_Grounded = false;
-
-        for(int i = 0; i < colliders.Length; i++)
+        else if(!jumped || m_Rigidbody2D.velocity.y == 0)
         {
-            if(colliders[i].gameObject != gameObject)
-            {
-                Debug.Log(colliders[i].gameObject.name);
-                m_Grounded = true;
-                jumped = false;
-                doubleJumped = false;
-            }
+            jumped = false;
+            m_Grounded = true;
+            doubleJumped = false;
         }
     }
 
@@ -64,7 +59,11 @@ public class CharacterController2D : MonoBehaviour
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
             if(tongueJoint.enabled)
+            {
+                jumped = false;
+                doubleJumped = false;
                 targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
+            }
             else
                 targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
 
@@ -86,9 +85,7 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.gravityScale = originalGravity;
             //Can jump only if not on a ladder
             if(jump)
-            {
-                    CheckAndJump();
-            }
+                CheckAndJump();
         }
 
     }
@@ -152,10 +149,15 @@ public class CharacterController2D : MonoBehaviour
         if(tongueJoint.enabled)
             EventManager.TriggerEvent(Names.Events.TongueIn);
 
-        if(m_Grounded)
+        if(m_Grounded || !jumped)
         {
+            m_Rigidbody2D.velocity = Vector3.zero;
+            m_Rigidbody2D.angularVelocity = 0;
+
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
             audioManager.Play("jump1");
+            jumped = true;
+            m_Grounded = false;
         }
         else if(!doubleJumped)
         {
@@ -166,8 +168,6 @@ public class CharacterController2D : MonoBehaviour
             audioManager.Play("jump2");
             doubleJumped = true;
         }
-        m_Grounded = false;
-
     }
 
 
