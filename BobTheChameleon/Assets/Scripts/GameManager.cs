@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
         player = GameObject.FindWithTag(Names.Tags.Player.ToString());
         if(player != null)

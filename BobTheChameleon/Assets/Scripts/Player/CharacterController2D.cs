@@ -7,16 +7,19 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
+    [SerializeField] private GameObject mouth;
 
-    [SerializeField] private readonly GameObject mouth;
+    private const float groundCheckRadius = .25f; // Radius of the overlap circle to determine if grounded
+    private float originalGravity;
 
-    const float k_GroundedRadius = .4f; // Radius of the overlap circle to determine if grounded
     private bool m_Grounded;            // Whether or not the player is grounded
+    private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+    private bool jumped, doubleJumped;
+
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
-    private bool m_FacingRight = true;  // For determining which way the player is currently facing.
     private Vector3 velocity = Vector3.zero;
-    private bool doubleJumped;
+
     public AudioManager audioManager;
     public Animator animator;
 
@@ -25,21 +28,25 @@ public class CharacterController2D : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
-        
+        originalGravity = m_Rigidbody2D.gravityScale;
     }
 
     private void FixedUpdate()
     {
-        m_Grounded = false;
-
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, groundCheckRadius, m_WhatIsGround);
+
+        if(colliders.Length == 0)
+            m_Grounded = false;
+
         for(int i = 0; i < colliders.Length; i++)
         {
             if(colliders[i].gameObject != gameObject)
             {
+                Debug.Log(colliders[i].gameObject.name);
                 m_Grounded = true;
+                jumped = false;
                 doubleJumped = false;
             }
         }
@@ -52,31 +59,7 @@ public class CharacterController2D : MonoBehaviour
         {
             // Play stepping sound if the playing is walking on the floor
 
-
-            if(horizontal != 0f && (m_Grounded))
-            {
-                if(!audioManager.IsPlaying("walk"))
-                    audioManager.Play("walk");
-            }
-            if(horizontal == 0 || !m_Grounded)
-                audioManager.Stop("walk");
-
-            if(!m_Grounded)
-            {
-                animator.SetBool("Jumping", true);
-            }
-            if(horizontal != 0 && m_Grounded)
-            {
-                animator.SetBool("Jumping", false);
-                animator.SetBool("Moving", true);
-            }
-
-            else if(m_Grounded)
-            {
-                animator.SetBool("Jumping", false);
-                animator.SetBool("Moving", false);
-            }
-
+            HandleAnimation(horizontal);
 
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
@@ -100,11 +83,41 @@ public class CharacterController2D : MonoBehaviour
             handleLadder();
         else
         {
-            m_Rigidbody2D.gravityScale = 3; //TODO: usa a variable to store the original value
-            if(jump) //Can jump only if not on a ladder
-                CheckAndJump();
+            m_Rigidbody2D.gravityScale = originalGravity;
+            //Can jump only if not on a ladder
+            if(jump)
+            {
+                    CheckAndJump();
+            }
         }
 
+    }
+
+    private void HandleAnimation(float horizontal)
+    {
+        if(horizontal != 0f && (m_Grounded))
+        {
+            if(!audioManager.IsPlaying("walk"))
+                audioManager.Play("walk");
+        }
+        if(horizontal == 0 || !m_Grounded)
+            audioManager.Stop("walk");
+
+        if(!m_Grounded)
+        {
+            animator.SetBool("Jumping", true);
+        }
+        if(horizontal != 0 && m_Grounded)
+        {
+            animator.SetBool("Jumping", false);
+            animator.SetBool("Moving", true);
+        }
+
+        else if(m_Grounded)
+        {
+            animator.SetBool("Jumping", false);
+            animator.SetBool("Moving", false);
+        }
     }
 
     private void handleLadder()

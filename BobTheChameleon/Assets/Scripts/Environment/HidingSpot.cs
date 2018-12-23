@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-public class Bush : MonoBehaviour
+public class HidingSpot : MonoBehaviour
 {
-
     private Camouflage player;
 
     void Awake()
@@ -26,5 +25,4 @@ public class Bush : MonoBehaviour
         if(collision.tag == Names.Tags.Player.ToString())
             player.SetCamouflageFlag(false);
     }
-
 }
