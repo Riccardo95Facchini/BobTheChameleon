@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class PreyPatrol : MonoBehaviour
 {
-    private float movementRange = 2f; // TODO: take it from scriptable object
-    private float preySpeed = 5; // TODO: take it from scriptable object
-    private float newPositionInterval = 1f; // TODO: take it from scriptable object
+    [SerializeField] private Prey preyData;
+
+    private float movementRange;
+    private float preySpeed;
+    private float newPositionInterval;
 
     private Vector2 startingPosition;
     private Vector2 nextPosition;
@@ -26,6 +28,11 @@ public class PreyPatrol : MonoBehaviour
         isCaught = false;
         isEaten = false;
         isLookingRight = true;
+        //Scriptable object data
+        movementRange = preyData.movementRange;
+        preySpeed = preyData.preySpeed;
+        newPositionInterval = preyData.newPositionInterval;
+
         startingPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
         StartCoroutine(RandomMovement());
@@ -57,7 +64,7 @@ public class PreyPatrol : MonoBehaviour
                 startingPosition.x + Random.Range(-movementRange, movementRange),
                 startingPosition.y + Random.Range(-movementRange, movementRange));
 
-            CheckFlip(nextPosition.x);
+            CheckFlip(nextPosition.x, transform.position.x);
 
             yield return new WaitForSeconds(newPositionInterval);
         }
@@ -66,15 +73,16 @@ public class PreyPatrol : MonoBehaviour
     /// <summary>
     /// Flips the sprite if the fly goes the other way
     /// </summary>
-    /// <param name="nextX">Value on the X of the next position</param>
-    private void CheckFlip(float nextX)
+    /// <param name="nextX">Value of the X after moving</param>
+    /// <param name="previousX">Value of the X before moving</param>
+    private void CheckFlip(float nextX, float previousX)
     {
-        if(nextX < transform.position.x && isLookingRight)
+        if(nextX < previousX && isLookingRight)
         {
             spriteRenderer.flipX = !spriteRenderer.flipX;
             isLookingRight = false;
         }
-        else if(nextX > transform.position.x && !isLookingRight)
+        else if(nextX > previousX && !isLookingRight)
         {
             spriteRenderer.flipX = !spriteRenderer.flipX;
             isLookingRight = true;
@@ -89,10 +97,13 @@ public class PreyPatrol : MonoBehaviour
     private IEnumerator Flee(Transform player)
     {
         Vector2 dir;
+        float previousX;
         while(!isEscaped)
         {
+            previousX = transform.position.x;
             dir = (transform.position - player.position).normalized;
             transform.Translate(dir * preySpeed * Time.deltaTime);
+            CheckFlip(transform.position.x, previousX);
             yield return null;
         }
         gameObject.SetActive(false);

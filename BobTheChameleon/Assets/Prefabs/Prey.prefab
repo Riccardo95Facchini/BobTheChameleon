@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219e1756533feff41821d310c2c4a2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preyData: {fileID: 11400000, guid: 3fa7bbe613063a54d98e674f3f504118, type: 2}
 --- !u!95 &95210346258713654
 Animator:
   serializedVersion: 3

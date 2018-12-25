@@ -44,9 +44,9 @@ public class GameManager : MonoBehaviour
             isPlayerDead = false;
             DontDestroyOnLoad(gameObject);
 
-            currentLevel = 0;
-            inMenu = true;
-            Load(currentLevel);
+            //currentLevel = 0;
+            //inMenu = true;
+            //Load(currentLevel);
         }
         else
         {

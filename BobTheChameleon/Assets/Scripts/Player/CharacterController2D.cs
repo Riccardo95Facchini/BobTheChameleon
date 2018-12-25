@@ -7,13 +7,14 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
     [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
     [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
-    [SerializeField] private GameObject mouth;
+
+    [SerializeField] private Animator animator;
 
     private const float groundCheckRadius = 0.27f; // Radius of the overlap circle to determine if grounded
     private float originalGravity;
 
-    private bool m_Grounded;            // Whether or not the player is grounded
-    private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+    private bool isGrounded;            // Whether or not the player is grounded
+    private bool isFacingRight = true;  // For determining which way the player is currently facing.
     private bool jumped, doubleJumped;
 
     private Rigidbody2D m_Rigidbody2D;
@@ -21,8 +22,6 @@ public class CharacterController2D : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
 
     public AudioManager audioManager;
-    public Animator animator;
-
 
     private void Awake()
     {
@@ -38,11 +37,11 @@ public class CharacterController2D : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, groundCheckRadius, m_WhatIsGround);
 
         if(colliders.Length == 0)
-            m_Grounded = false;
+            isGrounded = false;
         else if(!jumped || m_Rigidbody2D.velocity.y == 0)
         {
             jumped = false;
-            m_Grounded = true;
+            isGrounded = true;
             doubleJumped = false;
         }
     }
@@ -50,12 +49,8 @@ public class CharacterController2D : MonoBehaviour
     public void Move(float horizontal, bool jump, bool onLadder)
     {
         //only control the player if grounded or airControl is turned on
-        if((m_Grounded || m_AirControl) && !onLadder)
+        if((isGrounded || m_AirControl) && !onLadder)
         {
-            // Play stepping sound if the playing is walking on the floor
-
-            HandleAnimation(horizontal);
-
             // Move the character by finding the target velocity
             Vector3 targetVelocity = Vector3.zero;
             if(tongueJoint.enabled)
@@ -71,10 +66,10 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
             // If the input is moving the player right and the player is facing left...
-            if(horizontal > 0 && !m_FacingRight)
+            if(horizontal > 0 && !isFacingRight)
                 Flip();
             // Otherwise if the input is moving the player left and the player is facing right...
-            else if(horizontal < 0 && m_FacingRight)
+            else if(horizontal < 0 && isFacingRight)
                 Flip();
         }
 
@@ -87,33 +82,35 @@ public class CharacterController2D : MonoBehaviour
             if(jump)
                 CheckAndJump();
         }
-
+        HandleAnimation(horizontal);
     }
 
     private void HandleAnimation(float horizontal)
     {
-        if(horizontal != 0f && (m_Grounded))
+        if(isGrounded)
         {
-            if(!audioManager.IsPlaying("walk"))
-                audioManager.Play("walk");
-        }
-        if(horizontal == 0 || !m_Grounded)
-            audioManager.Stop("walk");
+            if(horizontal != 0f)
+            {
+                if(!audioManager.IsPlaying("walk"))
+                    audioManager.Play("walk");
 
-        if(!m_Grounded)
-        {
-            animator.SetBool("Jumping", true);
+                animator.SetBool("Jumping", false);
+                animator.SetBool("Moving", true);
+            }
+            else
+            {
+                audioManager.Stop("walk");
+                animator.SetBool("Jumping", false);
+                animator.SetBool("Moving", false);
+            }
         }
-        if(horizontal != 0 && m_Grounded)
+        else
         {
-            animator.SetBool("Jumping", false);
-            animator.SetBool("Moving", true);
-        }
+            if(!animator.GetBool("Jumping"))
+                animator.SetBool("Jumping", true);
 
-        else if(m_Grounded)
-        {
-            animator.SetBool("Jumping", false);
             animator.SetBool("Moving", false);
+            audioManager.Stop("walk");
         }
     }
 
@@ -126,19 +123,6 @@ public class CharacterController2D : MonoBehaviour
         Vector2 direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
         transform.Translate(direction * (speed * Time.deltaTime));
-
-        //if(Input.GetKey(KeyCode.W))
-        //{
-        //    m_Rigidbody2D.velocity = new Vector2(0, speed * Time.deltaTime);
-        //}
-        //else if(Input.GetKey(KeyCode.S))
-        //{
-        //    m_Rigidbody2D.velocity = new Vector2(0, -speed * Time.deltaTime);
-        //}
-        //else
-        //{
-        //    m_Rigidbody2D.velocity = Vector2.zero;
-        //}
     }
 
     /// <summary>
@@ -149,7 +133,7 @@ public class CharacterController2D : MonoBehaviour
         if(tongueJoint.enabled)
             EventManager.TriggerEvent(Names.Events.TongueIn);
 
-        if(m_Grounded || !jumped)
+        if(isGrounded || !jumped)
         {
             m_Rigidbody2D.velocity = Vector3.zero;
             m_Rigidbody2D.angularVelocity = 0;
@@ -157,7 +141,7 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
             audioManager.Play("jump1");
             jumped = true;
-            m_Grounded = false;
+            isGrounded = false;
         }
         else if(!doubleJumped)
         {
@@ -174,9 +158,9 @@ public class CharacterController2D : MonoBehaviour
     public void Flip()
     {
         // Switch the way the player is labelled as facing.
-        m_FacingRight = !m_FacingRight;
+        isFacingRight = !isFacingRight;
 
-        if(m_Grounded)
+        if(isGrounded)
             EventManager.TriggerEvent(Names.Events.TongueIn);
 
         // Multiply the player's x local scale by -1.
@@ -187,11 +171,11 @@ public class CharacterController2D : MonoBehaviour
 
     public bool getFacingRight()
     {
-        return m_FacingRight;
+        return isFacingRight;
     }
 
     public bool getGrounded()
     {
-        return m_Grounded;
+        return isGrounded;
     }
 }
