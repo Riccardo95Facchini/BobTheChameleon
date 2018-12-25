@@ -7,10 +7,11 @@ public class TongueRenderer : MonoBehaviour
     [SerializeField] private LayerMask tongueLayerMask;
     [SerializeField] private PlayerMovement playerMovement;
 
-    [SerializeField] private GameObject mouth;
-    [SerializeField] private float climbSpeed = 3f;
+    [SerializeField] private Transform mouth;
+
+    [SerializeField] [Min(0.5f)] private float tongueMinDistance;
     [SerializeField] private float tongueMaxDistance = 10f;
-    [SerializeField] private float tongueMinDistance;
+    [SerializeField] private float climbSpeed = 3f;
 
     private bool drawn;
     private bool tongueAttached;
@@ -70,11 +71,13 @@ public class TongueRenderer : MonoBehaviour
 
     private void HandleAnchor()
     {
-        tongueJoint.anchor = mouth.transform.localPosition;
+        tongueJoint.anchor = mouth.localPosition;
         tongueJoint.enabled = !controller.getGrounded();
 
         if(!tongueJoint.enabled)
+        {
             tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
+        }
 
         if(tongueJoint.distance > tongueMaxDistance)
             TongueIn();
@@ -113,7 +116,7 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void SetStartPosition()
     {
-        startPoint = mouth.transform.position;
+        startPoint = mouth.position;
     }
 
     /// <summary>
@@ -142,13 +145,13 @@ public class TongueRenderer : MonoBehaviour
             if(hit.collider.tag == Names.Tags.Anchor.ToString())
             {
                 endPoint = hit.transform.position;
-                Attach();
+                Attach(hit.rigidbody);
                 return true;
             }
             else if(hit.collider.tag == Names.Tags.Prey.ToString())
             {
                 caughtPrey = hit.collider.gameObject;
-                hit.collider.GetComponent<PreyPatrol>().Caught(mouth.transform);
+                hit.collider.GetComponent<PreyPatrol>().Caught(mouth);
                 tongueAttached = true;
                 return true;
             }
@@ -158,9 +161,12 @@ public class TongueRenderer : MonoBehaviour
                 endPoint = hit.point;
             }
         }
-        else
+        else if(Vector2.Distance(startPoint, endPoint) > tongueMaxDistance)
         {
-            endPoint = startPoint + ((endPoint - startPoint).normalized * tongueMaxDistance);
+            //var x2 = startPoint.x + (endPoint.x - startPoint.x) * tongueMaxDistance / Vector2.Distance(startPoint, endPoint);
+            //var y2 = startPoint.y + (endPoint.y - startPoint.y) * tongueMaxDistance / Vector2.Distance(startPoint, endPoint);
+            //endPoint = new Vector3(x2, y2, 0);
+            endPoint = new Ray2D(startPoint, (endPoint - startPoint)).GetPoint(tongueMaxDistance);
         }
 
         return false;
@@ -169,12 +175,13 @@ public class TongueRenderer : MonoBehaviour
     /// <summary>
     /// Attaches the DistanceJoint2D to the hit ancor and enables it
     /// </summary>
-    private void Attach()
+    private void Attach(Rigidbody2D anchorRB)
     {
         tongueAttached = true;
         tongueJoint.anchor = startPoint;
-        tongueJoint.connectedAnchor = endPoint;
+        //tongueJoint.connectedAnchor = endPoint;
         tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
+        tongueJoint.connectedBody = anchorRB;
     }
 
     /// <summary>
@@ -184,6 +191,7 @@ public class TongueRenderer : MonoBehaviour
     {
         tongueAttached = false;
         tongueJoint.enabled = false;
+        tongueJoint.connectedBody = null;
     }
 
     /// <summary>

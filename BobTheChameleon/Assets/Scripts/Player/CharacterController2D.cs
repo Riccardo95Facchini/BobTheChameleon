@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] private float m_JumpForce = 700f;                          // Amount of force added when the player jumps.
-    [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = 0.05f; // How much to smooth out the movement
-    [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
-    [SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
-    [SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
+    [SerializeField] private float jumpForce = 700f;                          // Amount of force added when the player jumps.
+    [Range(0, .3f)] [SerializeField] private float movementSmoothing = 0.05f; // How much to smooth out the movement
+    [Range(0, .5f)] [SerializeField] private float yAnchorValueDifference = 0.05f; // How much to smooth out the movement
+    [SerializeField] private bool isAirControlActive;                         // Whether or not a player can steer while jumping;
+    [SerializeField] private LayerMask whatIsGround;                          // A mask determining what is ground to the character
+    [SerializeField] private Transform groundCheck;                           // A position marking where to check if the player is grounded.
 
     [SerializeField] private Animator animator;
 
@@ -19,7 +20,7 @@ public class CharacterController2D : MonoBehaviour
 
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
-    private Vector3 velocity = Vector3.zero;
+    private Vector2 velocity = Vector2.zero;
 
     public AudioManager audioManager;
 
@@ -34,7 +35,7 @@ public class CharacterController2D : MonoBehaviour
     {
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, groundCheckRadius, m_WhatIsGround);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundCheckRadius, whatIsGround);
 
         if(colliders.Length == 0)
             isGrounded = false;
@@ -49,21 +50,25 @@ public class CharacterController2D : MonoBehaviour
     public void Move(float horizontal, bool jump, bool onLadder)
     {
         //only control the player if grounded or airControl is turned on
-        if((isGrounded || m_AirControl) && !onLadder)
+        if((isGrounded || isAirControlActive) && !onLadder)
         {
             // Move the character by finding the target velocity
-            Vector3 targetVelocity = Vector3.zero;
+            Vector2 targetVelocity = Vector2.zero;
             if(tongueJoint.enabled)
             {
                 jumped = false;
                 doubleJumped = false;
-                targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
+
+                if(tongueJoint.connectedBody.position.y > transform.position.y)
+                    targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
+                else
+                    targetVelocity = Physics2D.gravity;
             }
             else
                 targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
 
             // And then smoothing it out and applying it to the character
-            m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
+            m_Rigidbody2D.velocity = Vector2.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
 
             // If the input is moving the player right and the player is facing left...
             if(horizontal > 0 && !isFacingRight)
@@ -116,6 +121,9 @@ public class CharacterController2D : MonoBehaviour
 
     private void handleLadder()
     {
+        jumped = false;
+        doubleJumped = false;
+
         float speed = 10;
         m_Rigidbody2D.gravityScale = 0;
         m_Rigidbody2D.velocity = Vector2.zero;
@@ -138,7 +146,7 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.velocity = Vector3.zero;
             m_Rigidbody2D.angularVelocity = 0;
 
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1f));
+            m_Rigidbody2D.AddForce(new Vector2(0f, jumpForce * 1f));
             audioManager.Play("jump1");
             jumped = true;
             isGrounded = false;
@@ -148,7 +156,7 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.velocity = Vector3.zero;
             m_Rigidbody2D.angularVelocity = 0;
 
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1));
+            m_Rigidbody2D.AddForce(new Vector2(0f, jumpForce * 1));
             audioManager.Play("jump2");
             doubleJumped = true;
         }

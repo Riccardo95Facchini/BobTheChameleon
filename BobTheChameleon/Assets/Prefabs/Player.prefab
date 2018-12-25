@@ -36,7 +36,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110115698857284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.309498, y: -4.849, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4945107553363234}
@@ -77,16 +77,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a40e0000229c5439d81326fcd16537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 700
-  m_MovementSmoothing: 0.05
-  m_AirControl: 1
-  m_WhatIsGround:
+  jumpForce: 700
+  movementSmoothing: 0.05
+  yAnchorValueDifference: 0.05
+  isAirControlActive: 1
+  whatIsGround:
     serializedVersion: 2
     m_Bits: 8192
-  m_GroundCheck: {fileID: 4945107553363234}
-  mouth: {fileID: 1476999472888030}
-  audioManager: {fileID: 0}
+  groundCheck: {fileID: 4945107553363234}
   animator: {fileID: 95080848357129244}
+  audioManager: {fileID: 0}
 --- !u!114 &114524550893733502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,10 +104,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 12801
   playerMovement: {fileID: 114490097068375462}
-  mouth: {fileID: 1476999472888030}
-  climbSpeed: 3
-  tongueMaxDistance: 10
+  mouth: {fileID: 4446007625140384}
   tongueMinDistance: 2
+  tongueMaxDistance: 10
+  climbSpeed: 3
 --- !u!114 &114490097068375462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ DistanceJoint2D:
   m_GameObject: {fileID: 1110115698857284}
   m_Enabled: 0
   serializedVersion: 4
-  m_EnableCollision: 1
+  m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 0}
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
@@ -343,7 +343,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 1110115698857284}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a00d36d4a11763a47b59131abdc2b22e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -363,10 +363,10 @@ PolygonCollider2D:
       - {x: -0.4663391, y: 0.7310624}
       - {x: -0.027294159, y: 0.069759846}
       - {x: -0.13401031, y: -0.17753649}
-      - {x: -0.4065895, y: -0.15684128}
-      - {x: -0.47336578, y: -0.3380704}
-      - {x: -0.467865, y: -0.5527868}
-      - {x: -0.18195724, y: -0.7300825}
+      - {x: -0.13356254, y: -0.23918281}
+      - {x: -0.11799723, y: -0.3424042}
+      - {x: -0.06915891, y: -0.46177778}
+      - {x: 0.013062164, y: -0.65207475}
       - {x: 0.33378983, y: -0.6722431}
       - {x: 0.47429276, y: -0.5040226}
       - {x: 0.49365997, y: -0.14780045}
@@ -383,7 +383,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1110115698857284}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a00d36d4a11763a47b59131abdc2b22e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
