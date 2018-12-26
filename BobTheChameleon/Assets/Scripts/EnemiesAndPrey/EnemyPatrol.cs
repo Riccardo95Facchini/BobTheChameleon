@@ -94,7 +94,7 @@ public class EnemyPatrol : MonoBehaviour
             animator.SetBool("Attacking", true);
             return true;
         }
-        sightCheck.Reset();
+        sightCheck.SetToDefault();
         return false;
     }
 

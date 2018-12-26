@@ -29,7 +29,7 @@ public class BirdSight : MonoBehaviour
             if(!isAiming)
             {
                 isAiming = true;
-                sightCheck.Reset();
+                sightCheck.SetToDefault();
                 StartCoroutine(Aim());
             }
         }
@@ -37,7 +37,7 @@ public class BirdSight : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        sightCheck.Reset();
+        sightCheck.SetToDefault();
     }
 
     /// <summary>

@@ -21,7 +21,7 @@ public class PredatorKillsBob : MonoBehaviour
             if(spottedCheck.WasSpottedBeforeCamouflage() || !playerState.IsCamouflaged())
             {
                 EventManager.TriggerEvent(Names.Events.PlayerHit);
-                spottedCheck.Reset();
+                spottedCheck.SetToDefault();
             }
         }
     }

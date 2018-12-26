@@ -10,13 +10,13 @@ public class Camouflage : MonoBehaviour
 
     private bool isCamouflaged;
     //private bool startedCamouflage;
-    private bool canCamouflage;
+    //private bool canCamouflage;
 
     private void OnEnable()
     {
         isCamouflaged = false;
         //startedCamouflage = false;
-        canCamouflage = false;
+        //canCamouflage = false;
         //StartCoroutine(WaitForCamouflage());
     }
     /// <summary>
