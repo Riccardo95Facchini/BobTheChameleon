@@ -961,11 +961,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4880421190041002, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.060116
+      value: 22.787582
       objectReference: {fileID: 0}
     - target: {fileID: 4880421190041002, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.014877
+      value: 8.014384
       objectReference: {fileID: 0}
     - target: {fileID: 4880421190041002, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1003,11 +1003,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.7633934
+      value: -5.4648857
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.7635255
+      value: -0.03462839
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1030,25 +1030,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4269950166945884655, guid: f87e0a897c616134e9c3549965fbeb8c,
-        type: 3}
-      propertyPath: m_BoundingShape2D
-      value: 
-      objectReference: {fileID: 576521119}
     - target: {fileID: 114011499162277252, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 3}
       propertyPath: m_ScreenY
-      value: 0.6682095
+      value: 0.77623475
       objectReference: {fileID: 0}
     - target: {fileID: 114011499162277252, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 3}
       propertyPath: m_DeadZoneHeight
-      value: 0.3148149
+      value: 0.092592694
       objectReference: {fileID: 0}
     - target: {fileID: 114011499162277252, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 3}
       propertyPath: m_ScreenX
-      value: 0.36643893
+      value: 0.3641737
       objectReference: {fileID: 0}
     - target: {fileID: 114011499162277252, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 3}
@@ -1063,7 +1058,7 @@ PrefabInstance:
     - target: {fileID: 114011499162277252, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 3}
       propertyPath: m_DeadZoneWidth
-      value: 0.11869913
+      value: 0.08472404
       objectReference: {fileID: 0}
     - target: {fileID: 114011499162277252, guid: f87e0a897c616134e9c3549965fbeb8c,
         type: 3}
@@ -1075,6 +1070,11 @@ PrefabInstance:
       propertyPath: m_BiasX
       value: -0.000000026993275
       objectReference: {fileID: 0}
+    - target: {fileID: 4269950166945884655, guid: f87e0a897c616134e9c3549965fbeb8c,
+        type: 3}
+      propertyPath: m_BoundingShape2D
+      value: 
+      objectReference: {fileID: 576521119}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
 --- !u!1001 &1046223770
