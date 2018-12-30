@@ -16,6 +16,7 @@ public class CharacterController2D : MonoBehaviour
     private bool isGrounded;            // Whether or not the player is grounded
     private bool isFacingRight = true;  // For determining which way the player is currently facing.
     private bool jumped, doubleJumped;
+    private int lastSound = 1;
 
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
@@ -95,15 +96,12 @@ public class CharacterController2D : MonoBehaviour
         {
             if(horizontal != 0f)
             {
-                if(!audioManager.IsPlaying("walk"))
-                    audioManager.Play("walk");
-
                 animator.SetBool("Jumping", false);
                 animator.SetBool("Moving", true);
             }
             else
             {
-                audioManager.Stop("walk");
+                
                 animator.SetBool("Jumping", false);
                 animator.SetBool("Moving", false);
             }
@@ -114,7 +112,7 @@ public class CharacterController2D : MonoBehaviour
                 animator.SetBool("Jumping", true);
 
             animator.SetBool("Moving", false);
-            audioManager.Stop("walk");
+          
         }
     }
 
@@ -184,5 +182,28 @@ public class CharacterController2D : MonoBehaviour
     public bool getGrounded()
     {
         return isGrounded;
+    }
+
+    public void playFootstep()
+    {
+        
+
+        if (lastSound == 1)
+        {
+            audioManager.Play("walk2");
+            lastSound = 2;
+        }
+
+        else if (lastSound == 2)
+        { 
+            audioManager.Play("walk3");
+            lastSound = 3;
+        }
+
+        else
+        {
+            audioManager.Play("walk3");
+            lastSound = 1;
+        }
     }
 }

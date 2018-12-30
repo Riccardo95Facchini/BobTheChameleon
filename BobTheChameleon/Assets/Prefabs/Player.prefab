@@ -79,7 +79,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 700
   movementSmoothing: 0.05
-  yAnchorValueDifference: 0.05
   isAirControlActive: 1
   whatIsGround:
     serializedVersion: 2

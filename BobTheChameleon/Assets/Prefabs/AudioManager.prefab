@@ -1,21 +1,11 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &100100000
-Prefab:
-  m_ObjectHideFlags: 1
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications: []
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1865730463630994}
-  m_IsPrefabAsset: 1
 --- !u!1 &1865730463630994
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4788896067017240}
@@ -29,9 +19,10 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4788896067017240
 Transform:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865730463630994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -42,9 +33,10 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &114884296346227200
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865730463630994}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -52,10 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: walk
-    clip: {fileID: 8300000, guid: f74eef7e41ff9264dba5f318e638bc30, type: 3}
+  - name: walk1
+    clip: {fileID: 8300000, guid: 4caeda9ff7974bd4aa02412da3d7e4d7, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 1.009
     loop: 0
     source: {fileID: 0}
   - name: jump1
@@ -86,5 +78,23 @@ MonoBehaviour:
     clip: {fileID: 0}
     volume: 0
     pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: walk2
+    clip: {fileID: 8300000, guid: 6b336a4375bfd414fa04d4ea3c93898d, type: 3}
+    volume: 1
+    pitch: 1.319
+    loop: 0
+    source: {fileID: 0}
+  - name: walk3
+    clip: {fileID: 8300000, guid: 538b8d377e3ed0345a51f6147c0f5854, type: 3}
+    volume: 1
+    pitch: 0.854
+    loop: 0
+    source: {fileID: 0}
+  - name: eagleAttack
+    clip: {fileID: 8300000, guid: 7caaa17ef4fe08d42aebb3e2c5e2d5bc, type: 3}
+    volume: 1
+    pitch: 1
     loop: 0
     source: {fileID: 0}

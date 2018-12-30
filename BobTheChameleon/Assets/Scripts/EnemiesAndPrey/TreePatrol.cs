@@ -93,6 +93,7 @@ public class TreePatrol : MonoBehaviour
         StartCoroutine(currentCoroutine);
         animator.SetBool("Attacking", true);
         animator.SetBool("IsAtTree", false);
+        FindObjectOfType<AudioManager>().Play("eagleAttack");
     }
 
     /// <summary>
