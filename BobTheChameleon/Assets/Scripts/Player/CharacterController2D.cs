@@ -97,22 +97,34 @@ public class CharacterController2D : MonoBehaviour
             if(horizontal != 0f)
             {
                 animator.SetBool("Jumping", false);
+                animator.SetBool("DoubleJump", false);
                 animator.SetBool("Moving", true);
             }
             else
             {
                 
                 animator.SetBool("Jumping", false);
+                animator.SetBool("DoubleJump", false);
                 animator.SetBool("Moving", false);
             }
         }
-        else
+        else if (!isGrounded && jumped)
         {
             if(!animator.GetBool("Jumping"))
                 animator.SetBool("Jumping", true);
 
+            else if (doubleJumped)
+            {
+                animator.SetBool("DoubleJump", true);
+            }
+
             animator.SetBool("Moving", false);
           
+        }
+
+        else
+        {
+            animator.SetBool("Moving", false);
         }
     }
 
@@ -144,7 +156,8 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.angularVelocity = 0;
 
             m_Rigidbody2D.AddForce(new Vector2(0f, jumpForce * 1f));
-            audioManager.Play("jump1");
+
+            //audioManager.Play("jump1");
             jumped = true;
             isGrounded = false;
         }
@@ -152,10 +165,11 @@ public class CharacterController2D : MonoBehaviour
         {
             m_Rigidbody2D.velocity = Vector3.zero;
             m_Rigidbody2D.angularVelocity = 0;
-
-            m_Rigidbody2D.AddForce(new Vector2(0f, jumpForce * 1));
-            audioManager.Play("jump2");
             doubleJumped = true;
+            m_Rigidbody2D.AddForce(new Vector2(0f, jumpForce * 1));
+            animator.SetBool("DoubleJump", true);
+            //audioManager.Play("jump2");
+            
         }
     }
 
@@ -205,5 +219,15 @@ public class CharacterController2D : MonoBehaviour
             audioManager.Play("walk3");
             lastSound = 1;
         }
+    }
+
+    public void playJump()
+    {
+        audioManager.Play("jump1");
+    }
+
+    public void playDoubleJump()
+    {
+        audioManager.Play("jump2");
     }
 }
