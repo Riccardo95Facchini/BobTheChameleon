@@ -11,6 +11,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Animator animator;
 
     private const float groundCheckRadius = 0.27f; // Radius of the overlap circle to determine if grounded
+    private const float doubleJumpReset = 0.25f;
     private float originalGravity;
 
     private bool isGrounded;            // Whether or not the player is grounded
@@ -21,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private DistanceJoint2D tongueJoint;
     private Vector2 velocity = Vector2.zero;
+    private PlayerMovement pm;
 
     public AudioManager audioManager;
 
@@ -28,6 +30,7 @@ public class CharacterController2D : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
+        pm = GetComponent<PlayerMovement>();
         originalGravity = m_Rigidbody2D.gravityScale;
     }
 
@@ -56,16 +59,21 @@ public class CharacterController2D : MonoBehaviour
             Vector2 targetVelocity = Vector2.zero;
             if(tongueJoint.enabled)
             {
-                jumped = false;
-                doubleJumped = false;
+                //jumped = false;
+                Invoke("EnableDoubleJump", doubleJumpReset);
+
+                var diff = Mathf.Abs(tongueJoint.connectedBody.position.y - transform.position.y);
 
                 if(tongueJoint.connectedBody.position.y > transform.position.y)
-                    targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
+                    targetVelocity = new Vector2(horizontal * 15f * diff, m_Rigidbody2D.velocity.y);
                 else
                     targetVelocity = Physics2D.gravity;
             }
             else
+            {
                 targetVelocity = new Vector2(horizontal * 10f, m_Rigidbody2D.velocity.y);
+                CancelInvoke();
+            }
 
             // And then smoothing it out and applying it to the character
             m_Rigidbody2D.velocity = Vector2.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, movementSmoothing);
@@ -79,20 +87,34 @@ public class CharacterController2D : MonoBehaviour
         }
 
         if(onLadder)
-            handleLadder();
+            HandleLadder();
         else
         {
             m_Rigidbody2D.gravityScale = originalGravity;
             //Can jump only if not on a ladder
             if(jump)
                 CheckAndJump();
+
         }
-        HandleAnimation(horizontal);
+        HandleAnimation(horizontal, onLadder);
     }
 
-    private void HandleAnimation(float horizontal)
+    /// <summary>
+    /// Called with an invoke, prevents the abuse of attatching with the toungue and jumping
+    /// </summary>
+    private void EnableDoubleJump()
     {
-        if(isGrounded)
+        doubleJumped = false;
+    }
+
+    private void HandleAnimation(float horizontal, bool onLadder)
+    {
+        if(onLadder)
+        {
+            animator.SetBool("Jumping", false);
+            animator.SetBool("Moving", false);
+        }
+        else if(isGrounded)
         {
             if(horizontal != 0f)
             {
@@ -102,24 +124,24 @@ public class CharacterController2D : MonoBehaviour
             }
             else
             {
-                
+
                 animator.SetBool("Jumping", false);
                 animator.SetBool("DoubleJump", false);
                 animator.SetBool("Moving", false);
             }
         }
-        else if (!isGrounded && jumped)
+        else if(!isGrounded && jumped)
         {
             if(!animator.GetBool("Jumping"))
                 animator.SetBool("Jumping", true);
 
-            else if (doubleJumped)
+            else if(doubleJumped)
             {
                 animator.SetBool("DoubleJump", true);
             }
 
             animator.SetBool("Moving", false);
-          
+
         }
 
         else
@@ -128,16 +150,23 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-    private void handleLadder()
+    private void HandleLadder()
     {
         jumped = false;
         doubleJumped = false;
+        float vertical = Input.GetAxis("Vertical");
+
+        if(isGrounded && vertical < 0)
+        {
+            vertical = 0;
+            pm.SetIsOnLadder(false);
+        }
 
         float speed = 10;
         m_Rigidbody2D.gravityScale = 0;
         m_Rigidbody2D.velocity = Vector2.zero;
 
-        Vector2 direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 direction = new Vector2(Input.GetAxis("Horizontal"), vertical);
 
         transform.Translate(direction * (speed * Time.deltaTime));
     }
@@ -169,7 +198,7 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.AddForce(new Vector2(0f, jumpForce * 1));
             animator.SetBool("DoubleJump", true);
             //audioManager.Play("jump2");
-            
+
         }
     }
 
@@ -200,16 +229,16 @@ public class CharacterController2D : MonoBehaviour
 
     public void playFootstep()
     {
-        
 
-        if (lastSound == 1)
+
+        if(lastSound == 1)
         {
             audioManager.Play("walk2");
             lastSound = 2;
         }
 
-        else if (lastSound == 2)
-        { 
+        else if(lastSound == 2)
+        {
             audioManager.Play("walk3");
             lastSound = 3;
         }
