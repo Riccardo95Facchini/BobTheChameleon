@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 58923892909794552}
   - component: {fileID: 212622285608703322}
   m_Layer: 12
-  m_Name: Prey
+  m_Name: Fly
   m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
