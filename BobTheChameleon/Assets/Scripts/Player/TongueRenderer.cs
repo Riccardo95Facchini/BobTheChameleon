@@ -57,6 +57,9 @@ public class TongueRenderer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If a prey is caught, set the tip of the tongue to the position of the prey until it is eaten
+    /// </summary>
     private void HandlePrey()
     {
         if(caughtPrey.activeSelf)
@@ -69,6 +72,9 @@ public class TongueRenderer : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Handles when Bob is attached to an anchor point
+    /// </summary>
     private void HandleAnchor()
     {
         tongueJoint.anchor = mouth.localPosition;
@@ -139,16 +145,15 @@ public class TongueRenderer : MonoBehaviour
     private bool CheckRaycast()
     {
         RaycastHit2D hit = Physics2D.Raycast(startPoint, (endPoint - startPoint), tongueMaxDistance, tongueLayerMask);
-
         if(hit.collider != null)
         {
-            if(hit.collider.tag == Names.Tags.Anchor.ToString())
+            if(hit.collider.tag == Names.Tags.Anchor.ToString() && CheckMaximumDistance(hit.transform.position))
             {
                 endPoint = hit.transform.position;
                 Attach(hit.rigidbody);
                 return true;
             }
-            else if(hit.collider.tag == Names.Tags.Prey.ToString())
+            else if(hit.collider.tag == Names.Tags.Prey.ToString() && CheckMaximumDistance(hit.transform.position))
             {
                 caughtPrey = hit.collider.gameObject;
                 hit.collider.GetComponent<PreyPatrol>().Caught(mouth);
@@ -163,13 +168,26 @@ public class TongueRenderer : MonoBehaviour
         }
         else if(Vector2.Distance(startPoint, endPoint) > tongueMaxDistance)
         {
-            //var x2 = startPoint.x + (endPoint.x - startPoint.x) * tongueMaxDistance / Vector2.Distance(startPoint, endPoint);
-            //var y2 = startPoint.y + (endPoint.y - startPoint.y) * tongueMaxDistance / Vector2.Distance(startPoint, endPoint);
-            //endPoint = new Vector3(x2, y2, 0);
             endPoint = new Ray2D(startPoint, (endPoint - startPoint)).GetPoint(tongueMaxDistance);
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// Checks if the point is too far to be reached, if too far sets the end position to the furthest point on the line connecting start and end point.
+    /// </summary>
+    /// <param name="end">Point where the toungue tip should be drawn</param>
+    /// <returns>True if the distance is less then the maximum one, false otherwise</returns>
+    private bool CheckMaximumDistance(Vector2 end)
+    {
+        if(Vector2.Distance(startPoint, end) > tongueMaxDistance)
+        {
+            endPoint = new Ray2D(startPoint, (endPoint - startPoint)).GetPoint(tongueMaxDistance);
+            return false;
+        }
+        else
+            return true;
     }
 
     /// <summary>
@@ -219,6 +237,7 @@ public class TongueRenderer : MonoBehaviour
 
     private void TongueOut()
     {
+        CancelInvoke();
         SetStartPosition();
         SetEndPosition();
         EventManager.StopListening(Names.Events.TongueOut, TongueOut);
@@ -229,15 +248,11 @@ public class TongueRenderer : MonoBehaviour
         }
 
         if(CheckRaycast())
-        {
-            DrawTongue();
             EventManager.StartListening(Names.Events.TongueIn, TongueIn);
-        }
         else
-        {
-            DrawTongue();
             Invoke(Names.Events.TongueIn.ToString(), 0.1f);
-        }
+
+        DrawTongue();
     }
     private void TongueIn()
     {
