@@ -87,7 +87,8 @@ public class GameManager : MonoBehaviour
     public void LoadNext()
     {
         currentLevel++;
-        Debug.Log(currentLevel);
+        if(currentLevel > 8)
+            currentLevel = 0;
         SceneManager.LoadScene(currentLevel);
     }
 

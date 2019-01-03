@@ -11,7 +11,7 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Animator animator;
 
     private const float groundCheckRadius = 0.27f; // Radius of the overlap circle to determine if grounded
-    private const float doubleJumpReset = 0.25f;
+    private const float doubleJumpReset = 0.5f;
     private float originalGravity;
 
     private bool isGrounded;            // Whether or not the player is grounded

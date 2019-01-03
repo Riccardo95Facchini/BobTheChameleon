@@ -141,5 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1965119c8c905642ada13a0674fdd44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallDelay: 0
+  fallDelay: 0.25
   respawnDelay: 5
