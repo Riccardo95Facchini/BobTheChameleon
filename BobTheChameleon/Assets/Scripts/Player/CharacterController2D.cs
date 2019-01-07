@@ -92,7 +92,8 @@ public class CharacterController2D : MonoBehaviour
         {
             m_Rigidbody2D.gravityScale = originalGravity;
             //Can jump only if not on a ladder
-            if(jump)
+            animator.SetBool("Climbing", false);
+            if (jump)
                 CheckAndJump();
 
         }
@@ -153,13 +154,17 @@ public class CharacterController2D : MonoBehaviour
     private void HandleLadder()
     {
         jumped = false;
+        animator.SetBool("DoubleJump", false);
         doubleJumped = false;
+        animator.SetBool("Jumping", false);
+        animator.SetBool("Climbing", true);
         float vertical = Input.GetAxis("Vertical");
 
         if(isGrounded && vertical < 0)
         {
             vertical = 0;
             pm.SetIsOnLadder(false);
+            animator.SetBool("Climbing", false);
         }
 
         float speed = 10;
