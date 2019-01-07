@@ -10,7 +10,7 @@ public class CharacterController2D : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
-    private const float groundCheckRadius = 0.27f; // Radius of the overlap circle to determine if grounded
+    private const float groundCheckRadius = 0.3f; // Radius of the overlap circle to determine if grounded
     private const float doubleJumpReset = 0.5f;
     private float originalGravity;
 
@@ -62,12 +62,11 @@ public class CharacterController2D : MonoBehaviour
                 //jumped = false;
                 Invoke("EnableDoubleJump", doubleJumpReset);
 
-                var diff = Mathf.Abs(tongueJoint.connectedBody.position.y - transform.position.y);
-
                 if(tongueJoint.connectedBody.position.y > transform.position.y)
-                    targetVelocity = new Vector2(horizontal * 15f * diff, m_Rigidbody2D.velocity.y);
+                    targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
                 else
-                    targetVelocity = Physics2D.gravity;
+                    return;
+                    //targetVelocity = Physics2D.gravity;
             }
             else
             {
@@ -182,7 +181,13 @@ public class CharacterController2D : MonoBehaviour
     private void CheckAndJump()
     {
         if(tongueJoint.enabled)
-            EventManager.TriggerEvent(Names.Events.TongueIn);
+        {
+            //If anchor is below Bob prevent from jumping
+            if(tongueJoint.connectedAnchor.y < transform.position.y)
+                return;
+            else
+                EventManager.TriggerEvent(Names.Events.TongueIn);
+        }
 
         if(isGrounded || !jumped)
         {

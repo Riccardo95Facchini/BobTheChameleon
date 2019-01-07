@@ -22,6 +22,7 @@ public class TongueRenderer : MonoBehaviour
     private CharacterController2D controller;
     private DistanceJoint2D tongueJoint;
     private GameObject caughtPrey = null;
+    private PolygonCollider2D headCollider;
 
     /// <summary>
     /// When awake cache the needed components and initiate the renderer
@@ -32,6 +33,7 @@ public class TongueRenderer : MonoBehaviour
         tongueAttached = false;
         controller = GetComponent<CharacterController2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
+        headCollider = GetComponent<PolygonCollider2D>();
         tongueJoint.enabled = false;
     }
 
@@ -240,6 +242,7 @@ public class TongueRenderer : MonoBehaviour
         CancelInvoke();
         SetStartPosition();
         SetEndPosition();
+        headCollider.enabled = false;
         EventManager.StopListening(Names.Events.TongueOut, TongueOut);
 
         if(!CorrectSide())
@@ -259,6 +262,7 @@ public class TongueRenderer : MonoBehaviour
         if(tongueAttached)
             Detach();
 
+        headCollider.enabled = true;
         EventManager.StartListening(Names.Events.TongueOut, TongueOut);
         EventManager.StopListening(Names.Events.TongueIn, TongueIn);
         tongueRenderer.SetPosition(1, tongueRenderer.GetPosition(0));
