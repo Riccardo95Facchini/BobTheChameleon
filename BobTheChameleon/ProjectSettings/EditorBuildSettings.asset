@@ -6,36 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/0.MainMenu.unity
+    path: Assets/Scenes/BetaScenes/0.MainMenu.unity
     guid: f6d816622f158234fa95a976fa929e2b
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/1.SampleSceneJump.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/BetaScenes/1.BetaLevel 1.unity
+    guid: dd2f71a6bacd5d84392fec162292575b
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/2.SampleSceneBush.unity
-    guid: 70fdcb768503e934885219e94d2e2e3d
+    path: Assets/Scenes/BetaScenes/2.BetaLevel 2.unity
+    guid: bf96467b00c247c418318cd4437542e8
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/3.SampleScenePrey.unity
-    guid: 4b66d99a72b261441955ed3f4d361db8
+    path: Assets/Scenes/BetaScenes/3.BetaLevel 3.unity
+    guid: 3b64930baf2708f4782ceacfa0ae27af
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/4.SampleSceneAnchor.unity
-    guid: 0bcba8eb5a7e7864191c65c47ac3fada
+    path: Assets/Scenes/BetaScenes/4.BetaLevel 4.unity
+    guid: b45eb9a8a94fb9142af87dffb6ca3634
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/5.SampleSceneAcrobatics.unity
-    guid: e91e2f21c9787ac448078280787a455f
+    path: Assets/Scenes/BetaScenes/5.BetaLevel 5.unity
+    guid: 9245998d0d056144f80b5e6902e01e2f
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/6.SampleScenePlatforms.unity
-    guid: c24b160bd72148b44ae24c46dff2183b
+    path: Assets/Scenes/BetaScenes/6.BetaLevel 6.unity
+    guid: 3eec941fd0d3c394fa2a5e8ca4897525
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/7.SampleSceneSpikes.unity
-    guid: dd46e61497859c142bf4d0aeec0e95fd
+    path: Assets/Scenes/BetaScenes/7.BetaLevel 7.unity
+    guid: 772f63ba69086504b934abdd97fd16cc
   - enabled: 1
-    path: Assets/Scenes/SampleScenes/8.SampleSceneSnake.unity
-    guid: fd7f4168cd5b04d46b758d6e387f6140
-  - enabled: 1
-    path: Assets/Scenes/SampleScenes/9.SampleSceneEagle.unity
-    guid: 1cbc2a0b3b8e39c4fb2ce57a798ff863
-  - enabled: 1
-    path: Assets/Scenes/Alpha Demo Level.unity
-    guid: 84890ccda4e93aa4398de2c056a0654f
+    path: Assets/Scenes/BetaScenes/8.BetaLevel 8.unity
+    guid: 8dcc5fee48d1b96439dfeb13b8b9a273
   m_configObjects: {}

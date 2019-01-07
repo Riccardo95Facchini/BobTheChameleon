@@ -7,10 +7,11 @@ public class TongueRenderer : MonoBehaviour
     [SerializeField] private LayerMask tongueLayerMask;
     [SerializeField] private PlayerMovement playerMovement;
 
-    [SerializeField] private GameObject mouth;
-    [SerializeField] private float climbSpeed = 3f;
+    [SerializeField] private Transform mouth;
+
+    [SerializeField] [Min(0.5f)] private float tongueMinDistance;
     [SerializeField] private float tongueMaxDistance = 10f;
-    [SerializeField] private float tongueMinDistance;
+    [SerializeField] private float climbSpeed = 3f;
 
     private bool drawn;
     private bool tongueAttached;
@@ -21,6 +22,7 @@ public class TongueRenderer : MonoBehaviour
     private CharacterController2D controller;
     private DistanceJoint2D tongueJoint;
     private GameObject caughtPrey = null;
+    private PolygonCollider2D headCollider;
 
     /// <summary>
     /// When awake cache the needed components and initiate the renderer
@@ -31,6 +33,7 @@ public class TongueRenderer : MonoBehaviour
         tongueAttached = false;
         controller = GetComponent<CharacterController2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
+        headCollider = GetComponent<PolygonCollider2D>();
         tongueJoint.enabled = false;
     }
 
@@ -56,6 +59,9 @@ public class TongueRenderer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If a prey is caught, set the tip of the tongue to the position of the prey until it is eaten
+    /// </summary>
     private void HandlePrey()
     {
         if(caughtPrey.activeSelf)
@@ -68,13 +74,18 @@ public class TongueRenderer : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Handles when Bob is attached to an anchor point
+    /// </summary>
     private void HandleAnchor()
     {
-        tongueJoint.anchor = mouth.transform.localPosition;
+        tongueJoint.anchor = mouth.localPosition;
         tongueJoint.enabled = !controller.getGrounded();
 
         if(!tongueJoint.enabled)
+        {
             tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
+        }
 
         if(tongueJoint.distance > tongueMaxDistance)
             TongueIn();
@@ -113,7 +124,7 @@ public class TongueRenderer : MonoBehaviour
     /// </summary>
     private void SetStartPosition()
     {
-        startPoint = mouth.transform.position;
+        startPoint = mouth.position;
     }
 
     /// <summary>
@@ -136,19 +147,18 @@ public class TongueRenderer : MonoBehaviour
     private bool CheckRaycast()
     {
         RaycastHit2D hit = Physics2D.Raycast(startPoint, (endPoint - startPoint), tongueMaxDistance, tongueLayerMask);
-
         if(hit.collider != null)
         {
-            if(hit.collider.tag == Names.Tags.Anchor.ToString())
+            if(hit.collider.tag == Names.Tags.Anchor.ToString() && CheckMaximumDistance(hit.transform.position))
             {
                 endPoint = hit.transform.position;
-                Attach();
+                Attach(hit.rigidbody);
                 return true;
             }
-            else if(hit.collider.tag == Names.Tags.Prey.ToString())
+            else if(hit.collider.tag == Names.Tags.Prey.ToString() && CheckMaximumDistance(hit.transform.position))
             {
                 caughtPrey = hit.collider.gameObject;
-                hit.collider.GetComponent<PreyPatrol>().Caught(mouth.transform);
+                hit.collider.GetComponent<PreyPatrol>().Caught(mouth);
                 tongueAttached = true;
                 return true;
             }
@@ -158,23 +168,40 @@ public class TongueRenderer : MonoBehaviour
                 endPoint = hit.point;
             }
         }
-        else
+        else if(Vector2.Distance(startPoint, endPoint) > tongueMaxDistance)
         {
-            endPoint = startPoint + ((endPoint - startPoint).normalized * tongueMaxDistance);
+            endPoint = new Ray2D(startPoint, (endPoint - startPoint)).GetPoint(tongueMaxDistance);
         }
 
         return false;
     }
 
     /// <summary>
+    /// Checks if the point is too far to be reached, if too far sets the end position to the furthest point on the line connecting start and end point.
+    /// </summary>
+    /// <param name="end">Point where the toungue tip should be drawn</param>
+    /// <returns>True if the distance is less then the maximum one, false otherwise</returns>
+    private bool CheckMaximumDistance(Vector2 end)
+    {
+        if(Vector2.Distance(startPoint, end) > tongueMaxDistance)
+        {
+            endPoint = new Ray2D(startPoint, (endPoint - startPoint)).GetPoint(tongueMaxDistance);
+            return false;
+        }
+        else
+            return true;
+    }
+
+    /// <summary>
     /// Attaches the DistanceJoint2D to the hit ancor and enables it
     /// </summary>
-    private void Attach()
+    private void Attach(Rigidbody2D anchorRB)
     {
         tongueAttached = true;
         tongueJoint.anchor = startPoint;
-        tongueJoint.connectedAnchor = endPoint;
+        //tongueJoint.connectedAnchor = endPoint;
         tongueJoint.distance = Vector2.Distance(startPoint, endPoint);
+        tongueJoint.connectedBody = anchorRB;
     }
 
     /// <summary>
@@ -184,6 +211,7 @@ public class TongueRenderer : MonoBehaviour
     {
         tongueAttached = false;
         tongueJoint.enabled = false;
+        tongueJoint.connectedBody = null;
     }
 
     /// <summary>
@@ -211,8 +239,10 @@ public class TongueRenderer : MonoBehaviour
 
     private void TongueOut()
     {
+        CancelInvoke();
         SetStartPosition();
         SetEndPosition();
+        headCollider.enabled = false;
         EventManager.StopListening(Names.Events.TongueOut, TongueOut);
 
         if(!CorrectSide())
@@ -221,21 +251,18 @@ public class TongueRenderer : MonoBehaviour
         }
 
         if(CheckRaycast())
-        {
-            DrawTongue();
             EventManager.StartListening(Names.Events.TongueIn, TongueIn);
-        }
         else
-        {
-            DrawTongue();
             Invoke(Names.Events.TongueIn.ToString(), 0.1f);
-        }
+
+        DrawTongue();
     }
     private void TongueIn()
     {
         if(tongueAttached)
             Detach();
 
+        headCollider.enabled = true;
         EventManager.StartListening(Names.Events.TongueOut, TongueOut);
         EventManager.StopListening(Names.Events.TongueIn, TongueIn);
         tongueRenderer.SetPosition(1, tongueRenderer.GetPosition(0));

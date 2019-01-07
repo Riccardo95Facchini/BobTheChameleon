@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == Names.Tags.Player.ToString())
-            GameManager.Instance.checkpoint = respPos.position;
+        //if(collision.tag == Names.Tags.Player.ToString())
+        //    GameManager.Instance.checkpoint = respPos.position;
     }
 }

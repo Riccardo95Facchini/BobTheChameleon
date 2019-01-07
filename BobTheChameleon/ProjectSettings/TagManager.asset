@@ -23,7 +23,7 @@ TagManager:
   - Enemy
   - Background
   - Prey
-  - 
+  - Ground
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: HiddenBackground
+    uniqueID: 565384181
+    locked: 0
   - name: Background
     uniqueID: 3848528609
     locked: 0

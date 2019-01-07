@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,49 +15,39 @@ public class GameManager : MonoBehaviour
     private bool isPlayerDead;
     private static bool inMenu;
 
-    public Vector3 checkpoint;
-
-    private static int currentLevel;
-
-    private static ArrayList levels = new ArrayList()
-{
-    "0.MainMenu", "1.SampleSceneJump", "2.SampleSceneBush",
-        "3.SampleScenePrey", "4.SampleSceneAnchor", "5.SampleSceneAcrobatics",
-        "6.SampleScenePlatforms", "7.SampleSceneSpikes", "8.SampleSceneSnake",
-        "9.SampleSceneEagle", "Alpha Demo Level"
-};
-
-    private void OnLevelWasLoaded(int level)
-    {
-        player = GameObject.FindWithTag(Names.Tags.Player.ToString());
-        if(player != null)
-            checkpoint = player.transform.position;
-    }
+    private static int currentLevel = 0;
 
     private void Awake()
     {
         EventManager.StartListening(Names.Events.PlayerDead, PlayerDead);
+        SceneManager.sceneLoaded += OnLoadCallback;
         if(Instance == null)
         {
             Instance = this;
             isPlayerDead = false;
             DontDestroyOnLoad(gameObject);
 
-            currentLevel = 0;
-            inMenu = true;
-            Load(currentLevel);
+            //currentLevel = 0;
+            //inMenu = true;
+            //Load(currentLevel);
         }
         else
         {
             Destroy(gameObject);
+            return;
         }
         player = GameObject.FindWithTag(Names.Tags.Player.ToString());
-        if(player != null)
-            checkpoint = player.transform.position;
+    }
+
+    void OnLoadCallback(Scene scene, LoadSceneMode sceneMode)
+    {
+        player = GameObject.FindWithTag(Names.Tags.Player.ToString());
     }
 
     void Update()
     {
+        //Debug.Log(currentLevel);
+
         if(!inMenu)
         {
             if(!isPlayerDead)
@@ -66,7 +55,7 @@ public class GameManager : MonoBehaviour
                 if(Input.GetKeyDown(KeyCode.Escape))
                 {
                     inMenu = true;
-                    SceneManager.LoadScene("0.MainMenu");
+                    SceneManager.LoadScene(0);
                 }
                 if(Input.GetKeyDown(KeyCode.Return))
                     Load(currentLevel);
@@ -75,31 +64,12 @@ public class GameManager : MonoBehaviour
                     EventManager.TriggerEvent(Names.Events.TongueOut);
                 else if(Input.GetKeyUp(KeyCode.Mouse0))
                     EventManager.TriggerEvent(Names.Events.TongueIn);
-
-                if(Input.GetKeyDown(KeyCode.Mouse1))
-                {
-                    Time.timeScale = slowMotionValue;
-                    Invoke("CancelSlowMotion", slowMotionDuration);
-                }
-                else if(Input.GetKeyUp(KeyCode.Mouse1))
-                {
-                    CancelInvoke();
-                    Time.timeScale = 1f;
-                }
-
-                if(Input.GetKeyDown(KeyCode.KeypadEnter))
-                    Respawn(); // TODO: only for prototype
             }
         }
     }
 
-    private void CancelSlowMotion()
-    {
-        Time.timeScale = 1f;
-    }
-
     /// <summary>
-    /// Load a specific level in the Arraylist levels
+    /// Load a specific level
     /// </summary>
     /// <param name="sceneId">Id of the level</param>
     public void Load(int sceneId)
@@ -108,7 +78,7 @@ public class GameManager : MonoBehaviour
             inMenu = false;
 
         currentLevel = sceneId;
-        SceneManager.LoadScene(levels[sceneId].ToString());
+        SceneManager.LoadScene(currentLevel);
     }
 
     /// <summary>
@@ -117,7 +87,9 @@ public class GameManager : MonoBehaviour
     public void LoadNext()
     {
         currentLevel++;
-        SceneManager.LoadScene(levels[currentLevel].ToString());
+        if(currentLevel > 8)
+            currentLevel = 0;
+        SceneManager.LoadScene(currentLevel);
     }
 
     #region EventManager
@@ -131,12 +103,8 @@ public class GameManager : MonoBehaviour
     }
     private void Respawn()
     {
-        if(currentLevel != 10) //TODO: only prototype
-            Load(currentLevel);
-        else
-        {
-            player.GetComponent<PlayerMovement>().SetRespawn(checkpoint);
-        }
+        Load(currentLevel);
+
         isPlayerDead = false;
         DeathPanel.SetActive(false);
         player.SetActive(true);

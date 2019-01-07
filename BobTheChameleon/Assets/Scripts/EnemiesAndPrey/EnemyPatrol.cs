@@ -53,6 +53,7 @@ public class EnemyPatrol : MonoBehaviour
     /// <returns>walkSpeed when not charging, chargeSpeed when charging</returns>
     private float SpeedSet()
     {
+        rayDirection = movingLeft ? Vector2.left : Vector2.right;
         if(!charging)
         {
             charging = IsPlayerInSightSimple();
@@ -93,7 +94,7 @@ public class EnemyPatrol : MonoBehaviour
             animator.SetBool("Attacking", true);
             return true;
         }
-        sightCheck.Reset();
+        sightCheck.SetToDefault();
         return false;
     }
 

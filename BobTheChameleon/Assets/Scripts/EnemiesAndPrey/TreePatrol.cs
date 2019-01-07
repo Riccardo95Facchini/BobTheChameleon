@@ -5,11 +5,13 @@ public class TreePatrol : MonoBehaviour
 {
     [SerializeField] private Transform leftPosition;
     [SerializeField] private Transform rightPosition;
+
     [SerializeField] private Enemy enemyData;
+
     [SerializeField] private PlayerInLineOfSight sightCheck;
 
-    public Animator animator;
-    
+    [SerializeField] private Animator animator;
+
     private float flipInterval;
     private float chargeSpeed;
 
@@ -53,6 +55,7 @@ public class TreePatrol : MonoBehaviour
     {
         while(true)
         {
+            CheckFlipSprite(playerPosition.position.x);
             transform.position = Vector2.MoveTowards(transform.position, playerPosition.position, chargeSpeed * Time.deltaTime);
             yield return null;
         }
@@ -65,10 +68,7 @@ public class TreePatrol : MonoBehaviour
     /// <returns>null</returns>
     private IEnumerator GoBackToTree(Vector3 target)
     {
-        if(isLookingLeft && transform.position.x < target.x)
-            FlipSprite();
-        else if(!isLookingLeft && transform.position.x > target.x)
-            FlipSprite();
+        CheckFlipSprite(target.x);
 
         while(transform.position != target)
         {
@@ -93,6 +93,7 @@ public class TreePatrol : MonoBehaviour
         StartCoroutine(currentCoroutine);
         animator.SetBool("Attacking", true);
         animator.SetBool("IsAtTree", false);
+        FindObjectOfType<AudioManager>().Play("eagleAttack");
     }
 
     /// <summary>
@@ -137,5 +138,17 @@ public class TreePatrol : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);
 
         isLookingLeft = !isLookingLeft;
+    }
+
+    /// <summary>
+    /// Checks if the eagle must be flipped when moving towards a target
+    /// </summary>
+    /// <param name="targetX">X value of the target</param>
+    private void CheckFlipSprite(float targetX)
+    {
+        if(isLookingLeft && transform.position.x < targetX)
+            FlipSprite();
+        else if(!isLookingLeft && transform.position.x > targetX)
+            FlipSprite();
     }
 }

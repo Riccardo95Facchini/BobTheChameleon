@@ -57,7 +57,7 @@ public class PlayerInLineOfSight : MonoBehaviour
         return spottedBeforeCamouflage;
     }
 
-    public void Reset()
+    public void SetToDefault()
     {
         playerState = null;
         spottedBeforeCamouflage = false;
