@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 120634025458630210}
   - component: {fileID: 95080848357129244}
   - component: {fileID: 6542778165328626398}
-  - component: {fileID: 6542019008353916973}
   - component: {fileID: 5858856082748759122}
   m_Layer: 8
   m_Name: Player
@@ -42,6 +41,7 @@ Transform:
   m_Children:
   - {fileID: 4945107553363234}
   - {fileID: 4446007625140384}
+  - {fileID: 5683933970957705858}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,6 +104,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 12801
   playerMovement: {fileID: 114490097068375462}
+  tailCollider: {fileID: 4988552003545135306}
   mouth: {fileID: 4446007625140384}
   tongueMinDistance: 2
   tongueMaxDistance: 10
@@ -347,25 +348,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2448808, y: -0.018406212}
-  m_Size: {x: 0.5102384, y: 1.322724}
+  m_Offset: {x: 0.23, y: -0.18154937}
+  m_Size: {x: 0.5157687, y: 1.6490103}
   m_Direction: 0
---- !u!58 &6542019008353916973
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110115698857284}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: a00d36d4a11763a47b59131abdc2b22e, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.23, y: -0.76}
-  serializedVersion: 2
-  m_Radius: 0.25
 --- !u!60 &5858856082748759122
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -478,3 +463,50 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.27
+--- !u!1 &3622381338408495904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5683933970957705858}
+  - component: {fileID: 4988552003545135306}
+  m_Layer: 8
+  m_Name: Tail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5683933970957705858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622381338408495904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4485770090094986}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &4988552003545135306
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3622381338408495904}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: a00d36d4a11763a47b59131abdc2b22e, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.3

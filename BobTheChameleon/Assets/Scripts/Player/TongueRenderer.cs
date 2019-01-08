@@ -6,6 +6,7 @@ public class TongueRenderer : MonoBehaviour
     [SerializeField] private LineRenderer tongueRenderer;
     [SerializeField] private LayerMask tongueLayerMask;
     [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private CircleCollider2D tailCollider;
 
     [SerializeField] private Transform mouth;
 
@@ -243,6 +244,7 @@ public class TongueRenderer : MonoBehaviour
         SetStartPosition();
         SetEndPosition();
         headCollider.enabled = false;
+        tailCollider.enabled = false;
         EventManager.StopListening(Names.Events.TongueOut, TongueOut);
 
         if(!CorrectSide())
@@ -263,6 +265,7 @@ public class TongueRenderer : MonoBehaviour
             Detach();
 
         headCollider.enabled = true;
+        tailCollider.enabled = true;
         EventManager.StartListening(Names.Events.TongueOut, TongueOut);
         EventManager.StopListening(Names.Events.TongueIn, TongueIn);
         tongueRenderer.SetPosition(1, tongueRenderer.GetPosition(0));
