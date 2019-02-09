@@ -31119,7 +31119,7 @@ GameObject:
   - component: {fileID: 804226486}
   - component: {fileID: 804226488}
   - component: {fileID: 804226487}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: UnidirectionalPlatform (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36498,7 +36498,7 @@ GameObject:
   - component: {fileID: 996134803}
   - component: {fileID: 996134805}
   - component: {fileID: 996134804}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: UnidirectionalPlatform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36679,7 +36679,7 @@ GameObject:
   - component: {fileID: 1311199485}
   - component: {fileID: 1311199487}
   - component: {fileID: 1311199486}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: UnidirectionalPlatform (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36756,7 +36756,7 @@ GameObject:
   - component: {fileID: 1334215482}
   - component: {fileID: 1334215484}
   - component: {fileID: 1334215483}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: UnidirectionalPlatform (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37092,9 +37092,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1720785773}
-  m_Layer: 13
+  m_Layer: 2
   m_Name: UnidrectionalPlatforms
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

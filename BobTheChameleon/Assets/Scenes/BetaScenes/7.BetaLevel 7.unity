@@ -1178,9 +1178,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 567188680}
-  m_Layer: 13
+  m_Layer: 2
   m_Name: UnidirectionalPlatforms
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7416,11 +7416,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6866524268614557944, guid: 206ff64b5807e6a4f82cbeefefc4e24e,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 206ff64b5807e6a4f82cbeefefc4e24e, type: 3}
