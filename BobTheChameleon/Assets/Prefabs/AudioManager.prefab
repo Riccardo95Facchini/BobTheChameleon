@@ -98,3 +98,9 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: Background music
+    clip: {fileID: 8300000, guid: 570a832a10c44d841ae8b3fc6bb2a750, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}

@@ -66,4 +66,9 @@ public class AudioManager : MonoBehaviour
 
         s.source.pitch = pitch;
     }
+
+    void Start()
+    {
+        Play("Background music");
+    }
 }
