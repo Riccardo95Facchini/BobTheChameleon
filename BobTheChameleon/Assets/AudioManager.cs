@@ -6,8 +6,6 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] sounds;
 
-    
-
     // Use this for initialization
     void Awake()
     {
@@ -67,10 +65,5 @@ public class AudioManager : MonoBehaviour
         }
 
         s.source.pitch = pitch;
-    }
-
-    void Start()
-    {
-        Play("Background music");
     }
 }
