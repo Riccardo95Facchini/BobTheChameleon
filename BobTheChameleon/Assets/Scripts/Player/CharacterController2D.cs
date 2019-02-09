@@ -23,11 +23,13 @@ public class CharacterController2D : MonoBehaviour
     private DistanceJoint2D tongueJoint;
     private Vector2 velocity = Vector2.zero;
     private PlayerMovement pm;
+    private CapsuleCollider2D bodyCollider;
 
     public AudioManager audioManager;
 
     private void Awake()
     {
+        bodyCollider = GetComponent<CapsuleCollider2D>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         tongueJoint = GetComponent<DistanceJoint2D>();
         pm = GetComponent<PlayerMovement>();
@@ -66,7 +68,7 @@ public class CharacterController2D : MonoBehaviour
                     targetVelocity = new Vector2(horizontal * 15f, m_Rigidbody2D.velocity.y);
                 else
                     return;
-                    //targetVelocity = Physics2D.gravity;
+                //targetVelocity = Physics2D.gravity;
             }
             else
             {
@@ -92,7 +94,7 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.gravityScale = originalGravity;
             //Can jump only if not on a ladder
             animator.SetBool("Climbing", false);
-            if (jump)
+            if(jump)
                 CheckAndJump();
 
         }
@@ -222,7 +224,7 @@ public class CharacterController2D : MonoBehaviour
             EventManager.TriggerEvent(Names.Events.TongueIn);
 
         // Multiply the player's x local scale by -1.
-        Vector3 theScale = transform.localScale;
+        Vector3 theScale = bodyCollider.transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
     }
