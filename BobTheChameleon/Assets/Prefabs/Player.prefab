@@ -395,7 +395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4446007625140384}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Mouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4945107553363234}
   - component: {fileID: 6738642665694308853}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,9 +473,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5683933970957705858}
   - component: {fileID: 4988552003545135306}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Tail
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
