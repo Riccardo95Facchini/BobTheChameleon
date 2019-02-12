@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BetaScenes/0.MainMenu.unity
+    path: Assets/Scenes/BetaScenes/0.PlayMenu.unity
     guid: f6d816622f158234fa95a976fa929e2b
   - enabled: 1
     path: Assets/Scenes/BetaScenes/1.BetaLevel 1.unity
@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BetaScenes/8.BetaLevel 8.unity
     guid: 8dcc5fee48d1b96439dfeb13b8b9a273
+  - enabled: 1
+    path: Assets/Scenes/BetaScenes/Menu.unity
+    guid: 27c29c0cffbd06d4d8d30be22dadefd4
   m_configObjects: {}
