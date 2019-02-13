@@ -52,11 +52,11 @@ public class GameManager : MonoBehaviour
         {
             if(!isPlayerDead)
             {
-                if(Input.GetKeyDown(KeyCode.Escape))
-                {
-                    inMenu = true;
-                    SceneManager.LoadScene(0);
-                }
+                //if(Input.GetKeyDown(KeyCode.Escape))
+                //{
+                   // inMenu = true;
+                   // SceneManager.LoadScene(0);
+                //}
                 if(Input.GetKeyDown(KeyCode.Return))
                     Load(currentLevel);
 
