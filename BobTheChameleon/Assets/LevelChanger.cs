@@ -15,10 +15,10 @@ public class LevelChanger : MonoBehaviour
         //FadeToNextLevel();
 
         if (finishingFlag.GetComponent<NextLevel>().getCollided()) {
-        //}
+       // }
 
 
-        // (Input.GetMouseButton(0)) {          //useful to quickly test the change of the level
+         //if(Input.GetMouseButton(0)) {          //useful to quickly test the change of the level
             FadeToNextLevel();
         }
     }
