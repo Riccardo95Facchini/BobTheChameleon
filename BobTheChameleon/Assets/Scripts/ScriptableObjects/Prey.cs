@@ -6,4 +6,5 @@ public class Prey : ScriptableObject
     public float movementRange;
     public float preySpeed;
     public float newPositionInterval;
+    public int bonus;
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8140b243a9691f94fbf6f292d7aded40, type: 3}
-  m_Name: Fly
+  m_Name: ButterFly
   m_EditorClassIdentifier: 
-  movementRange: 2
-  preySpeed: 5
-  newPositionInterval: 1
-  bonus: 30
+  movementRange: 3
+  preySpeed: 3
+  newPositionInterval: 2
+  bonus: 50

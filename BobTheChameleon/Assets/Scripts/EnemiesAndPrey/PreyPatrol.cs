@@ -8,6 +8,7 @@ public class PreyPatrol : MonoBehaviour
     private float movementRange;
     private float preySpeed;
     private float newPositionInterval;
+    private int bonus;
 
     private Vector2 startingPosition;
     private Vector2 nextPosition;
@@ -34,6 +35,7 @@ public class PreyPatrol : MonoBehaviour
         movementRange = preyData.movementRange;
         preySpeed = preyData.preySpeed;
         newPositionInterval = preyData.newPositionInterval;
+        bonus = preyData.bonus;
 
         startingPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -126,7 +128,7 @@ public class PreyPatrol : MonoBehaviour
         }
 
         gameObject.SetActive(false);
-        bonusManager.Gain(10); //to be adjusted 
+        bonusManager.Gain(bonus); 
         
         
 
