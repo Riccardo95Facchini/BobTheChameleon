@@ -19,6 +19,8 @@ public class PreyPatrol : MonoBehaviour
     private bool isEaten;
     private bool isLookingRight;
 
+    public BonusManager bonusManager;
+
     /// <summary>
     /// Chaching and coroutine starting
     /// </summary>
@@ -122,7 +124,12 @@ public class PreyPatrol : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, mouth.position, Time.deltaTime * preySpeed * 10);
             yield return null;
         }
+
         gameObject.SetActive(false);
+        bonusManager.Gain(10); //to be adjusted 
+        
+        
+
     }
 
     /// <summary>
@@ -143,6 +150,8 @@ public class PreyPatrol : MonoBehaviour
         StopAllCoroutines();
         isCaught = true;
         StartCoroutine(GetReeled(mouth));
+        
+
     }
 
     /// <summary>

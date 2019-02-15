@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preyData: {fileID: 11400000, guid: 3fa7bbe613063a54d98e674f3f504118, type: 2}
+  bonusManager: {fileID: 7387252964697452843, guid: 0664f592c3e44404ba06c21bad8348a1,
+    type: 3}
 --- !u!95 &95210346258713654
 Animator:
   serializedVersion: 3
