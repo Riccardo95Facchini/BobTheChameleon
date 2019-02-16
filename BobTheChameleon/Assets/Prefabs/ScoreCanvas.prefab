@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1060138212}
   - component: {fileID: 1060138211}
   m_Layer: 5
-  m_Name: ScoreCanvas 1
+  m_Name: ScoreCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -287.6, y: 252.71}
+  m_AnchoredPosition: {x: -280, y: 185}
   m_SizeDelta: {x: 149.1, y: 37.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1332619259
@@ -214,7 +214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11, y: 258.76}
+  m_AnchoredPosition: {x: 16, y: 185}
   m_SizeDelta: {x: 397.4, y: 61.512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2004939418
