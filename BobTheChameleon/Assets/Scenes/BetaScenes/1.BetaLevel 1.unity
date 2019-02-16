@@ -463,8 +463,69 @@ PrefabInstance:
       propertyPath: DeathPanel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1808343542834503757, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808343542834503757, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808343542834503757, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808343542834503757, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 243358155}
+    - target: {fileID: 1808343542834503757, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: MenuAfterDeath
+      objectReference: {fileID: 0}
+    - target: {fileID: 1808343542834503757, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2854fa24fb830444baf3d7ee8bb4b9a, type: 3}
+--- !u!1 &243358154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1898900690672150, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 243358153}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &243358155 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7731580016799747798, guid: b2854fa24fb830444baf3d7ee8bb4b9a,
+    type: 3}
+  m_PrefabInstance: {fileID: 243358153}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243358154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0529486814897b46926d4746e0f99a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &243358156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243358154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0529486814897b46926d4746e0f99a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthManager: {fileID: 0}
 --- !u!1 &251365021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,11 +1793,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4880421190041002, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.982845
+      value: 18.395584
       objectReference: {fileID: 0}
     - target: {fileID: 4880421190041002, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.006019
+      value: 8.008345
       objectReference: {fileID: 0}
     - target: {fileID: 4880421190041002, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1774,11 +1835,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.010379791
+      value: -0.0104599
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.3046665
+      value: -1.3069925
       objectReference: {fileID: 0}
     - target: {fileID: 4855761306013274, guid: f87e0a897c616134e9c3549965fbeb8c, type: 3}
       propertyPath: m_LocalPosition.z
