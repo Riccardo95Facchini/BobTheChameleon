@@ -339,7 +339,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 15
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -695,7 +695,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -749,7 +749,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015241374}
+  m_AnchoredPosition: {x: 0, y: -0.0000056457993}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &589680605
@@ -1134,7 +1134,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 13
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -1426,7 +1426,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -1586,7 +1586,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -1714,7 +1714,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -1927,7 +1927,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
@@ -2926,7 +2926,7 @@ PrefabInstance:
     - target: {fileID: 114404282578934604, guid: 7c1e18be43c4a27458ba86ebe312c792,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c1e18be43c4a27458ba86ebe312c792, type: 3}
