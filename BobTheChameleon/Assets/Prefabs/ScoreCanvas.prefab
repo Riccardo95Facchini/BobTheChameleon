@@ -134,8 +134,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -282, y: 185}
-  m_SizeDelta: {x: 149.1, y: 37.1}
+  m_AnchoredPosition: {x: -270.9, y: 185}
+  m_SizeDelta: {x: 165.8, y: 37.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1332619259
 CanvasRenderer:
@@ -175,10 +175,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Bonus Score:'
+  m_Text: 'Bonus Score:  '
 --- !u!1 &2004939414
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -154, y: 185}
+  m_AnchoredPosition: {x: -115, y: 185}
   m_SizeDelta: {x: 50.8, y: 61.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2004939418
