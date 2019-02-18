@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class DeathPanelScript : MonoBehaviour
 {
-    public HealthManager healthManager;
+    
 
     public void MenuAfterDeath()
     {
         
+        Debug.Log("respawn");
         EventManager.TriggerEvent(Names.Events.Respawn);
         SceneManager.LoadScene("Menu");
     }
