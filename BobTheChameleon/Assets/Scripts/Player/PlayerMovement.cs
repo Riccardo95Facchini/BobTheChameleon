@@ -8,8 +8,6 @@ public class PlayerMovement : MonoBehaviour
     private float runSpeed = 40f;
     [SerializeField]
     private float sprintModifier = 1.5f;
-    [SerializeField] private CapsuleCollider2D bodyCollider;
-    [SerializeField] private CapsuleCollider2D bodyOnLadderCollider;
     [SerializeField] private PolygonCollider2D headCollider;
 
     bool jump = false;
@@ -36,14 +34,10 @@ public class PlayerMovement : MonoBehaviour
         isOnLadder = v;  //Avoids problem with respawn on checkpoint if dead on ladder
         if(v)
         {
-            bodyCollider.enabled = false;
-            bodyOnLadderCollider.enabled = true;
             headCollider.enabled = false;
         }
         else
         {
-            bodyOnLadderCollider.enabled = false;
-            bodyCollider.enabled = true;
             headCollider.enabled = true;
         }
     }
