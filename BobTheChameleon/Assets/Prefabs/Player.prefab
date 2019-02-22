@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 95080848357129244}
   - component: {fileID: 6542778165328626398}
   - component: {fileID: 5858856082748759122}
+  - component: {fileID: 5056351166132635088}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -124,6 +125,9 @@ MonoBehaviour:
   controller: {fileID: 114898771617750224}
   runSpeed: 40
   sprintModifier: 1.5
+  bodyCollider: {fileID: 6542778165328626398}
+  bodyOnLadderCollider: {fileID: 5056351166132635088}
+  headCollider: {fileID: 5858856082748759122}
 --- !u!114 &114924774786233468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +390,22 @@ PolygonCollider2D:
       - {x: 0.25205266, y: 0.6503897}
       - {x: -0.09507382, y: 0.8878243}
       - {x: -0.22015998, y: 0.90577996}
+--- !u!70 &5056351166132635088
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110115698857284}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: a00d36d4a11763a47b59131abdc2b22e, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.6699101, y: 1.8899698}
+  m_Direction: 0
 --- !u!1 &1476999472888030
 GameObject:
   m_ObjectHideFlags: 0
