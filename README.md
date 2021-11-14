@@ -46,7 +46,7 @@ The majority of graphical assets used were freely available on the [Unity Asset 
 <!-- CONTACT -->
 ## Contact
 
-Riccardo Facchini - [LinkedIn](https://www.linkedin.com/in/riccardo-facchini-1a8206194/) - riccardo95facchini@gmail.com
+Riccardo Facchini - [LinkedIn](https://www.linkedin.com/in/riccardo-facchini-1a8206194/)
 
 <!-- CONTRIBUTORS -->
 ## Contributors
